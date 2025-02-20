@@ -1,17 +1,16 @@
-### **Title: Upload CSV File**###
+### **Title: CSV File Upload and Validation**###
 
-User Role: As a Catalog Manager, I want to upload a CSV file so that I can populate the catalog database efficiently.
+User Role: As a Catalog Manager, I want to upload a CSV file so that I can efficiently populate the catalog database with new product data.
 
 Functional Description:
 
-The system should allow users to upload a CSV file containing catalog data. The backend should validate, parse, and store this data in PostgreSQL. The UI should provide real-time feedback during upload and notify users upon completion.
+The system should allow users to upload a CSV file containing catalog data. The backend will validate the file's structure, parse its content, and store the data in PostgreSQL. The UI will provide real-time feedback during the upload and notify users upon completion or if there are errors in the file.
 
 **GIVEN-WHEN-THEN Scenario**:
 
 GIVEN I am on the file upload page
 
 WHEN I select a valid CSV file and click "Upload"
-
 THEN the system should process the file, validate its format, and store the data in the database
 
 **Acceptance Criteria**:
@@ -31,12 +30,12 @@ Backend Implications:
 - Create an API endpoint in Node.js (Express) to accept CSV files.
 - Implement file validation & parsing logic.
 - Store processed data in PostgreSQL (via Sequelize ORM).
-- Handle large file processing asynchronously (use AWS Lambda for scalability).
+- Handle large file processing asynchronously using AWS Lambda.
 
 Frontend Implications:
 
 - Implement a drag-and-drop file uploader UI using React.
-- Show progress bar & success/failure messages.
+- Show a progress bar & success/failure messages.
 - Implement client-side file validation (CSV format, size check).
 
 **Development Subtasks**:
@@ -57,156 +56,159 @@ Frontend Implications:
 - Test backend database storage & query performance.
 - Perform security tests (malicious file uploads, SQL injection protection).
 
-### **Title: Search Catalog**###
+---
 
-User Role: As a Catalog Manager, I want to search for products in the catalog so that I can quickly find specific items.
+### **Title: Basic Search Functionality for Product Catalog**###
+
+User Role: As a Catalog Manager, I want to search the product catalog so that I can quickly find specific products to view or edit.
 
 Functional Description:
 
-The system should allow users to search for products in the catalog by NSN or common name. The search results should be displayed in a paginated format for easy navigation.
+The system should allow users to search the product catalog using various filters such as NSN, common name, or description. The search results should be displayed in a paginated table format with options for sorting.
 
 **GIVEN-WHEN-THEN Scenario**:
 
-GIVEN I am on the catalog management page
+GIVEN I am on the product catalog page
 
-WHEN I enter a search term like NSN or common name
-
-THEN the system should display matching products in a paginated list
+WHEN I enter search criteria and click "Search"
+THEN the system should display a list of products matching the criteria
 
 **Acceptance Criteria**:
 
-- The system must allow search by NSN and common name.
-- Search results should be returned within 2 seconds.
-- Paginated results must be displayed with a maximum of 20 items per page.
-- Users should be able to navigate through pages of results.
+- The system must support searches by NSN, common name, and description.
+- Search results should be displayed in a paginated table.
+- Users should be able to sort results by any visible column.
+- The system should return search results within 2 seconds for typical queries.
 
-Story Points: 3 (Low complexity)
+Story Points: 3 (Moderate complexity)
 
 **Impact Analysis**:
 
 Backend Implications:
 
-- Implement search logic in Node.js to query PostgreSQL database.
-- Optimize database queries for performance.
+- Implement search API in Node.js (Express).
+- Ensure efficient querying of PostgreSQL for search criteria.
+- Implement sorting and pagination logic in API.
 
 Frontend Implications:
 
-- Implement search input field and results display using React.
-- Implement pagination controls for navigating search results.
+- Create a search bar and filters using React.
+- Display results in a table with pagination and sorting.
 
 **Development Subtasks**:
 
-- Frontend: Build the search bar and results display component.
-- Frontend: Implement pagination controls.
-- Backend: Implement search query logic in Express.
-- Backend: Optimize query performance for fast results.
+- Frontend: Build search bar and filter components.
+- Frontend: Implement table component for displaying results.
+- Backend: Create search API endpoint.
+- Backend: Implement sorting and pagination logic.
 
 **Testing Subtasks**:
 
-- Test search by NSN and common name.
-- Test pagination functionality.
-- Test performance of search results retrieval.
-- Test edge cases (e.g., no results found, special characters in search).
+- Test search functionality with various criteria.
+- Test edge cases (e.g., no results found, maximum result set).
+- Test sort and pagination features.
+- Perform performance testing to ensure response time.
+
+---
 
 ### **Title: Edit Product Details**###
 
-User Role: As a Catalog Manager, I want to edit product details so that I can update the catalog with accurate information.
+User Role: As a Catalog Manager, I want to edit product details so that I can ensure the catalog data is accurate and up-to-date.
 
 Functional Description:
 
-The system should allow users to edit details of products in the catalog. Changes should be saved to the database and reflected in the UI.
+The system should allow users to edit details of a product, such as its description, price, and UI. Changes should be saved to the database and reflected in the catalog view.
 
 **GIVEN-WHEN-THEN Scenario**:
 
 GIVEN I am viewing a product's details
 
-WHEN I edit the product information and save changes
-
-THEN the system should update the database and reflect changes in the UI
+WHEN I make changes and click "Save"
+THEN the system should update the product details in the database and reflect the changes in the UI
 
 **Acceptance Criteria**:
 
-- The system must allow editing of all product fields (e.g., NSN, common name, description).
-- Changes must be saved to the PostgreSQL database.
-- The UI should reflect updated product details immediately upon saving.
-- An error message should be displayed if saving fails.
+- Users must be able to edit fields like description, price, and UI.
+- Changes must be saved in PostgreSQL.
+- The UI must reflect changes immediately after saving.
+- System must validate input data before saving.
 
-Story Points: 5 (Moderate complexity)
+Story Points: 3 (Moderate complexity)
 
 **Impact Analysis**:
 
 Backend Implications:
 
-- Create API endpoints for updating product details in Node.js.
-- Ensure database integrity and security when updating records.
+- Implement update API endpoint in Node.js (Express).
+- Ensure data validation and integrity checks.
 
 Frontend Implications:
 
-- Implement editable fields in the product detail view using React.
-- Provide feedback to users upon saving changes.
+- Create product detail view with editable fields using React.
+- Implement form validation and submit logic.
 
 **Development Subtasks**:
 
-- Frontend: Build editable fields in the product detail component.
-- Frontend: Implement save button and feedback messages.
-- Backend: Create API endpoint for updating product details.
+- Frontend: Build product detail view component.
+- Frontend: Implement form validation and submission logic.
+- Backend: Create update API endpoint.
 - Backend: Implement data validation and integrity checks.
 
 **Testing Subtasks**:
 
-- Test editing and saving product details.
-- Test database updates and data integrity.
-- Test UI feedback on successful and failed saves.
-- Test edge cases (e.g., empty fields, invalid data input).
+- Test editing functionality with valid and invalid input.
+- Test database update operation and data consistency.
+- Perform UI tests to ensure changes reflect immediately.
+- Conduct negative tests (e.g., unauthorized edits).
+
+---
 
 ### **Title: Download Catalog as CSV**###
 
-User Role: As a Catalog Manager, I want to download the entire catalog as a CSV file so that I can share it with stakeholders.
+User Role: As a Catalog Manager, I want to download the catalog as a CSV file so that I can have an offline copy of the product data.
 
 Functional Description:
 
-The system should allow users to download the entire product catalog as a CSV file. The download should be initiated from the UI and handled by the backend.
+The system should enable users to download the entire product catalog as a CSV file. The file should be generated on-demand and include all relevant product data fields.
 
 **GIVEN-WHEN-THEN Scenario**:
 
-GIVEN I am on the catalog management page
+GIVEN I am on the catalog page
 
-WHEN I click the "Download as CSV" button
-
-THEN the system should generate and download the catalog as a CSV file
+WHEN I click "Download as CSV"
+THEN the system should generate a CSV file containing the product data and initiate a download
 
 **Acceptance Criteria**:
 
-- The system must generate a CSV file containing all catalog data.
-- Download should be initiated within 3 seconds.
-- CSV file must include all product fields.
-- An error message should be displayed if download fails.
+- The downloaded file must include all product data fields.
+- The download process must complete within 5 seconds for typical catalog sizes.
+- The system must handle concurrent download requests efficiently.
 
-Story Points: 3 (Low complexity)
+Story Points: 2 (Simple complexity)
 
 **Impact Analysis**:
 
 Backend Implications:
 
-- Create API endpoint in Node.js to generate CSV from database records.
+- Implement CSV export API endpoint in Node.js (Express).
 - Ensure efficient data retrieval and CSV generation.
 
 Frontend Implications:
 
-- Implement download button and handle download initiation using React.
-- Provide feedback to users upon download completion or failure.
+- Add a download button to the catalog page using React.
+- Handle file download initiation and user interactions.
 
 **Development Subtasks**:
 
-- Frontend: Build the download button and feedback messages.
-- Backend: Create API endpoint for generating CSV files.
-- Backend: Implement efficient data retrieval and CSV export logic.
+- Frontend: Implement download button in catalog page.
+- Backend: Create CSV export API endpoint.
+- Backend: Optimize data retrieval for CSV generation.
 
 **Testing Subtasks**:
 
-- Test download initiation and completion.
+- Test CSV download functionality.
 - Verify CSV file content and format.
-- Test error handling in case of download failure.
-- Test performance of CSV generation and download.
+- Perform performance testing for download process.
+- Conduct concurrent download tests.
 
-These user stories are crafted to align with CMMI Level 5 development standards, ensuring a structured and quality-focused approach to delivering the MVP plan.
+These user stories provide a detailed roadmap for achieving the MVP objectives, ensuring a well-rounded and efficient implementation using CMMI Level 5 standards.
