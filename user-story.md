@@ -8,9 +8,9 @@ The system should allow users to upload a CSV file containing catalog data. The 
 
 **GIVEN-WHEN-THEN Scenario**:
 
-- **GIVEN** I am on the file upload page  
-- **WHEN** I select a valid CSV file and click "Upload"  
-- **THEN** the system should process the file, validate its format, and store the data in the database  
+GIVEN I am on the file upload page
+WHEN I select a valid CSV file and click "Upload"
+THEN the system should process the file, validate its format, and store the data in the database
 
 **Acceptance Criteria**:
 
@@ -20,18 +20,18 @@ The system should allow users to upload a CSV file containing catalog data. The 
 - The system must provide progress feedback while uploading.
 - Logs must be stored in AWS CloudWatch for debugging.
 
-**Story Points**: 8 (Increased complexity)
+Story Points: 5 (Moderate complexity)
 
 **Impact Analysis**:
 
-**Backend Implications**:
+Backend Implications:
 
 - Create an API endpoint in Node.js (Express) to accept CSV files.
 - Implement file validation & parsing logic.
 - Store processed data in PostgreSQL (via Sequelize ORM).
 - Handle large file processing asynchronously (use AWS Lambda for scalability).
 
-**Frontend Implications**:
+Frontend Implications:
 
 - Implement a drag-and-drop file uploader UI using React.
 - Show progress bar & success/failure messages.
@@ -57,150 +57,154 @@ The system should allow users to upload a CSV file containing catalog data. The 
 
 ---
 
-### **Title: Search Product Catalog**
+### **Title: Search Catalog**
 
-User Role: As a Catalog Manager, I want to search the product catalog so that I can quickly find specific products.
+User Role: As a Catalog Manager, I want to search the catalog by NSN or common name to quickly find specific products.
 
 Functional Description:
 
-The system should allow users to search through the product catalog using various criteria. The backend should handle search queries efficiently, and the UI should display search results in a user-friendly manner.
+The system should provide search functionality to allow users to find catalog items based on NSN or common name, enabling efficient management and updates of product information.
 
 **GIVEN-WHEN-THEN Scenario**:
 
-- **GIVEN** I am on the catalog search page  
-- **WHEN** I enter search criteria and click "Search"  
-- **THEN** the system should return a list of products matching the criteria  
+GIVEN I am on the catalog search page
+WHEN I enter an NSN or common name in the search bar
+THEN the system should display matching catalog items
 
 **Acceptance Criteria**:
 
-- The system must support searching by NSN, common_name, and Description.
-- Search results should be displayed within 2 seconds.
-- If no products match the criteria, a "No results found" message must be displayed.
+- The search should return results within 2 seconds.
+- The search must be case-insensitive.
+- If no matches are found, display a "No results found" message.
+- Logs must be stored in AWS CloudWatch for debugging.
 
-**Story Points**: 3 (Simple complexity)
+Story Points: 3 (Simple complexity)
 
 **Impact Analysis**:
 
-**Backend Implications**:
+Backend Implications:
 
-- Create an API endpoint for handling search queries.
-- Implement efficient querying using PostgreSQL.
+- Implement a search API endpoint in Node.js.
+- Optimize database queries for quick search results.
 
-**Frontend Implications**:
+Frontend Implications:
 
-- Develop a search input and results display UI using React.
-- Implement client-side validation for search inputs.
+- Create a search bar component in React.
+- Display search results in a paginated list.
+- Show a loading indicator while searching.
 
 **Development Subtasks**:
 
-- Frontend: Build the search input component.
-- Frontend: Implement results display and pagination.
-- Backend: Create Express API for search queries.
-- Backend: Optimize database queries for performance.
+- Frontend: Build the search bar component.
+- Frontend: Implement paginated results display.
+- Backend: Create search API endpoint.
+- Backend: Optimize database queries.
 
 **Testing Subtasks**:
 
-- Test search functionality with valid and invalid inputs.
-- Test performance of search queries.
-- Test edge cases with no matching results.
-- Conduct usability tests on search UI.
+- Test search functionality with valid NSN and common names.
+- Test search with no matching results.
+- Test performance for large datasets.
+- Conduct security tests (SQL injection protection).
 
 ---
 
 ### **Title: Edit Product Details**
 
-User Role: As a Catalog Manager, I want to edit product details so that I can ensure the catalog data is accurate and up-to-date.
+User Role: As a Catalog Manager, I want to edit product details so that I can keep the catalog information accurate and up-to-date.
 
 Functional Description:
 
-The system should allow users to edit details of products in the catalog. The backend should handle updates securely, and the UI should provide an intuitive editing interface.
+The system should allow users to view and edit details of individual products, ensuring the catalog is accurate and reflects current information.
 
 **GIVEN-WHEN-THEN Scenario**:
 
-- **GIVEN** I am viewing a product's details  
-- **WHEN** I make changes to the product information and click "Save"  
-- **THEN** the system should update the product details in the database  
+GIVEN I am on a product's detail page
+WHEN I edit the product information and click "Save"
+THEN the system should update the product details in the database
 
 **Acceptance Criteria**:
 
-- Users must be able to edit NSN, common_name, Description, Price, and UI fields.
-- Changes must be saved to the database within 2 seconds.
-- A confirmation message must be displayed upon successful update.
+- The system must save changes within 2 seconds.
+- Provide confirmation upon successful update.
+- If the update fails, display an error message.
+- Logs must be stored in AWS CloudWatch for debugging.
 
-**Story Points**: 5 (Moderate complexity)
+Story Points: 5 (Moderate complexity)
 
 **Impact Analysis**:
 
-**Backend Implications**:
+Backend Implications:
 
-- Create an API endpoint for updating product details.
-- Implement update logic using Sequelize ORM.
+- Implement an API endpoint for updating product details.
+- Ensure data validation and integrity checks.
 
-**Frontend Implications**:
+Frontend Implications:
 
-- Develop a form UI for editing product details using React.
-- Implement client-side validation for form inputs.
+- Create a product detail view with editable fields.
+- Implement save functionality and feedback messages.
 
 **Development Subtasks**:
 
-- Frontend: Build the product details form component.
-- Frontend: Implement form validation and error handling.
-- Backend: Create Express API for updating product details.
-- Backend: Implement update logic in PostgreSQL.
+- Frontend: Build the product detail view.
+- Frontend: Implement edit and save functionality.
+- Backend: Create update API endpoint.
+- Backend: Implement data validation logic.
 
 **Testing Subtasks**:
 
-- Test editing functionality with valid and invalid inputs.
-- Test performance of update operations.
-- Test edge cases with incomplete data.
-- Conduct usability tests on the edit UI.
+- Test editing and saving product details.
+- Test validation for invalid data entries.
+- Test performance for high-frequency updates.
+- Conduct security tests (data validation, input sanitization).
 
 ---
 
-### **Title: Export Catalog Data**
+### **Title: Download Catalog**
 
-User Role: As a Catalog Manager, I want to export catalog data so that I can share it with external stakeholders or systems.
+User Role: As a Catalog Manager, I want to download the catalog as a CSV file so that I can analyze and share the information easily.
 
 Functional Description:
 
-The system should allow users to export the product catalog as a CSV file. The backend should generate the CSV efficiently, and the UI should provide a simple export interface.
+The system should allow users to download the entire catalog as a CSV file, facilitating easy data analysis and sharing with stakeholders.
 
 **GIVEN-WHEN-THEN Scenario**:
 
-- **GIVEN** I am on the catalog management page  
-- **WHEN** I click "Export"  
-- **THEN** the system should generate a CSV file of the current catalog and start a download  
+GIVEN I am on the catalog management page
+WHEN I click the "Download" button
+THEN the system should generate and download the catalog as a CSV file
 
 **Acceptance Criteria**:
 
-- The exported CSV must include all product fields.
-- The CSV generation process must be completed within 5 seconds.
-- Users must be notified if the export fails.
+- The download should start within 3 seconds.
+- The CSV file must contain all catalog entries.
+- If the download fails, display an error message.
+- Logs must be stored in AWS CloudWatch for debugging.
 
-**Story Points**: 3 (Simple complexity)
+Story Points: 3 (Simple complexity)
 
 **Impact Analysis**:
 
-**Backend Implications**:
+Backend Implications:
 
-- Create an API endpoint for exporting catalog data.
-- Implement CSV generation logic using Node.js.
+- Implement an API endpoint for CSV generation.
+- Ensure efficient data retrieval and file generation.
 
-**Frontend Implications**:
+Frontend Implications:
 
-- Develop an export button UI using React.
-- Implement client-side handling of CSV download.
+- Create a download button on the catalog management page.
+- Provide feedback on download initiation and completion.
 
 **Development Subtasks**:
 
-- Frontend: Build the export button component.
-- Frontend: Implement download handling and notifications.
-- Backend: Create Express API for CSV export.
-- Backend: Implement CSV generation logic.
+- Frontend: Implement the download button.
+- Frontend: Handle user feedback for downloads.
+- Backend: Create CSV generation API endpoint.
+- Backend: Optimize data retrieval for large datasets.
 
 **Testing Subtasks**:
 
-- Test successful export of catalog data.
-- Test performance of CSV generation.
-- Test edge cases with large data volumes.
-- Conduct usability tests on the export UI.
+- Test successful CSV downloads.
+- Test performance for large catalogs.
+- Test error handling for download failures.
+- Conduct security tests (authorization, data exposure).
