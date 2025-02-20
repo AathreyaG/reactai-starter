@@ -1,4 +1,4 @@
-### **Title: Upload CSV File**###
+### **Title: Upload CSV File** ###
 
 User Role: As a Catalog Manager, I want to upload a CSV file so that I can populate the catalog database efficiently.
 
@@ -22,31 +22,58 @@ THEN the system should process the file, validate its format, and store the data
 - The system must provide progress feedback while uploading.
 - Logs must be stored in AWS CloudWatch for debugging.
 
-Story Points: 5 (Moderate complexity)
+Story Points: 8 (Increased complexity due to additional features)
+
+**Enhancements to Increase Complexity**:
+
+1. **Data Transformation and Enrichment**:
+   - Implement logic to transform data from the CSV file into a different format before storing it in the database.
+   - Integrate with external APIs to enrich the data with additional information.
+
+2. **Advanced Error Handling and Reporting**:
+   - Provide detailed error reports for failed uploads, including line numbers and specific issues in the CSV file.
+   - Implement a retry mechanism for transient errors.
+
+3. **User Notifications and Alerts**:
+   - Send email notifications to users upon successful or failed uploads.
+   - Implement real-time alerts using WebSockets to notify users of upload status changes.
+
+4. **Enhanced Security Measures**:
+   - Integrate a file scanning service to check for malware in the uploaded CSV files.
+   - Implement data anonymization techniques to protect sensitive information.
+
+5. **Scalability and Performance Optimization**:
+   - Implement load balancing to distribute upload requests across multiple servers.
+   - Use caching strategies to optimize data retrieval and reduce database load.
+
+6. **Comprehensive Logging and Analytics**:
+   - Implement comprehensive logging for all stages of the upload process.
+   - Develop an analytics dashboard to provide insights into upload trends and performance metrics.
 
 **Impact Analysis**:
 
 Backend Implications:
 
 - Create an API endpoint in Node.js (Express) to accept CSV files.
-- Implement file validation & parsing logic.
+- Implement file validation, parsing, transformation, and enrichment logic.
 - Store processed data in PostgreSQL (via Sequelize ORM).
 - Handle large file processing asynchronously (use AWS Lambda for scalability).
+- Implement security measures and logging.
 
 Frontend Implications:
 
 - Implement a drag-and-drop file uploader UI using React.
-- Show progress bar & success/failure messages.
+- Show progress bar, success/failure messages, and real-time alerts.
 - Implement client-side file validation (CSV format, size check).
 
 **Development Subtasks**:
 
 - Frontend: Build the file upload component.
-- Frontend: Implement progress bar & error handling.
+- Frontend: Implement progress bar, error handling, and real-time alerts.
 - Backend: Create Express API to handle file uploads.
-- Backend: Implement file parsing logic.
+- Backend: Implement file parsing, transformation, and enrichment logic.
 - Backend: Store data in PostgreSQL.
-- Backend: Log upload status to AWS CloudWatch.
+- Backend: Log upload status to AWS CloudWatch and implement security measures.
 
 **Testing Subtasks**:
 
@@ -56,10 +83,12 @@ Frontend Implications:
 - Test large file handling (100MB limit).
 - Test backend database storage & query performance.
 - Perform security tests (malicious file uploads, SQL injection protection).
+- Test retry mechanism and detailed error reporting.
+- Test user notifications and real-time alerts.
 
 ---
 
-### **Title: Search Catalog**###
+### **Title: Search Catalog** ###
 
 User Role: As a Catalog Manager, I want to search the catalog so that I can easily find specific products.
 
@@ -112,7 +141,7 @@ Frontend Implications:
 
 ---
 
-### **Title: Edit Catalog Entry**###
+### **Title: Edit Catalog Entry** ###
 
 User Role: As a Catalog Manager, I want to edit catalog entries so that I can update product information as needed.
 
@@ -165,7 +194,7 @@ Frontend Implications:
 
 ---
 
-### **Title: Download Catalog**###
+### **Title: Download Catalog** ###
 
 User Role: As a Catalog Manager, I want to download the catalog as a CSV file so that I can have an offline copy of the data.
 
