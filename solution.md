@@ -41,9 +41,10 @@ To create a detailed, unambiguous, and structured technical architecture for the
   - Supports filtering and sorting through query parameters.
   
 - **`PUT /catalog/:id`**: 
-  - Updates catalog entries.
-  - Expects a JSON body with the updated data.
-  
+  - Updates a catalog item identified by its unique ID.
+  - Expects a JSON body with the fields to be updated.
+  - Returns an appropriate response based on the outcome.
+
 - **`GET /catalog/download`**: 
   - Generates a downloadable CSV file of the entire catalog.
 
