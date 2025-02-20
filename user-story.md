@@ -1,4 +1,4 @@
-### **Title: Upload CSV File**###
+### **Title: Upload CSV File**
 
 User Role: As a Catalog Manager, I want to upload a CSV file so that I can populate the catalog database efficiently.
 
@@ -8,10 +8,9 @@ The system should allow users to upload a CSV file containing catalog data. The 
 
 **GIVEN-WHEN-THEN Scenario**:
 
-GIVEN I am on the file upload page
-
-WHEN I select a valid CSV file and click "Upload"
-THEN the system should process the file, validate its format, and store the data in the database
+GIVEN I am on the file upload page  
+WHEN I select a valid CSV file and click "Upload"  
+THEN the system should process the file, validate its format, and store the data in the database  
 
 **Acceptance Criteria**:
 
@@ -58,106 +57,100 @@ Frontend Implications:
 
 ---
 
-### **Title: Manage Catalog Items**###
+### **Title: Search Catalog**
 
-User Role: As a Catalog Manager, I want to manage catalog items so that I can keep the product information up to date.
+User Role: As a Catalog Manager, I want to search the catalog so that I can quickly find specific products.
 
 Functional Description:
 
-The system should allow users to view, search, edit, and delete catalog items. The backend should support CRUD operations, and the frontend should provide a user-friendly interface for these interactions.
+The system should enable users to search the product catalog using various criteria such as NSN or common name. The search results should be displayed in a user-friendly list format, allowing for easy navigation and selection.
 
 **GIVEN-WHEN-THEN Scenario**:
 
-GIVEN I am on the catalog management page
-
-WHEN I perform a search or select an item
-THEN I should be able to view, edit, or delete the catalog item
+GIVEN I am on the catalog page  
+WHEN I enter a search query in the search bar and press "Enter"  
+THEN the system should display the matching products in the catalog list  
 
 **Acceptance Criteria**:
 
-- Users must be able to search for catalog items by any attribute.
-- Users must be able to edit catalog item details.
-- Users must be able to delete catalog items.
-- Changes should be saved to the database immediately.
+- The search functionality must support criteria like NSN and common name.
+- Search results should be displayed within 2 seconds.
+- No results found message should be displayed if the search yields no products.
 
-Story Points: 8 (High complexity)
+Story Points: 3 (Simple complexity)
 
 **Impact Analysis**:
 
 Backend Implications:
 
-- Develop CRUD API endpoints for catalog items.
-- Implement search functionality using Sequelize queries.
+- Create an API endpoint to handle search queries.
+- Implement query logic to search the database efficiently.
 
 Frontend Implications:
 
-- Create a table view for catalog items using React.
-- Implement search, edit, and delete functionalities.
-- Apply form validation for editing catalog items.
+- Implement a search bar UI using React.
+- Display search results dynamically as the user types.
 
 **Development Subtasks**:
 
-- Frontend: Build the catalog table component.
-- Frontend: Implement search functionality.
-- Frontend: Implement edit and delete options.
-- Backend: Develop CRUD API endpoints.
-- Backend: Implement search query logic.
+- Frontend: Build the search bar component.
+- Frontend: Implement real-time search result display.
+- Backend: Create API to handle search queries.
+- Backend: Optimize database queries for fast search.
 
 **Testing Subtasks**:
 
-- Test viewing all catalog items.
-- Test search functionality with various queries.
-- Test editing a catalog item and saving changes.
-- Test deleting a catalog item.
-- Validate data integrity in the database after operations.
+- Test search with valid criteria (NSN, common name).
+- Test search with invalid criteria.
+- Test search with no results.
+- Test performance of search queries.
 
 ---
 
-### **Title: Export Catalog Data**###
+### **Title: Edit Product Catalog**
 
-User Role: As a Catalog Manager, I want to export catalog data so that I can share it with stakeholders or publish it to GSA marketplaces.
+User Role: As a Catalog Manager, I want to edit product details so that I can keep the catalog information accurate and up-to-date.
 
 Functional Description:
 
-The system should allow users to export catalog data as a CSV file. The backend should handle the data compilation, and the frontend should provide a simple button to initiate the export.
+The system should allow users to edit product details directly from the catalog interface. Changes should be validated and updated in the database upon confirmation.
 
 **GIVEN-WHEN-THEN Scenario**:
 
-GIVEN I am on the catalog management page
-
-WHEN I click the "Export" button
-THEN a CSV file of the current catalog data should be generated and downloaded
+GIVEN I am on the catalog page  
+WHEN I select a product and click "Edit"  
+THEN I should be able to modify the product details and save the changes  
 
 **Acceptance Criteria**:
 
-- The system must provide an "Export" button on the catalog management page.
-- The exported file must be in CSV format and include all catalog items.
-- The export process should not exceed 60 seconds.
+- Users must be able to edit fields like common name, description, and price.
+- Changes must be reflected in the database immediately upon saving.
+- An error message should be displayed if validation fails.
 
-Story Points: 3 (Low complexity)
+Story Points: 8 (Complex)
 
 **Impact Analysis**:
 
 Backend Implications:
 
-- Create an API endpoint for exporting catalog data.
-- Implement data aggregation logic.
+- Create API endpoints for updating product details.
+- Implement validation logic for product data.
 
 Frontend Implications:
 
-- Add an "Export" button to the catalog management UI.
-- Implement download functionality for the exported file.
+- Implement an editable form UI using React.
+- Provide feedback for successful updates or validation errors.
 
 **Development Subtasks**:
 
-- Frontend: Add "Export" button to UI.
-- Frontend: Implement file download logic.
-- Backend: Develop export API endpoint.
-- Backend: Implement data aggregation logic.
+- Frontend: Build the editable product form.
+- Frontend: Implement validation and error handling.
+- Backend: Create API endpoints for product updates.
+- Backend: Implement data validation logic.
 
 **Testing Subtasks**:
 
-- Test exporting catalog data with different dataset sizes.
-- Validate the format of the exported CSV file.
-- Ensure all catalog items are included in the export.
-- Test the export process under load conditions.
+- Test editing with valid inputs.
+- Test editing with invalid inputs.
+- Test database update on successful edit.
+- Test feedback for validation errors.
