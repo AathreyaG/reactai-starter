@@ -1,11 +1,12 @@
 ### Problem Analysis
 
 - **Objective**: Develop an application to upload, curate, and publish the GSA Global Supply catalog on platforms like FedMall or GSA Advantage.
-  
+
 - **Key Features**:
-  - **CSV Upload**: Users must be able to upload CSV files of varying sizes through a web interface.
+  - **CSV Upload**: Users must be able to upload CSV files of varying sizes through a web interface, with a maximum file size of 200MB.
   - **Catalog Management**: Users should be able to search and edit product catalogs.
   - **Publishing and Downloading**: Users should have the ability to download or publish the entire catalog to GSA marketplaces.
+  - **Authentication**: Keycloak authentication is required.
 
 - **Data Structure**:
   - Each product is identified by a unique National Stock Number (NSN).
@@ -20,12 +21,10 @@
 
 - The CSV file format is consistent and validated before upload.
 - The application will initially support only the features listed in the problem statement.
-- User authentication and authorization are not part of the MVP.
 - The application will be deployed on AWS.
 
 ### Areas of Uncertainty
 
-- **CSV File Size Limits**: The problem statement mentions varying file sizes but does not specify limits.
 - **User Roles and Permissions**: It's unclear if different user roles will have different permissions.
 - **Publishing Mechanism**: The exact process for publishing to GSA marketplaces is not detailed.
 - **Error Handling**: Details on how to handle errors during upload, search, edit, and publish processes are not provided.
@@ -63,5 +62,4 @@
 
 - What are the specific requirements for publishing to GSA marketplaces?
 - Are there any specific user roles or permissions that need to be implemented?
-- What are the expected file size limits for CSV uploads?
 - How should errors be handled and communicated to the user?
