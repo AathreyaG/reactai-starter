@@ -1,113 +1,59 @@
-Here is the proposed technical architecture for the GSA Supply Catalog Management Platform, designed with a detailed breakdown of each component, utilizing React, Node.js, and AWS. The architecture aims to create a scalable, maintainable, and secure platform to manage the GSA Supply Catalog.
-
 ### Detailed Explanation of the Proposed Architecture
 
 #### 1. **Frontend Architecture (React + TypeScript)**
 
 - **Component Structure**:
-  - The frontend is organized into modular components to enhance maintainability and scalability:
-    - **Header Component**: Responsible for navigation and displaying user information.
-    - **CatalogTable Component**: Used for displaying the product catalog with pagination, sorting, and filtering capabilities.
-    - **ProductDetail Component**: Provides detailed views for editing specific product information.
-    - **CSVUploader Component**: Allows users to upload CSV files with a drag-and-drop interface.
-    - **ExportComponent**: Enables users to download product catalog data as a CSV file.
+  - The frontend is composed of modular React components to support a scalable and maintainable user interface:
+    - **Header Component**: Provides navigation and user-related actions.
+    - **CatalogTable Component**: Displays product catalog with interactive features like pagination, sorting, and filtering.
+    - **ProductDetail Component**: Enables detailed product view and editing.
+    - **CSVUploader Component**: Allows CSV file uploads with drag-and-drop functions.
+    - **ExportComponent**: Facilitates downloading catalog data as CSV files.
 
 - **UI Frameworks/Component Libraries**:
-  - **Material-UI (MUI)**: Selected for its comprehensive set of components and cohesive user experience.
-  - **USWDS Components**: Ensures compliance with US federal design standards, focusing on accessibility and usability.
+  - **Material-UI (MUI)**: Chosen for its comprehensive component library and cohesive visual design.
+  - **USWDS Components**: Used to fulfill US federal accessibility requirements and ensure a consistent user experience.
 
 #### 2. **Backend Architecture (Node.js + Express + PostgreSQL)**
 
 - **RESTful API Endpoints**:
   - **/api/upload**:
-    - **POST**: Accepts CSV file uploads for validation before storing on S3.
+    - **POST**: Accepts and validates CSV file uploads before storage on S3.
   - **/api/products**:
-    - **GET**: Retrieves a list of products with options for sorting and filtering.
-    - **POST**: Allows the addition of new products to the catalog.
+    - **GET**: Fetches a list of products with options for sorting and filtering.
+    - **POST**: Allows adding new products to the catalog.
   - **/api/products/:id**:
-    - **GET**: Fetches detailed information for a specific product.
-    - **PUT**: Updates details of an existing product.
-    - **DELETE**: Deletes a product from the catalog.
+    - **GET**: Retrieves details of a specific product.
+    - **PUT**: Updates an existing product's details.
+    - **DELETE**: Removes a product from the catalog.
   - **/api/export**:
-    - **GET**: Initiates an export of the product data to a CSV file and stores it on S3.
+    - **GET**: Triggers the export of product data to a CSV file stored on S3.
 
 - **Data Processing Workflows**:
-  - **File Handling**: Managed using the **Multer** library to handle file uploads.
-  - **Validations**: The **Joi** library ensures data integrity and verifies structure before processing.
-  - **Background Processing**: **AWS Lambda** is used for resource-intensive tasks like CSV file validation, maintaining optimal performance asynchronously.
+  - **File Handling**: Utilizes the **Multer** library for efficient handling of file uploads.
+  - **Validations**: Ensures data integrity using the **Joi** library for structural validation.
+  - **Background Processing**: Leverages **AWS Lambda** for asynchronous tasks like CSV file validation, to optimize performance.
 
 #### 3. **AWS Infrastructure & Deployment**
 
 - **Hosting**:
-  - **AWS Elastic Beanstalk**: Handles deployment and management of Node.js applications with automatic scaling and monitoring capabilities.
+  - **AWS Elastic Beanstalk**: Automated deployment and scaling of Node.js applications with monitoring.
 
 - **File Storage**:
-  - **Amazon S3**: Used for storing uploaded CSV files and exported data.
+  - **Amazon S3**: Dedicated to storing both raw and processed CSV files.
 
 - **Database**:
-  - **Amazon RDS with PostgreSQL**: Provides a managed, scalable, and secure relational database service.
+  - **Amazon RDS with PostgreSQL**: Provides a reliable, scalable relational database solution.
 
 - **API Management**:
-  - **Amazon API Gateway**: Manages all API requests, providing routing, authorization, and request validation.
+  - **Amazon API Gateway**: Routes API traffic with integrated security and validation features.
 
 - **Security**:
-  - **Amazon Cognito**: Manages user identity, authentication, and authorization securely.
+  - **Amazon Cognito**: Handles user identity management, ensuring secure authentication and authorization.
 
 - **CI/CD Pipeline**:
-  - **AWS CodePipeline**: Integrated with **CodeBuild** and **CodeDeploy** for seamless continuous integration and deployment, ensuring automated and reliable application updates.
+  - **AWS CodePipeline**: Combined with **CodeBuild** and **CodeDeploy** for a streamlined continuous integration and deployment process, enabling efficient and error-free updates.
 
-### C4-PlantUML Diagram
+## Generated Diagrams
 
-```plantuml
-@startuml
-!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
-
-' Title
-title GSA Supply Catalog Management Platform (Container Diagram)
-
-' Define the system
-System_Boundary(GSA_Boundary, "Supply Catalog Management Platform") {
-
-    ' Users
-    Person(user, "GSA Acquisition Workforce", "Interacts with the platform to manage supply catalog")
-
-    ' Frontend Application
-    Container(webApp, "Web Application", "React + TypeScript", "User interface for uploading and managing supply catalog data")
-
-    ' API Gateway
-    Container(apiGateway, "API Gateway", "Amazon API Gateway", "Handles request routing, validation, and authorization")
-
-    ' Core Backend Services
-    Container_Boundary(Backend, "Backend Services") {
-        Container(appNode, "Application Server", "Node.js + Express on Elastic Beanstalk", "Processes business logic and data transactions")
-        Container(authService, "Authentication Service", "Amazon Cognito", "Manages user authentication and authorization")
-        Container(database, "Database", "PostgreSQL on RDS", "Stores supply catalog data securely with relational capabilities")
-        Container(fileStorage, "File Storage", "Amazon S3", "Stores uploaded CSV files and provides export storage")
-        Container(lambda, "Background Processing", "AWS Lambda", "Executes asynchronous tasks like file validation and processing")
-    }
-
-    ' Monitoring and Security
-    System_Ext(cloudwatch, "CloudWatch", "AWS CloudWatch", "Monitors application performance and logs")
-    System_Ext(secretsManager, "Secrets Manager", "AWS Secrets Manager", "Manages sensitive configurations securely")
-    System_Ext(vpc, "Virtual Private Cloud", "AWS VPC", "Isolates backend services in a secure network environment")
-
-    ' Relationships and Flows
-    Rel(user, webApp, "Uses", "HTTPS")
-    Rel(webApp, apiGateway, "Sends requests to", "HTTPS")
-    Rel(apiGateway, appNode, "Routes requests to", "HTTPS")
-    Rel(appNode, database, "Reads from and writes to", "JDBC")
-    Rel(appNode, fileStorage, "Stores and retrieves files from", "HTTPS")
-    Rel(appNode, lambda, "Triggers for background tasks", "HTTPS")
-}
-
-' Notes
-note right of authService
-Utilizes Amazon Cognito for
-secure user authentication
-and session management
-end note
-
-@enduml
-```
-
-This architecture leverages AWS services for efficient processing and storage, designed to meet the GSA Supply Catalog Management Platform's requirements for scalability, maintainability, and security.
+![Diagram 1](./images/solution_diagram_1.png)
