@@ -1,79 +1,26 @@
-### **Title: Search Product Catalog**###
+### **Title: Upload CSV File**
 
-User Role: As a Catalog Manager, I want to search the product catalog so that I can efficiently find specific products within the database.
-
-Functional Description:
-
-The system should allow users to search the product catalog using various filters such as NSN, common name, or description. The backend should support search queries and handle pagination to manage large sets of data efficiently.
-
-**GIVEN-WHEN-THEN Scenario**:
-
-GIVEN I am on the catalog search page
-
-WHEN I enter a search term and click "Search"
-
-THEN the system should return a list of products matching the criteria, with pagination if there are more than 20 results
-
-**Acceptance Criteria**:
-
-- The search must support filters by NSN, common name, and description.
-- The results should be returned within 3 seconds.
-- The system should display results in pages of 20.
-- If no results are found, a message "No products found" must be displayed.
-
-Story Points: 3 (Simple complexity)
-
-**Impact Analysis**:
-
-Backend Implications:
-
-- Implement a search API endpoint in Node.js (Express) that queries the PostgreSQL database.
-- Optimize queries to ensure search response time is under 3 seconds.
-- Implement pagination logic in the API.
-
-Frontend Implications:
-
-- Create a search bar and filter UI component using React.
-- Implement pagination controls.
-- Display search results dynamically and handle empty states.
-
-**Development Subtasks**:
-
-- Frontend: Build the search bar component.
-- Frontend: Implement pagination controls.
-- Backend: Create Express API to handle search requests.
-- Backend: Implement database query logic for filtering and pagination.
-
-**Testing Subtasks**:
-
-- Test search functionality with valid search terms.
-- Test search with no matching results.
-- Test pagination with more than 20 results.
-- Performance test to ensure response time under 3 seconds.
-
----
-
-### **Title: Edit Product Details**###
-
-User Role: As a Catalog Manager, I want to edit product details so that I can update the catalog with the most current information.
+User Role: As a Catalog Manager, I want to upload a CSV file so that I can populate the catalog database efficiently.
 
 Functional Description:
 
-The system should allow users to edit product details directly from the web interface. Changes should be validated and then updated in the PostgreSQL database.
+The system should allow users to upload a CSV file containing catalog data. The backend should validate, parse, and store this data in PostgreSQL. The UI should provide real-time feedback during upload and notify users upon completion.
 
 **GIVEN-WHEN-THEN Scenario**:
 
-GIVEN I am viewing a product's details
+GIVEN I am on the file upload page
 
-WHEN I click "Edit" and modify the fields
+WHEN I select a valid CSV file and click "Upload"
 
-THEN the system should save the changes and update the database
+THEN the system should process the file, validate its format, and store the data in the database
 
 **Acceptance Criteria**:
 
-- Users must be able to edit fields such as common name, description, and price.
-- Changes must be validated before saving.
-- The system must confirm the update with a success message.
+- The system must support CSV file uploads up to 100MB.
+- If the file is invalid, an error message must be displayed.
+- Upon successful upload, data should be inserted into PostgreSQL.
+- The system must provide progress feedback while uploading.
+- Logs must be stored in AWS CloudWatch for debugging.
 
 Story Points: 5 (Moderate complexity)
 
@@ -81,77 +28,184 @@ Story Points: 5 (Moderate complexity)
 
 Backend Implications:
 
-- Implement an API endpoint for updating product details in Node.js (Express).
-- Ensure data validation logic is in place before updating the database.
+- Create an API endpoint in Node.js (Express) to accept CSV files.
+- Implement file validation & parsing logic.
+- Store processed data in PostgreSQL (via Sequelize ORM).
+- Handle large file processing asynchronously (use AWS Lambda for scalability).
 
 Frontend Implications:
 
-- Create an editable form for product details using React.
-- Implement state management to handle form changes and submission.
+- Implement a drag-and-drop file uploader UI using React.
+- Show progress bar & success/failure messages.
+- Implement client-side file validation (CSV format, size check).
 
 **Development Subtasks**:
 
-- Frontend: Build the product details form with editable fields.
-- Frontend: Implement form validation.
-- Backend: Create Express API to handle product updates.
-- Backend: Implement data validation logic.
+- Frontend: Build the file upload component.
+- Frontend: Implement progress bar & error handling.
+- Backend: Create Express API to handle file uploads.
+- Backend: Implement file parsing logic.
+- Backend: Store data in PostgreSQL.
+- Backend: Log upload status to AWS CloudWatch.
 
 **Testing Subtasks**:
 
-- Test editing functionality with valid and invalid data.
-- Test database updates after editing.
-- Test form validation and error messages.
-- Test success message display upon completion.
+- Test successful file upload (valid CSV).
+- Test invalid file formats (TXT, JSON).
+- Test upload with a corrupt CSV file.
+- Test large file handling (100MB limit).
+- Test backend database storage & query performance.
+- Perform security tests (malicious file uploads, SQL injection protection).
 
 ---
 
-### **Title: Download Catalog as CSV**###
+### **Title: Search Product Catalog**
 
-User Role: As a Catalog Manager, I want to download the catalog as a CSV file so that I can have an offline copy of the data.
+User Role: As a Catalog Manager, I want to search the product catalog so that I can quickly find specific products.
 
 Functional Description:
 
-The system should allow users to download the entire product catalog as a CSV file. The backend should generate the CSV dynamically from the database.
+The system should allow users to search for products in the catalog using criteria such as NSN or common name. The backend should query the PostgreSQL database to retrieve matching records, and the UI should display the results in a user-friendly manner.
 
 **GIVEN-WHEN-THEN Scenario**:
 
-GIVEN I am on the catalog management page
+GIVEN I am on the product catalog page
 
-WHEN I click "Download Catalog"
+WHEN I enter a search term and click "Search"
 
-THEN the system should generate and download a CSV file containing all product data
+THEN the system should display a list of products matching the search criteria
 
 **Acceptance Criteria**:
 
-- The CSV file must include all fields from the database.
-- The download should initiate within 5 seconds.
-- If there is an error, an appropriate message must be displayed.
+- The system must support search by NSN and common name.
+- Search results should be displayed within 3 seconds for typical queries.
+- If no products match the search criteria, an appropriate message should be displayed.
 
-Story Points: 3 (Simple complexity)
+Story Points: 3 (Low to moderate complexity)
 
 **Impact Analysis**:
 
 Backend Implications:
 
-- Implement an API endpoint in Node.js (Express) to generate CSV files from database entries.
-- Ensure efficient data retrieval and CSV generation logic.
+- Create API endpoint for searching products.
+- Implement search logic using Sequelize to query PostgreSQL.
 
 Frontend Implications:
 
-- Create a download button in the UI.
-- Implement feedback for download initiation and errors.
+- Implement search bar UI component.
+- Display search results and handle no-match scenarios.
 
 **Development Subtasks**:
 
-- Frontend: Build the download button component.
-- Backend: Create Express API to handle CSV generation.
+- Frontend: Build search bar and results display components.
+- Backend: Create API endpoint for product search.
+- Backend: Implement search functionality.
+
+**Testing Subtasks**:
+
+- Test search with valid NSN.
+- Test search with valid common name.
+- Test search with no matching results.
+- Test performance for large datasets.
+
+---
+
+### **Title: Edit Product Details**
+
+User Role: As a Catalog Manager, I want to edit product details so that I can update the catalog with accurate information.
+
+Functional Description:
+
+The system should allow users to edit product details from the catalog. The backend should update the PostgreSQL database with the new information, and the UI should reflect the changes in real-time.
+
+**GIVEN-WHEN-THEN Scenario**:
+
+GIVEN I am viewing a product's details
+
+WHEN I edit the product information and click "Save"
+
+THEN the system should update the product details in the database and display a confirmation message
+
+**Acceptance Criteria**:
+
+- Users must be able to edit fields like common name, description, price, UI, and AAC.
+- Changes should be saved to the database with a confirmation message displayed.
+- Data validation should be performed to ensure data integrity.
+
+Story Points: 3 (Low to moderate complexity)
+
+**Impact Analysis**:
+
+Backend Implications:
+
+- Create API endpoint for updating product details.
+- Implement update logic using Sequelize to modify PostgreSQL records.
+
+Frontend Implications:
+
+- Implement product details form and handle state changes.
+- Display confirmation message upon successful update.
+
+**Development Subtasks**:
+
+- Frontend: Build product details form UI.
+- Frontend: Handle form submission and state management.
+- Backend: Create API endpoint for product updates.
+- Backend: Implement update logic.
+
+**Testing Subtasks**:
+
+- Test editing of each product field.
+- Test saving updates to the database.
+- Test data validation and error handling.
+- Test UI updates and confirmation messages.
+
+---
+
+### **Title: Download Catalog as CSV**
+
+User Role: As a Catalog Manager, I want to download the catalog as a CSV file so that I can share it or use it offline.
+
+Functional Description:
+
+The system should allow users to download the entire product catalog as a CSV file. The backend should generate the CSV format from the PostgreSQL database, and the UI should prompt the user to download the file.
+
+**GIVEN-WHEN-THEN Scenario**:
+
+GIVEN I am on the catalog management page
+
+WHEN I click "Download CSV"
+
+THEN the system should generate and prompt me to download the catalog in CSV format
+
+**Acceptance Criteria**:
+
+- The CSV file must contain all product data from the catalog.
+- The download should start within 5 seconds of the request.
+- The file must be in a standard CSV format.
+
+Story Points: 2 (Low complexity)
+
+**Impact Analysis**:
+
+Backend Implications:
+
+- Create API endpoint to generate CSV file.
+- Implement logic to retrieve data from PostgreSQL and format as CSV.
+
+Frontend Implications:
+
+- Implement download button UI component.
+- Handle file download initiation.
+
+**Development Subtasks**:
+
+- Frontend: Build download button component.
+- Backend: Create API endpoint for CSV generation.
 - Backend: Implement data retrieval and CSV formatting logic.
 
 **Testing Subtasks**:
 
-- Test CSV download with full catalog data.
-- Test CSV format and data integrity.
-- Test download initiation time.
-- Test error handling during CSV generation or download.
-
-These user stories are scoped to the MVP plan, ensuring the core functionalities are developed according to CMMI Level 5 standards, focusing on process improvement and quality management.
+- Test CSV file generation.
+- Test download initiation and file integrity.
+- Test performance and timing for large datasets.
