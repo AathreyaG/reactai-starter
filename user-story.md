@@ -1,4 +1,4 @@
-### **Title: Upload CSV File**
+### **Title: Upload CSV File**###
 
 User Role: As a Catalog Manager, I want to upload a CSV file so that I can populate the catalog database efficiently.
 
@@ -9,7 +9,8 @@ The system should allow users to upload a CSV file containing catalog data. The 
 **GIVEN-WHEN-THEN Scenario**:
 
 GIVEN I am on the file upload page
-WHEN I select a valid CSV file and click "Upload"
+
+WHEN I select a valid CSV file and click "Upload"  
 THEN the system should process the file, validate its format, and store the data in the database
 
 **Acceptance Criteria**:
@@ -57,154 +58,112 @@ Frontend Implications:
 
 ---
 
-### **Title: Search Catalog**
+### **Title: Search and Edit Catalog Entries**###
 
-User Role: As a Catalog Manager, I want to search the catalog by NSN or common name to quickly find specific products.
+User Role: As a Catalog Manager, I want to search and edit catalog entries so that I can update product information efficiently.
 
 Functional Description:
 
-The system should provide search functionality to allow users to find catalog items based on NSN or common name, enabling efficient management and updates of product information.
+The system should allow users to search catalog entries using filters and edit selected entries. This enhances data accuracy and facilitates easy updates.
 
 **GIVEN-WHEN-THEN Scenario**:
 
 GIVEN I am on the catalog search page
-WHEN I enter an NSN or common name in the search bar
-THEN the system should display matching catalog items
+
+WHEN I enter search criteria and submit the search  
+THEN the system should display a list of matching entries
+
+WHEN I select an entry and edit its details  
+THEN the system should update the entry in the database
 
 **Acceptance Criteria**:
 
-- The search should return results within 2 seconds.
-- The search must be case-insensitive.
-- If no matches are found, display a "No results found" message.
-- Logs must be stored in AWS CloudWatch for debugging.
+- The search functionality must support filters like NSN, common name, and description.
+- Edits should be reflected in the database immediately.
+- User feedback (success/failure messages) must be provided for edits.
+- Changes must be logged for audit purposes.
 
-Story Points: 3 (Simple complexity)
+Story Points: 8 (Higher complexity)
 
 **Impact Analysis**:
 
 Backend Implications:
 
-- Implement a search API endpoint in Node.js.
-- Optimize database queries for quick search results.
+- Create API endpoints for search and update operations.
+- Implement search filters using Sequelize.
+- Ensure data consistency and integrity during edits.
+- Log changes to AWS CloudWatch for auditing.
 
 Frontend Implications:
 
-- Create a search bar component in React.
-- Display search results in a paginated list.
-- Show a loading indicator while searching.
+- Implement a search form with filter options using React.
+- Display search results in a table with pagination.
+- Implement an edit form with validation for entry updates.
 
 **Development Subtasks**:
 
-- Frontend: Build the search bar component.
-- Frontend: Implement paginated results display.
-- Backend: Create search API endpoint.
-- Backend: Optimize database queries.
+- Frontend: Build the search form and results table.
+- Frontend: Build the edit form with validation.
+- Backend: Create API endpoints for search and update.
+- Backend: Implement logging for changes.
 
 **Testing Subtasks**:
 
-- Test search functionality with valid NSN and common names.
-- Test search with no matching results.
-- Test performance for large datasets.
-- Conduct security tests (SQL injection protection).
+- Test search with various filters.
+- Test editing entries with valid/invalid data.
+- Test response time and data consistency.
+- Perform security testing on search and edit operations.
 
 ---
 
-### **Title: Edit Product Details**
+### **Title: Download Catalog Data**###
 
-User Role: As a Catalog Manager, I want to edit product details so that I can keep the catalog information accurate and up-to-date.
+User Role: As a Catalog Manager, I want to download catalog data so that I can analyze or archive it offline.
 
 Functional Description:
 
-The system should allow users to view and edit details of individual products, ensuring the catalog is accurate and reflects current information.
+The system should allow users to download the entire catalog or filtered entries in CSV format. This facilitates offline analysis and record keeping.
 
 **GIVEN-WHEN-THEN Scenario**:
 
-GIVEN I am on a product's detail page
-WHEN I edit the product information and click "Save"
-THEN the system should update the product details in the database
+GIVEN I am on the catalog page
+
+WHEN I click the "Download" button  
+THEN the system should generate a CSV file of the catalog data for download
 
 **Acceptance Criteria**:
 
-- The system must save changes within 2 seconds.
-- Provide confirmation upon successful update.
-- If the update fails, display an error message.
-- Logs must be stored in AWS CloudWatch for debugging.
+- The download feature must support exporting all data or filtered data.
+- The CSV file should be well-formatted and include all relevant fields.
+- User feedback must be provided upon download initiation and completion.
+- Download logs must be stored in AWS CloudWatch.
 
-Story Points: 5 (Moderate complexity)
+Story Points: 3 (Low complexity)
 
 **Impact Analysis**:
 
 Backend Implications:
 
-- Implement an API endpoint for updating product details.
-- Ensure data validation and integrity checks.
+- Create an API endpoint to generate CSV files from database entries.
+- Implement filtering logic for partial downloads.
+- Log download requests and results.
 
 Frontend Implications:
 
-- Create a product detail view with editable fields.
-- Implement save functionality and feedback messages.
+- Implement a download button linked to the endpoint.
+- Provide download status feedback to the user.
 
 **Development Subtasks**:
 
-- Frontend: Build the product detail view.
-- Frontend: Implement edit and save functionality.
-- Backend: Create update API endpoint.
-- Backend: Implement data validation logic.
+- Frontend: Implement the download button and feedback.
+- Backend: Create the API endpoint for CSV generation.
+- Backend: Implement filtering logic.
 
 **Testing Subtasks**:
 
-- Test editing and saving product details.
-- Test validation for invalid data entries.
-- Test performance for high-frequency updates.
-- Conduct security tests (data validation, input sanitization).
+- Test full and partial downloads.
+- Verify CSV format and content.
+- Test download initiation and completion feedback.
+- Perform security testing on download operations.
 
----
-
-### **Title: Download Catalog**
-
-User Role: As a Catalog Manager, I want to download the catalog as a CSV file so that I can analyze and share the information easily.
-
-Functional Description:
-
-The system should allow users to download the entire catalog as a CSV file, facilitating easy data analysis and sharing with stakeholders.
-
-**GIVEN-WHEN-THEN Scenario**:
-
-GIVEN I am on the catalog management page
-WHEN I click the "Download" button
-THEN the system should generate and download the catalog as a CSV file
-
-**Acceptance Criteria**:
-
-- The download should start within 3 seconds.
-- The CSV file must contain all catalog entries.
-- If the download fails, display an error message.
-- Logs must be stored in AWS CloudWatch for debugging.
-
-Story Points: 3 (Simple complexity)
-
-**Impact Analysis**:
-
-Backend Implications:
-
-- Implement an API endpoint for CSV generation.
-- Ensure efficient data retrieval and file generation.
-
-Frontend Implications:
-
-- Create a download button on the catalog management page.
-- Provide feedback on download initiation and completion.
-
-**Development Subtasks**:
-
-- Frontend: Implement the download button.
-- Frontend: Handle user feedback for downloads.
-- Backend: Create CSV generation API endpoint.
-- Backend: Optimize data retrieval for large datasets.
-
-**Testing Subtasks**:
-
-- Test successful CSV downloads.
-- Test performance for large catalogs.
-- Test error handling for download failures.
-- Conduct security tests (authorization, data exposure).
+These user stories are aligned with the MVP plan, focusing on core functionalities of upload, search, edit, and download for the GSA Supply Catalog Management Platform.
