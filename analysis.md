@@ -1,70 +1,72 @@
-### Detailed Explanation of the Problem
+### Problem Statement Analysis
 
-- **Objective**: Develop an application for the GSA Acquisition Workforce (AWF) to manage the Global Supply catalog, enabling upload, curation, and publication on platforms like FedMall or GSA Advantage.
-- **Functionality**:
-  - **Upload**: Users should be able to upload CSV files containing product data.
-  - **Curation**: Users can search and edit product catalogs.
-  - **Publication**: Users can download or publish the catalog to GSA marketplaces.
-- **Data**: The catalog consists of items identified by National Stock Numbers (NSNs) and includes details like representative office, common name, description, price, unit of issue (UI), and acquisition advice code (AAC).
-- **Sample Data**: Provided in CSV format with fields such as NSN, rep_office, common_name, description, price, UI, and AAC.
+- **Objective**: Develop an application for the GSA Acquisition Workforce that allows seamless upload, curation, and publication of the Global Supply catalog on platforms like FedMall or GSA Advantage.
+  
+- **Key Features**:
+  - **CSV Upload**: Users should be able to upload CSV files through a web interface. The files can vary in size.
+  - **Catalog Management**: Users should be able to search and edit product catalogs.
+  - **Download and Publish**: Users should be able to download the catalog or publish it to GSA marketplaces.
+  
+- **Data Structure**: 
+  - The CSV file contains fields such as NSN, rep_office, common_name, Description, Price, UI, and AAC.
+  
+- **User Interaction**:
+  - Web-based interface for uploading, searching, editing, downloading, and publishing catalogs.
 
-### Analysis of the Problem Statement
-
-- **Breadth**:
-  - The application should support file uploads of varying sizes.
-  - It should provide a user-friendly interface for searching and editing catalog entries.
-  - The application should facilitate the publication of the catalog to external platforms.
-
-- **Depth**:
-  - **CSV Parsing**: The application must correctly parse CSV files to extract and store product data.
-  - **Data Management**: Efficient storage and retrieval of catalog data for search and edit operations.
-  - **Integration**: Ability to publish the catalog to external platforms like FedMall or GSA Advantage.
+- **Tech Stack**:
+  - Frontend: React, USWDS components
+  - Backend: Node.js, Restful APIs, Sequelize, Postgres
+  - Platform: AWS
 
 ### Assumptions
 
-- The CSV files are well-formed and follow a consistent schema.
+- The CSV format is consistent and validated before upload.
 - Users have the necessary permissions to upload, edit, and publish catalogs.
-- The application will initially focus on basic CRUD operations for the catalog.
-- The publication process involves generating a downloadable file or API call to external platforms.
+- The application will initially support only English language.
+- The application will be hosted on AWS, leveraging its services for deployment and scalability.
 
 ### Areas of Uncertainty or Ambiguity
 
-- Specific requirements for the publication process to external platforms.
-- Handling of large CSV files and potential performance implications.
-- User authentication and authorization details.
-- Error handling and validation for CSV uploads.
+- **CSV File Size**: The maximum file size that can be uploaded is not specified.
+- **User Authentication**: The problem statement does not specify how user authentication and authorization will be handled.
+- **Publishing Process**: The exact process and requirements for publishing to GSA marketplaces are not detailed.
+- **Search and Edit Functionality**: The depth and complexity of search and edit features are not specified.
 
-### MVP Plan
+### MVP Plan (5-6 hours of development time)
 
-#### Core Features for MVP
+1. **CSV Upload Feature**:
+   - Implement a basic web interface using React for CSV file upload.
+   - Backend API using Node.js to handle file uploads and store data in Postgres.
 
-1. **CSV Upload**:
-   - Implement a simple web interface for uploading CSV files.
-   - Parse and store CSV data in a Postgres database using Sequelize.
+2. **Catalog Search**:
+   - Implement a simple search feature on the frontend to query the catalog.
+   - Backend API to support search queries.
 
-2. **Basic Search and Edit**:
-   - Implement a search functionality to find products by NSN or common name.
-   - Allow users to edit product details and save changes to the database.
+3. **Basic Catalog Display**:
+   - Display uploaded catalog data in a tabular format using React.
 
-3. **Download Catalog**:
-   - Provide an option to download the entire catalog as a CSV file.
+4. **Download Feature**:
+   - Implement a feature to download the catalog as a CSV file.
 
-#### Stretch Goal
+5. **Deployment**:
+   - Deploy the application on AWS with basic configurations.
 
-- **Publication to External Platforms**:
-  - Implement a basic API integration or file export functionality to publish the catalog to FedMall or GSA Advantage.
+### Stretch Goal
+
+- **Edit Functionality**: Allow users to edit catalog entries directly in the web interface.
+- **Publish Functionality**: Implement a basic mechanism to simulate publishing to GSA marketplaces.
 
 ### Deliverables
 
-- Web interface for CSV file upload.
-- Backend service to parse and store CSV data.
-- Search and edit functionality for the product catalog.
-- Option to download the catalog as a CSV file.
-- Documentation for setup and usage instructions.
+- Basic web interface for CSV upload and catalog display.
+- Backend APIs for handling file uploads, search, and download.
+- Simple search functionality for catalog data.
+- Deployment of the application on AWS.
+- Documentation of the application setup and usage.
 
 ### Questions for Improving the MVP
 
-1. What are the specific requirements for the publication process to external platforms?
-2. Are there any specific performance considerations for handling large CSV files?
-3. What level of user authentication and authorization is required?
-4. What error handling and validation should be implemented for CSV uploads?
+1. What are the specific requirements for publishing to GSA marketplaces?
+2. Is there a preferred authentication method for user access control?
+3. Are there any specific performance requirements for handling large CSV files?
+4. Should the application support multiple languages or just English initially?
