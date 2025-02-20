@@ -1,4 +1,5 @@
-```plantuml
+Based on the provided requirements and context, let's design the technical architecture for the web application using a structured, comprehensive approach that aligns with best practices and leverages AWS infrastructure for scalability and reliability.
+
 @startuml
 !includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 
@@ -33,7 +34,7 @@ System_Boundary(GSA_Boundary, "GSA Global Supply Catalog Platform") {
     Rel(ciCdPipeline, appServer, "Deploys updates to")
 
     note right of webApp
-    Utilizes Metrostar Comet components for a consistent and accessible UI design
+    Utilizes USWDS components for a consistent and accessible UI design
     end note
 
     note bottom of ciCdPipeline
@@ -42,45 +43,45 @@ System_Boundary(GSA_Boundary, "GSA Global Supply Catalog Platform") {
 }
 
 @enduml
-```
 
-### Explanation
+### Detailed Explanation
 
 **1. Frontend Architecture (React + TypeScript):**
 
 - **Component Structure**:
-  - **Header**: Manages navigation across different sections like CSV upload and catalog management using React Router.
-  - **CSVUploader**: Utilizes `react-dropzone` for file uploads and directly uploads files to Amazon S3. A Lambda function then processes the file and inserts data into the PostgreSQL database.
-  - **CatalogViewer**: Displays catalog data with search, pagination, and sorting features. It uses the backend `/catalog` endpoint for data fetching and React's Context API for state management.
-  - **ProductEditor**: Allows editing of catalog entries and updates through `/catalog/:id` endpoint.
-  - **Footer**: Provides static information such as application version and contact details.
+  - **Header**: Manages navigation across sections like CSV upload, catalog management, and export using `React Router`.
+  - **CSVUploader**: Utilizes `react-dropzone` for file uploads. Communicates with `/uploadCSV` endpoint. Implements client-side validation with USWDS components for accessibility.
+  - **CatalogViewer**: Provides search, pagination, and sorting features. Interacts with `/catalog` endpoint for data retrieval. Uses React's Context API for state management.
+  - **ProductEditor**: Allows modifications of catalog entries through interaction with `/catalog/:id` endpoint.
+  - **Footer**: Displays application version and contact details.
 
 - **UI Frameworks/Component Libraries**:
-  - **Metrostar Comet**: Ensures accessibility and a consistent UI design across all user interfaces, enhancing interactive components for improved user experience.
+  - **USWDS**: Ensures accessibility and consistent UI design.
+  - **Metrostar Comet**: Enhances interactivity for better user experience.
 
 **2. Backend Architecture (Node.js + Express + PostgreSQL):**
 
 - **RESTful API Endpoints**:
-  - **`POST /uploadCSV`**: Accepts CSV uploads, processes files, and returns a JSON response indicating success or failure.
-  - **`GET /catalog`**: Retrieves catalog data in a paginated format with support for query parameter-based filtering and sorting.
-  - **`PUT /catalog/:id`**: Updates catalog entries with a JSON payload.
-  - **`GET /catalog/download`**: Generates and serves a downloadable CSV file of the catalog.
+  - **`POST /uploadCSV`**: Accepts and processes CSV uploads. Returns JSON response indicating success or failure.
+  - **`GET /catalog`**: Retrieves catalog data in paginated format, incorporating query-based filtering and sorting.
+  - **`PUT /catalog/:id`**: Updates catalog entries using JSON payload.
+  - **`GET /catalog/download`**: Serves a downloadable CSV version of the catalog.
 
 - **Data Processing Workflows**:
   - **File Handling**: Managed by `Multer` middleware for uploads and `csv-parser` for CSV processing.
-  - **Validations**: Enforced using `Joi` to ensure data integrity.
-  - **Background Processing**: Handled by `Bull` for asynchronous tasks such as processing large CSV datasets.
+  - **Validations**: Implemented using `Joi` for data integrity enforcement.
+  - **Background Processing**: Managed by `Bull` for asynchronous tasks like processing large CSV datasets.
 
 **3. AWS Infrastructure & Deployment:**
 
 - **AWS Services**:
-  - **Hosting**: Managed by AWS Elastic Beanstalk for application scaling and deployment.
+  - **Hosting**: AWS Elastic Beanstalk for application scaling and deployment.
   - **File Storage**: Amazon S3 for storing CSVs and static files.
-  - **Database**: Amazon RDS with PostgreSQL for persistent catalog data management.
-  - **API Management**: Amazon API Gateway for routing and managing API requests.
+  - **Database**: Amazon RDS with PostgreSQL for stable data management.
+  - **API Management**: Amazon API Gateway for request routing and management.
   - **Security**: Amazon Cognito for user authentication and authorization management.
 
 - **CI/CD Pipeline**:
-  - **AWS CodePipeline and CodeBuild**: Automated build, test, and deployment processes ensure continuous integration and delivery with code change triggers.
+  - **AWS CodePipeline and CodeBuild**: Automates build, test, and deployment, ensuring continuous integration and delivery based on code changes.
 
-This architecture leverages AWS for scalable and secure deployment while ensuring maintainability and alignment with the GSA's business goals for the catalog platform.
+This architecture is designed for scalability, maintainability, and seamless integration with AWS services to meet the project's objectives.
