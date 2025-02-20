@@ -1,7 +1,7 @@
 ### Problem Analysis
 
 - **Objective**: Develop an application for the GSA Acquisition Workforce to manage the Global Supply catalog, enabling upload, curation, and publication of product data on platforms like FedMall or GSA Advantage.
-  
+
 - **Core Features**:
   - **CSV Upload**: Users should be able to upload CSV files containing product data.
   - **Data Management**: Users can search, edit, and manage product catalogs.
@@ -27,11 +27,11 @@
 - Users have permissions to upload, edit, and publish catalogs.
 - The application will initially support only English language and US currency.
 - The MVP does not need to handle concurrent uploads or edits.
+- No user authentication is required.
+- File size limit for CSV uploads is 100MB.
 
 ### Areas of Uncertainty
 
-- **File Size Limits**: The problem statement mentions varying file sizes but does not specify limits.
-- **User Authentication**: No details on how users will authenticate or manage permissions.
 - **Publication Process**: The specifics of how the catalog is published to GSA marketplaces are not detailed.
 - **Error Handling**: No information on how errors (e.g., malformed CSVs) should be handled.
 - **Search and Edit Functionality**: The depth of search and edit capabilities is not specified.
@@ -41,6 +41,7 @@
 1. **CSV Upload Functionality**:
    - Implement a frontend component using React and USWDS for CSV file upload.
    - Backend endpoint in Node.js to handle file uploads and store data in Postgres using Sequelize.
+   - Ensure `multer` configuration supports file uploads up to 100MB.
 
 2. **Basic Data Management**:
    - Implement a simple search feature to query products by NSN or common name.
@@ -68,9 +69,13 @@
 - Deployment on AWS.
 - Documentation for setup and usage.
 
+### Security and Performance Considerations
+
+- **Rate Limiting**: Implement rate limiting using middleware like `express-rate-limit` to prevent abuse of the upload endpoint.
+- **Input Validation**: Use libraries like `Joi` to validate CSV content before processing to prevent injection attacks and ensure data integrity.
+- **Logging and Monitoring**: Implement logging (e.g., using `winston`) and monitoring (e.g., AWS CloudWatch) to track application usage and identify potential issues.
+
 ### Questions for Improvement
 
-- What are the specific file size limits for CSV uploads?
-- How should user authentication and permissions be managed?
 - What are the exact requirements for the publication process to GSA marketplaces?
 - Are there any specific error handling or logging requirements?
