@@ -1,72 +1,67 @@
 ### Problem Statement Analysis
 
-- **Objective**: Develop an application for the GSA Acquisition Workforce that allows seamless upload, curation, and publication of the Global Supply catalog on platforms like FedMall or GSA Advantage.
+- **Objective**: Develop an application for the GSA Acquisition Workforce to upload, curate, and publish the Global Supply catalog on platforms like FedMall or GSA Advantage.
   
 - **Key Features**:
-  - **CSV Upload**: Users should be able to upload CSV files through a web interface. The files can vary in size.
-  - **Catalog Management**: Users should be able to search and edit product catalogs.
-  - **Download and Publish**: Users should be able to download the catalog or publish it to GSA marketplaces.
-  
-- **Data Structure**: 
-  - The CSV file contains fields such as NSN, rep_office, common_name, Description, Price, UI, and AAC.
-  
-- **User Interaction**:
-  - Web-based interface for uploading, searching, editing, downloading, and publishing catalogs.
+  - **CSV Upload**: Users should be able to upload CSV files containing product data.
+  - **Search and Edit**: Users should be able to search and edit the product catalog.
+  - **Download and Publish**: Users should be able to download or publish the catalog to GSA marketplaces.
 
-- **Tech Stack**:
-  - Frontend: React, USWDS components
-  - Backend: Node.js, Restful APIs, Sequelize, Postgres
-  - Platform: AWS
+- **Data Structure**:
+  - CSV file with columns: NSN, rep_office, common_name, Description, Price, UI, AAC.
 
-### Assumptions
+- **User Interface**:
+  - Web interface for uploading CSV files.
+  - Interface for searching, editing, and managing product data.
 
-- The CSV format is consistent and validated before upload.
-- Users have the necessary permissions to upload, edit, and publish catalogs.
-- The application will initially support only English language.
-- The application will be hosted on AWS, leveraging its services for deployment and scalability.
+- **Assumptions**:
+  - The CSV files are well-formed and adhere to the specified format.
+  - User authentication and authorization are not part of the MVP.
+  - The application will initially support only English language.
+  - Error handling for CSV upload (e.g., incorrect format) is minimal in MVP.
 
-### Areas of Uncertainty or Ambiguity
+- **Uncertainties/Ambiguities**:
+  - Specifics on how the publication to GSA marketplaces should be handled.
+  - Details on user roles and permissions, if any.
+  - The extent of editing capabilities (e.g., which fields can be edited).
+  - How large file sizes are handled and any performance considerations.
 
-- **CSV File Size**: The maximum file size that can be uploaded is not specified.
-- **User Authentication**: The problem statement does not specify how user authentication and authorization will be handled.
-- **Publishing Process**: The exact process and requirements for publishing to GSA marketplaces are not detailed.
-- **Search and Edit Functionality**: The depth and complexity of search and edit features are not specified.
+### MVP Plan
 
-### MVP Plan (5-6 hours of development time)
+- **Frontend**:
+  - Develop a simple React-based web interface for CSV upload.
+  - Implement a basic search functionality using React components.
+  - Create a simple form for editing product details.
 
-1. **CSV Upload Feature**:
-   - Implement a basic web interface using React for CSV file upload.
-   - Backend API using Node.js to handle file uploads and store data in Postgres.
+- **Backend**:
+  - Set up a Node.js server with Express to handle CSV uploads.
+  - Use Sequelize to interact with a Postgres database to store product data.
+  - Implement RESTful APIs for searching and editing product data.
 
-2. **Catalog Search**:
-   - Implement a simple search feature on the frontend to query the catalog.
-   - Backend API to support search queries.
+- **Platform**:
+  - Deploy the application on AWS using services like EC2 or Lambda.
+  - Ensure basic security measures are in place (e.g., HTTPS).
 
-3. **Basic Catalog Display**:
-   - Display uploaded catalog data in a tabular format using React.
-
-4. **Download Feature**:
-   - Implement a feature to download the catalog as a CSV file.
-
-5. **Deployment**:
-   - Deploy the application on AWS with basic configurations.
-
-### Stretch Goal
-
-- **Edit Functionality**: Allow users to edit catalog entries directly in the web interface.
-- **Publish Functionality**: Implement a basic mechanism to simulate publishing to GSA marketplaces.
+- **Stretch Goal**:
+  - Implement the download functionality for the catalog.
+  - Begin integration with GSA marketplaces for publishing.
 
 ### Deliverables
 
-- Basic web interface for CSV upload and catalog display.
-- Backend APIs for handling file uploads, search, and download.
-- Simple search functionality for catalog data.
-- Deployment of the application on AWS.
-- Documentation of the application setup and usage.
+- **Frontend**:
+  - React components for CSV upload, search, and edit functionality.
+  
+- **Backend**:
+  - Node.js server with RESTful APIs for CSV processing, search, and edit operations.
+  - Postgres database schema for storing product data.
 
-### Questions for Improving the MVP
+- **Platform**:
+  - Deployed application on AWS.
+  - Basic documentation for deployment and usage.
 
-1. What are the specific requirements for publishing to GSA marketplaces?
-2. Is there a preferred authentication method for user access control?
-3. Are there any specific performance requirements for handling large CSV files?
-4. Should the application support multiple languages or just English initially?
+### Questions for Improving MVP
+
+1. What are the specific requirements for publishing the catalog to GSA marketplaces?
+2. Are there any specific performance requirements or constraints for handling large CSV files?
+3. Should there be any user authentication or authorization features in the MVP?
+4. Is there a need for detailed error handling and validation for CSV uploads in the MVP?
