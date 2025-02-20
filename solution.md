@@ -1,4 +1,3 @@
-```plantuml
 @startuml
 !includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 
@@ -48,7 +47,6 @@ and session management
 end note
 
 @enduml
-```
 
 ### Detailed Explanation of the Proposed Architecture
 
