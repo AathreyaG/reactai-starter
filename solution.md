@@ -1,5 +1,3 @@
-Below is the C4-PlantUML diagram and a detailed explanation of the proposed architecture for the GSA Supply Catalog Management Platform based on the requirements you provided.
-
 ```plantuml
 @startuml
 !includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
@@ -57,56 +55,55 @@ end note
 #### 1. **Frontend Architecture (React + TypeScript)**
 
 - **Component Structure**:
-  - The frontend application is modular, using a component-based architecture to ensure reusability and manageability.
-  - **Components** include:
-    - **Header Component**: Central navigation and user information display.
-    - **CatalogTable Component**: Presents the product catalog with capabilities for pagination, sorting, and filtering.
-    - **ProductDetail Component**: Provides a detailed view for editing product specific information.
-    - **CSVUploader Component**: Provides an interface allowing users to drag-and-drop and upload CSV files seamlessly.
+  - The frontend application adopts a modular, component-based architecture for ease of maintenance and scalability. The main components are:
+    - **Header Component**: Contains the main navigation and displays user information.
+    - **CatalogTable Component**: Used for presenting the product catalog with features like pagination, sorting, and filtering.
+    - **ProductDetail Component**: Provides detailed views for editing specific product details.
+    - **CSVUploader Component**: Provides a user interface for uploading CSV files via drag-and-drop.
     - **ExportComponent**: Allows users to download the catalog data in CSV format.
-  
+
 - **UI Frameworks/Component Libraries**:
-  - **Material-UI (MUI)**: Selected for its extensive component library and ease of integration, ensuring a cohesive user experience.
-  - **USWDS Components**: Ensures adherence to US federal design standards, which prioritize accessibility and usability.
+  - **Material-UI (MUI)**: To leverage its rich set of components and to ensure a cohesive user experience across the application.
+  - **USWDS Components**: Ensures adherence to US federal design standards, prioritizing accessibility and usability.
 
 #### 2. **Backend Architecture (Node.js + Express + PostgreSQL)**
 
 - **RESTful API Endpoints**:
   - **/api/upload**:
-    - **POST**: Facilitates CSV file uploads for initial validation before storing on S3.
+    - **POST**: Accepts CSV file uploads for validation before storing in S3.
   - **/api/products**:
-    - **GET**: Offers product listings with optional features for sorting and filtering.
-    - **POST**: Supports adding new entries to the product catalog.
+    - **GET**: Retrieves a list of products, with options for sorting and filtering.
+    - **POST**: Allows addition of new products to the catalog.
   - **/api/products/:id**:
-    - **GET**: Fetches detailed data for a specific product.
-    - **PUT**: Permits updates to existing product details.
-    - **DELETE**: Allows for the removal of a product.
+    - **GET**: Fetches detailed information for a specific product.
+    - **PUT**: Updates details of an existing product.
+    - **DELETE**: Removes a product from the catalog.
   - **/api/export**:
-    - **GET**: Initiates a CSV export of the current product data, then stores the files in S3 for retrieval.
+    - **GET**: Initiates an export of the product data to CSV and stores the file on S3.
 
 - **Data Processing Workflows**:
-  - **File Handling**: Managed using **Multer**, facilitating smooth file uploads and CSV handling.
-  - **Validations**: Ensures data integrity using the **Joi** library for structured validation.
-  - **Background Processing**: Utilizes **AWS Lambda** to handle resource-intensive tasks like file validations asynchronously to optimize response times.
+  - **File Handling**: Managed using the **Multer** library for upload handling.
+  - **Validations**: Use the **Joi** library to ensure data integrity and structure.
+  - **Background Processing**: **AWS Lambda** handles resource-intensive processes like CSV file validation asynchronously to maintain optimal performance.
 
 #### 3. **AWS Infrastructure & Deployment**
 
 - **Hosting**:
-  - **AWS Elastic Beanstalk**: Manages deployment, scaling, and health monitoring of the Node.js applications automatically.
+  - **AWS Elastic Beanstalk**: Provides a platform for deploying and managing Node.js applications with automatic scaling and monitoring.
 
 - **File Storage**:
-  - **Amazon S3**: Provides highly durable storage solutions for managing uploaded CSV files and exporting operations.
+  - **Amazon S3**: Used for storing uploaded CSV files and exported data.
 
 - **Database**:
-  - **Amazon RDS with PostgreSQL**: Ensures secure, scalable, and reliable database management using a managed service.
+  - **Amazon RDS with PostgreSQL**: A managed relational database service offering scalability and security.
 
 - **API Management**:
-  - **Amazon API Gateway**: Centralizes API request handling, with built-in security and validation features.
+  - **Amazon API Gateway**: Handles all API requests, providing routing, authorization, and request validation.
 
 - **Security**:
-  - **Amazon Cognito**: Provides a robust platform for managing user identities, authentication, and authorization.
+  - **Amazon Cognito**: Manages user identity, authentication, and authorization securely.
 
 - **CI/CD Pipeline**:
-  - **AWS CodePipeline**: Facilitates a complete CI/CD solution, incorporating CodeBuild and CodeDeploy to streamline deployment workflows.
+  - **AWS CodePipeline**: Integrated with CodeBuild and CodeDeploy to support continuous integration and deployment, ensuring automated and reliable application updates.
 
-This architecture is designed to ensure that the GSA Supply Catalog Management Platform achieves scalability, efficiency, and ease of maintenance, aligned with standard industry practices and compliance requirements.
+This architecture is crafted to provide a robust, scalable, and maintainable platform for managing the GSA Supply Catalog, leveraging AWS services for efficient processing, storage, and security.
