@@ -1,44 +1,92 @@
-Based on the context provided and the requirements for the GSA Global Supply catalog web application, here is a detailed technical architecture plan using React with TypeScript for the frontend and Node.js with Express and PostgreSQL for the backend, all deployed on AWS infrastructure.
+To create a detailed, unambiguous, and structured technical architecture for the web application based on the given requirements and context, we will use the following structure:
 
 ### 1. Frontend Architecture (React + TypeScript)
 
 #### Component Structure:
-- **Header**: Manages navigation using React Router for seamless user transitions between CSV uploads, catalog management, and exports.
-- **CSVUploader**: Leverages `react-dropzone` for drag-and-drop file uploads. Communicates with the `/uploadCSV` backend endpoint for file submissions. Performs client-side validation using USWDS for consistent UI components.
-- **CatalogViewer**: Displays the catalog data with features like search, pagination, and sorting. Interacts with the backend via the `/catalog` endpoint. Utilizes React Context API for state management.
-- **ProductEditor**: Provides an interface for editing catalog entries, with changes sent to the backend through `/catalog/:id`.
-- **Footer**: Shows static information like application version and contact details.
+
+- **Header**: 
+  - This component will handle the navigation and it will use React Router for transitions between different sections such as CSV uploads, catalog management, and export functionalities.
+  - The header ensures consistent user experience across the application.
+
+- **CSVUploader**:
+  - Uses `react-dropzone` for drag-and-drop file uploads.
+  - Directly communicates with the backend through the `/uploadCSV` endpoint.
+  - Performs client-side validation using USWDS components to ensure consistent and accessible UI.
+
+- **CatalogViewer**:
+  - Displays catalog data with functionalities like search, pagination, and sorting.
+  - Communicates with the backend via the `/catalog` endpoint.
+  - Uses Context API for state management to handle the global state conveniently.
+
+- **ProductEditor**:
+  - Provides a detailed interface for editing catalog entries.
+  - Sends updates to the backend through `/catalog/:id` endpoint.
+
+- **Footer**:
+  - Displays static information such as application version and contact details.
 
 #### UI Frameworks/Component Libraries:
-- **USWDS (United States Web Design System)**: Ensures accessibility and design uniformity.
-- **Metrostar Comet**: Provides enhanced interactive UI components for a richer user experience.
+- **USWDS**: Ensures accessibility, consistency, and government-standard UI.
+- **Metrostar Comet**: Enhances interactive components for a better user experience.
 
 ### 2. Backend Architecture (Node.js + Express + PostgreSQL)
 
 #### RESTful API Endpoints:
-- **POST /uploadCSV**: Accepts file uploads, processes CSV files, and returns a JSON response indicating success or failure.
-- **GET /catalog**: Returns catalog data in a paginated format. Supports query parameters for filtering and sorting.
-- **PUT /catalog/:id**: Updates entries in the catalog database, expecting a JSON request body containing updated data.
-- **GET /catalog/download**: Generates and returns the entire catalog as a downloadable CSV file.
+- **`POST /uploadCSV`**: 
+  - Accepts CSV file uploads.
+  - Processes files and returns JSON response indicating success or failure.
+  
+- **`GET /catalog`**: 
+  - Fetches catalog data in a paginated format.
+  - Supports filtering and sorting through query parameters.
+  
+- **`PUT /catalog/:id`**: 
+  - Updates catalog entries.
+  - Expects a JSON body with the updated data.
+  
+- **`GET /catalog/download`**: 
+  - Generates a downloadable CSV file of the entire catalog.
 
 #### Data Processing Workflows:
-- **File Handling**: Uses `Multer` middleware for handling multipart form data and `csv-parser` for CSV file processing.
-- **Validations**: Employs `Joi` to ensure data integrity before processing or storing.
-- **Background Processing**: Utilizes `Bull` to manage asynchronous tasks, such as processing large CSV files in the background without blocking the main execution thread.
+- **File Handling**: 
+  - Uses `Multer` middleware for file uploads.
+  - Employs `csv-parser` for processing CSV files.
+  
+- **Validations**: 
+  - Ensures data integrity with `Joi`.
+  
+- **Background Processing**: 
+  - Uses `Bull` for asynchronous tasks, such as processing large CSV data batches.
 
 ### 3. AWS Infrastructure & Deployment
 
 #### AWS Services:
-- **Hosting**: The application is hosted via AWS Elastic Beanstalk, which manages server scaling and load balancing.
-- **File Storage**: Amazon S3 is used for storing uploaded CSV files and other static assets.
-- **Database**: Amazon RDS with PostgreSQL provides managed, scalable, and reliable database services.
-- **API Management**: API Gateway is used for routing and managing API requests, enhancing security and scalability.
-- **Security**: Amazon Cognito handles user authentication and authorization with support for multi-factor authentication (MFA).
+- **Hosting**: 
+  - AWS Elastic Beanstalk for running the application.
+  
+- **File Storage**: 
+  - Amazon S3 for storing uploaded CSVs and static assets.
+  
+- **Database**: 
+  - Amazon RDS with PostgreSQL for reliable database management.
+  
+- **API Management**: 
+  - Amazon API Gateway for managing API requests.
+  
+- **Security**: 
+  - Amazon Cognito for handling user authentication and authorization.
 
-#### CI/CD Pipeline Recommendations:
-- **AWS CodePipeline and CodeBuild**: Automates the build, test, and deployment processes. Changes in the codebase trigger the pipeline to ensure continuous integration and continuous delivery.
+#### Deployment Details:
+- **AWS Elastic Beanstalk**: 
+  - Simplifies the deployment and scalability of the application.
+  
+- **CI/CD Pipeline**:
+  - **AWS CodePipeline and CodeBuild**: 
+    - Automates build, test, and deployment processes.
+    - Ensures continuous integration and delivery with triggers on code changes.
 
 ### Proposed Architecture Diagram:
+
 ```plantuml
 @startuml
 !includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
@@ -85,4 +133,4 @@ System_Boundary(GSA_Boundary, "GSA Global Supply Catalog Platform") {
 @enduml
 ```
 
-This comprehensive architecture is designed to ensure scalability, maintainability, and alignment with business goals for the GSA Global Supply catalog application.
+This comprehensive architecture ensures the application is scalable, maintainable, and aligned with business goals for the GSA Global Supply catalog application.
