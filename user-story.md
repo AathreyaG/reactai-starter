@@ -1,4 +1,4 @@
-### **Title: Upload CSV File** 
+### **Title: Upload CSV File**
 
 User Role: As a Catalog Manager, I want to upload a CSV file so that I can populate the catalog database efficiently.
 
@@ -8,9 +8,9 @@ The system should allow users to upload a CSV file containing catalog data. The 
 
 **GIVEN-WHEN-THEN Scenario**:
 
-GIVEN I am on the file upload page  
-WHEN I select a valid CSV file and click "Upload"  
-THEN the system should process the file, validate its format, and store the data in the database  
+- **GIVEN** I am on the file upload page  
+- **WHEN** I select a valid CSV file and click "Upload"  
+- **THEN** the system should process the file, validate its format, and store the data in the database  
 
 **Acceptance Criteria**:
 
@@ -20,18 +20,18 @@ THEN the system should process the file, validate its format, and store the data
 - The system must provide progress feedback while uploading.
 - Logs must be stored in AWS CloudWatch for debugging.
 
-Story Points: 5 (Moderate complexity)
+**Story Points**: 8 (Increased complexity)
 
 **Impact Analysis**:
 
-Backend Implications:
+**Backend Implications**:
 
 - Create an API endpoint in Node.js (Express) to accept CSV files.
 - Implement file validation & parsing logic.
 - Store processed data in PostgreSQL (via Sequelize ORM).
 - Handle large file processing asynchronously (use AWS Lambda for scalability).
 
-Frontend Implications:
+**Frontend Implications**:
 
 - Implement a drag-and-drop file uploader UI using React.
 - Show progress bar & success/failure messages.
@@ -67,9 +67,9 @@ The system should allow users to search through the product catalog using variou
 
 **GIVEN-WHEN-THEN Scenario**:
 
-GIVEN I am on the catalog search page  
-WHEN I enter search criteria and click "Search"  
-THEN the system should return a list of products matching the criteria  
+- **GIVEN** I am on the catalog search page  
+- **WHEN** I enter search criteria and click "Search"  
+- **THEN** the system should return a list of products matching the criteria  
 
 **Acceptance Criteria**:
 
@@ -77,16 +77,16 @@ THEN the system should return a list of products matching the criteria
 - Search results should be displayed within 2 seconds.
 - If no products match the criteria, a "No results found" message must be displayed.
 
-Story Points: 3 (Simple complexity)
+**Story Points**: 3 (Simple complexity)
 
 **Impact Analysis**:
 
-Backend Implications:
+**Backend Implications**:
 
 - Create an API endpoint for handling search queries.
 - Implement efficient querying using PostgreSQL.
 
-Frontend Implications:
+**Frontend Implications**:
 
 - Develop a search input and results display UI using React.
 - Implement client-side validation for search inputs.
@@ -117,9 +117,9 @@ The system should allow users to edit details of products in the catalog. The ba
 
 **GIVEN-WHEN-THEN Scenario**:
 
-GIVEN I am viewing a product's details  
-WHEN I make changes to the product information and click "Save"  
-THEN the system should update the product details in the database  
+- **GIVEN** I am viewing a product's details  
+- **WHEN** I make changes to the product information and click "Save"  
+- **THEN** the system should update the product details in the database  
 
 **Acceptance Criteria**:
 
@@ -127,16 +127,16 @@ THEN the system should update the product details in the database
 - Changes must be saved to the database within 2 seconds.
 - A confirmation message must be displayed upon successful update.
 
-Story Points: 5 (Moderate complexity)
+**Story Points**: 5 (Moderate complexity)
 
 **Impact Analysis**:
 
-Backend Implications:
+**Backend Implications**:
 
 - Create an API endpoint for updating product details.
 - Implement update logic using Sequelize ORM.
 
-Frontend Implications:
+**Frontend Implications**:
 
 - Develop a form UI for editing product details using React.
 - Implement client-side validation for form inputs.
@@ -167,9 +167,9 @@ The system should allow users to export the product catalog as a CSV file. The b
 
 **GIVEN-WHEN-THEN Scenario**:
 
-GIVEN I am on the catalog management page  
-WHEN I click "Export"  
-THEN the system should generate a CSV file of the current catalog and start a download  
+- **GIVEN** I am on the catalog management page  
+- **WHEN** I click "Export"  
+- **THEN** the system should generate a CSV file of the current catalog and start a download  
 
 **Acceptance Criteria**:
 
@@ -177,16 +177,16 @@ THEN the system should generate a CSV file of the current catalog and start a do
 - The CSV generation process must be completed within 5 seconds.
 - Users must be notified if the export fails.
 
-Story Points: 3 (Simple complexity)
+**Story Points**: 3 (Simple complexity)
 
 **Impact Analysis**:
 
-Backend Implications:
+**Backend Implications**:
 
 - Create an API endpoint for exporting catalog data.
 - Implement CSV generation logic using Node.js.
 
-Frontend Implications:
+**Frontend Implications**:
 
 - Develop an export button UI using React.
 - Implement client-side handling of CSV download.
