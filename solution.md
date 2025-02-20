@@ -1,4 +1,5 @@
-```plantuml
+Here is the proposed technical architecture for the GSA Supply Catalog Management Platform:
+
 @startuml
 !includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 
@@ -12,15 +13,15 @@ System_Boundary(GSA_Boundary, "Supply Catalog Management Platform") {
     Person(user, "GSA Acquisition Workforce", "Interacts with the platform to manage supply catalog")
 
     ' Frontend Application
-    Container(webApp, "Web Application", "React + TypeScript", "Interface for uploading and managing supply catalog data")
+    Container(webApp, "Web Application", "React + TypeScript", "User interface for uploading and managing supply catalog data")
 
     ' API Gateway
     Container(apiGateway, "API Gateway", "Amazon API Gateway", "Handles request routing, validation, and authorization")
 
     ' Core Backend Services
     Container_Boundary(Backend, "Backend Services") {
-        Container(appNode, "Application Server", "Node.js on Elastic Beanstalk", "Processes business logic and data transactions")
-        Container(authService, "Authentication Service", "Amazon Cognito", "Handles user authentication and access management")
+        Container(appNode, "Application Server", "Node.js + Express on Elastic Beanstalk", "Processes business logic and data transactions")
+        Container(authService, "Authentication Service", "Amazon Cognito", "Manages user authentication and authorization")
         Container(database, "Database", "PostgreSQL on RDS", "Stores supply catalog data securely with relational capabilities")
         Container(fileStorage, "File Storage", "Amazon S3", "Stores uploaded CSV files and provides export storage")
         Container(lambda, "Background Processing", "AWS Lambda", "Executes asynchronous tasks like file validation and processing")
@@ -48,57 +49,65 @@ and session management
 end note
 
 @enduml
-```
+
+---
 
 ### Detailed Explanation of the Proposed Architecture
 
 #### 1. **Frontend Architecture (React + TypeScript)**
 
 - **Component Structure**:
-  - The frontend follows a modular approach with React using TypeScript, ensuring type safety and enhancing code maintainability.
-  - The application utilizes a container-presenter pattern:
-    - **Header Component**: Manages application-wide navigation and logo.
-    - **ProductList Component**: Facilitates viewing, filtering, and searching through products with pagination.
-    - **ProductDetails Component**: Allows users to view and modify product details.
-    - **CSVUpload Component**: Enables file uploads with pre-upload client-side validation.
-    - **ExportButton Component**: Provides options to export data in CSV format.
+  - The frontend is built using React with TypeScript, ensuring code maintainability and robustness.
+  - Component Structure:
+    - **Header Component**: Provides navigation and branding.
+    - **ProductList Component**: Displays products with search and pagination features.
+    - **ProductDetails Component**: Allows viewing and editing of detailed product information.
+    - **CSVUpload Component**: Manages the file upload process with client-side validation.
+    - **ExportButton Component**: Facilitates exporting catalog data as a CSV.
 
 - **UI Frameworks/Component Libraries**:
-  - **Material-UI (MUI)**: Provides a comprehensive set of customizable UI components that ensure a consistent and responsive design.
-  - **USWDS Components**: Used to comply with federal standards, ensuring accessibility and usability for federal users.
+  - **Material-UI (MUI)**: Offers a customizable and consistent UI component library.
+  - **USWDS Components**: Ensures compliance with federal standards for accessibility.
 
 #### 2. **Backend Architecture (Node.js + Express + PostgreSQL)**
 
 - **RESTful API Endpoints**:
-  - **/api/upload**: 
-    - **POST** - Accepts CSV files, validates formats, and uploads to S3 before processing.
+  - **/api/upload**:
+    - **POST**: Accepts and processes CSV files, performs validation, and stores them in S3.
   - **/api/products**:
-    - **GET** - Retrieves products with support for filtering and pagination. Returns data in JSON.
-    - **POST** - Adds a new product entry to the database based on the JSON body.
+    - **GET**: Fetches product listings, supports filtering and pagination.
+    - **POST**: Adds new product data to the database from the request payload.
   - **/api/products/:id**:
-    - **GET** - Retrieves detailed information for a specific product by ID.
-    - **PUT** - Updates a product entry, supporting partial updates via JSON.
-    - **DELETE** - Deletes a product by ID.
+    - **GET**: Retrieves specific product data by ID.
+    - **PUT**: Updates product details by ID with partial updates supported.
+    - **DELETE**: Removes a product by ID.
   - **/api/export**:
-    - **GET** - Triggers the export of the product catalog as a CSV file, stored in Amazon S3.
+    - **GET**: Initiates CSV file export of the product catalog to S3.
 
 - **Data Processing Workflows**:
-  - CSV uploads are handled with **Multer** for multipart form-data handling, with server-side validation via libraries like **Joi**.
-  - **AWS Lambda** is used for background processing tasks such as file validations, ensuring they don't block the primary application flow.
+  - **CSV Upload Handling**: Uses **Multer** for file handling and **Joi** for data validation.
+  - **Asynchronous Processing**: **AWS Lambda** processes tasks like CSV validation outside of main application flow.
 
 #### 3. **AWS Infrastructure & Deployment**
 
 - **Hosting**:
-  - **AWS Elastic Beanstalk** is used for deploying the Node.js backend, providing load balancing, scaling, and easy configuration management.
+  - **AWS Elastic Beanstalk**: Deploys the Node.js backend offering scalability and easy management.
+  
 - **File Storage**:
-  - **Amazon S3** acts as a storage solution for CSV files, ensuring durability and accessibility.
+  - **Amazon S3**: Stores CSV files with high durability and global accessibility.
+  
 - **Database**:
-  - **Amazon RDS with PostgreSQL** handles data storage, offering automated backup and failover.
+  - **Amazon RDS with PostgreSQL**: Provides a robust relational database service with automated backups.
+  
 - **API Management**:
-  - **Amazon API Gateway** is employed for managing API lifecycles, applying rate limits, and securing API endpoints.
+  - **Amazon API Gateway**: Secures and manages API endpoints, including request/response handling.
+  
 - **Security**:
-  - **Amazon Cognito** is implemented for managing user identities, supporting secure sign-in and sign-up.
+  - **Amazon Cognito**: Manages user authentication, enabling secure access.
+  
 - **CI/CD Pipeline**:
-  - **AWS CodePipeline** automates the integration and deployment processes.
-  - **AWS CodeBuild** for building and testing the application.
-  - **AWS CodeDeploy** ensures automated code deployment with minimized downtime.
+  - **AWS CodePipeline**: Automates build, test, and deployment stages.
+  - **AWS CodeBuild**: Compiles and tests application components.
+  - **AWS CodeDeploy**: Manages smooth and efficient deployment processes.
+
+This architecture aligns with a modern, scalable web application approach using AWS services to ensure security, reliability, and maintainability, while meeting business goals and operational requirements.
