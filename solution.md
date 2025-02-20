@@ -17,12 +17,11 @@ System_Boundary(GSA_Boundary, "Supply Catalog Management Platform") {
     Container(webApp, "Web Application", "React + TypeScript", "User interface for uploading and managing supply catalog data")
 
     ' API Gateway
-    Container(apiGateway, "API Gateway", "Amazon API Gateway", "Handles request routing, validation, and authorization")
+    Container(apiGateway, "API Gateway", "Amazon API Gateway", "Handles request routing and validation")
 
     ' Core Backend Services
     Container_Boundary(Backend, "Backend Services") {
         Container(appNode, "Application Server", "Node.js + Express on Elastic Beanstalk", "Processes business logic and data transactions")
-        Container(authService, "Authentication Service", "Amazon Cognito", "Manages user authentication and authorization")
         Container(database, "Database", "PostgreSQL on RDS", "Stores supply catalog data securely with relational capabilities")
         Container(fileStorage, "File Storage", "Amazon S3", "Stores uploaded CSV files and provides export storage")
         Container(lambda, "Background Processing", "AWS Lambda", "Executes asynchronous tasks like file validation and processing")
@@ -41,13 +40,6 @@ System_Boundary(GSA_Boundary, "Supply Catalog Management Platform") {
     Rel(appNode, fileStorage, "Stores and retrieves files from", "HTTPS")
     Rel(appNode, lambda, "Triggers for background tasks", "HTTPS")
 }
-
-' Notes
-note right of authService
-Utilizes Amazon Cognito for
-secure user authentication
-and session management
-end note
 
 @enduml
 ```
@@ -103,7 +95,7 @@ end note
   - **Amazon API Gateway**: Manages API endpoints with security and request/response processing.
   
 - **Security**:
-  - **Amazon Cognito**: Manages user authentication ensuring secure access.
+  - **AWS Secrets Manager**: Manages sensitive configurations securely.
   
 - **CI/CD Pipeline**:
   - **AWS CodePipeline**: Automates the build, test, and deployment processes.
