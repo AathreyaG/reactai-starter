@@ -33,7 +33,7 @@ System_Boundary(GSA_Boundary, "GSA Global Supply Catalog Platform") {
     Rel(ciCdPipeline, appServer, "Deploys updates to")
 
     note right of webApp
-    Utilizes USWDS components for a consistent and accessible UI design
+    Utilizes Metrostar Comet components for a consistent and accessible UI design
     end note
 
     note bottom of ciCdPipeline
@@ -50,14 +50,13 @@ System_Boundary(GSA_Boundary, "GSA Global Supply Catalog Platform") {
 
 - **Component Structure**:
   - **Header**: Manages navigation across different sections like CSV upload and catalog management using React Router.
-  - **CSVUploader**: Utilizes `react-dropzone` for file uploads and communicates with the backend through `/uploadCSV` endpoint. It includes client-side validation using USWDS components to ensure accessibility.
+  - **CSVUploader**: Utilizes `react-dropzone` for file uploads and directly uploads files to Amazon S3. A Lambda function then processes the file and inserts data into the PostgreSQL database.
   - **CatalogViewer**: Displays catalog data with search, pagination, and sorting features. It uses the backend `/catalog` endpoint for data fetching and React's Context API for state management.
   - **ProductEditor**: Allows editing of catalog entries and updates through `/catalog/:id` endpoint.
   - **Footer**: Provides static information such as application version and contact details.
 
 - **UI Frameworks/Component Libraries**:
-  - **USWDS**: Ensures accessibility and a consistent UI design across all user interfaces.
-  - **Metrostar Comet**: Enhances interactive components for improved user experience.
+  - **Metrostar Comet**: Ensures accessibility and a consistent UI design across all user interfaces, enhancing interactive components for improved user experience.
 
 **2. Backend Architecture (Node.js + Express + PostgreSQL):**
 
