@@ -1,66 +1,66 @@
-Based on the given requirements and previous context, here's a comprehensive technical architecture plan for the GSA Supply Catalog Management Platform, with a focus on leveraging AWS services and the specified tech stack.
+Based on the provided context and requirements, here is a comprehensive technical architecture for the GSA Supply Catalog Management Platform, focusing on a high-level design for the frontend, backend, and AWS infrastructure.
 
 ### Detailed Explanation of the Proposed Architecture
 
 #### 1. **Frontend Architecture (React + TypeScript)**
 
 - **Component Structure**:
-  - The application follows a modular architecture, using React for building reusable components with TypeScript for type safety.
-  - Key components include:
-    - **Header Component**: Contains navigation links and branding.
-    - **CatalogTable Component**: Displays paginated product listings with filtering options.
-    - **ProductDetail Component**: Provides detailed views for individual product records with edit functionality.
-    - **CSVUploader Component**: Facilitates CSV file uploads with client-side validation using libraries like Formik and Yup.
-    - **ExportComponent**: Triggers the download of catalog data in CSV format.
-
+  - The application uses a modular architecture where React components are built with TypeScript for type safety and structure.
+  - **Components** include:
+    - **Header Component**: Contains navigation and branding, often utilizing context or state management for user session details.
+    - **CatalogTable Component**: Displays a list of products with support for pagination, filtering, and sorting.
+    - **ProductDetail Component**: Shows detailed information for each product, allowing editing and saving changes.
+    - **CSVUploader Component**: Manages the user interface for uploading CSV files, including drag-and-drop file upload support and real-time validation feedback.
+    - **ExportComponent**: Provides functionalities to download catalog data as a CSV file.
+  
 - **UI Frameworks/Component Libraries**:
-  - **Material-UI (MUI)**: Offers a modern, consistent, and responsive design for UI components.
-  - **USWDS Components**: Ensures compliance with US federal accessibility and design standards.
+  - **Material-UI (MUI)**: Provides a customizable and responsive UI component library, ensuring a professional look and feel.
+  - **USWDS Components**: Utilized to maintain compliance with US federal design standards, focusing on accessibility and user experience.
 
 #### 2. **Backend Architecture (Node.js + Express + PostgreSQL)**
 
 - **RESTful API Endpoints**:
   - **/api/upload**:
-    - **POST**: Accepts CSV files, performs server-side validation and uploads them to AWS S3.
+    - **POST**: Accepts CSV files and passes them for server-side validation and subsequent upload to AWS S3.
   - **/api/products**:
-    - **GET**: Retrieves a list of products with support for filtering, sorting, and pagination.
-    - **POST**: Allows for adding new product entries to the catalog.
+    - **GET**: Retrieves the list of products with filtering, sorting, and pagination options.
+    - **POST**: Adds new products to the catalog.
   - **/api/products/:id**:
-    - **GET**: Fetches detailed information for a specific product by ID.
-    - **PUT**: Updates the details of a product identified by ID.
-    - **DELETE**: Removes a specific product from the catalog.
+    - **GET**: Fetches detailed product information by ID.
+    - **PUT**: Updates an existing product's details.
+    - **DELETE**: Removes a product from the database.
   - **/api/export**:
-    - **GET**: Initiates the export process for product data into a CSV file and stores it in S3 for download.
-
+    - **GET**: Initiates the export of product data to a CSV file, stored in S3 for download.
+  
 - **Data Processing Workflows**:
-  - **File Handling**: Utilizes middleware like **Multer** for handling file uploads and **Joi** for JSON validation.
-  - **Background Processing**: Employs **AWS Lambda** to handle asynchronous tasks such as CSV validation and processing without blocking the main application flow.
+  - **File Handling**: Uses middleware like **Multer** for handling multipart/form-data, especially CSV files.
+  - **Validations**: Implements JSON schema validation using libraries like **Joi** to ensure data consistency.
+  - **Background Processing**: Utilizes **AWS Lambda** for resource-intensive tasks such as CSV validation and processing, ensuring the main application remains responsive.
 
 #### 3. **AWS Infrastructure & Deployment**
 
 - **Hosting**:
-  - **AWS Elastic Beanstalk**: Manages the deployment and scaling of the Node.js application, providing ease of use with infrastructure management.
+  - **AWS Elastic Beanstalk**: Simplifies the deployment and scaling of the Node.js application, managing underlying servers and resources.
 
 - **File Storage**:
-  - **Amazon S3**: Offers scalable and secure storage for uploaded CSV files and exported data.
+  - **Amazon S3**: Offers scalable and reliable storage for uploaded CSV files and exported catalog data.
 
 - **Database**:
-  - **Amazon RDS with PostgreSQL**: Provides a managed, durable, and scalable relational database service with high availability and backup options.
+  - **Amazon RDS with PostgreSQL**: Provides a managed relational database service, ensuring data durability and availability.
 
 - **API Management**:
-  - **Amazon API Gateway**: Facilitates secure and scalable exposure of RESTful APIs to the frontend application.
+  - **Amazon API Gateway**: Serves as a front door to the application, handling API routing, request/response transformation, and security.
 
 - **Security**:
-  - **Amazon Cognito**: Manages user identity, authentication, and access control securely.
+  - **Amazon Cognito**: Manages user authentication, providing security tokens and session management.
 
 - **CI/CD Pipeline**:
-  - **AWS CodePipeline**: Automates the build, test, and deployment processes, ensuring continuous integration and delivery.
-  - **AWS CodeBuild**: Handles code build and test tasks.
-  - **AWS CodeDeploy**: Automates the deployment of applications to Elastic Beanstalk, ensuring reliable updates.
+  - **AWS CodePipeline**: Automates the build, test, and deployment phases of the application, ensuring continuous integration and delivery.
+  - **AWS CodeBuild and AWS CodeDeploy**: Integrate with CodePipeline to compile source code, run tests, and perform application deployments.
 
 ### C4-PlantUML Diagram
 
-Here's the C4-PlantUML diagram representing the architecture:
+Below is the C4-PlantUML representation of the architectural design:
 
 ```plantuml
 @startuml
@@ -114,4 +114,4 @@ end note
 @enduml
 ```
 
-This architecture is designed to ensure scalability, robustness, and security, aligning with AWS best practices while meeting the business objectives of the platform.
+This architecture aligns with AWS best practices, ensuring the platform is scalable, secure, and robust to meet the business goals for managing the GSA Supply Catalog effectively.
