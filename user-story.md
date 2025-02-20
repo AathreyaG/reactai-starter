@@ -1,18 +1,16 @@
-### **Title: CSV File Upload Functionality**###
+### **Title: Upload CSV File**###
 
-User Role: As a Catalog Manager, I want to upload a CSV file so that I can efficiently populate and update the catalog database.
+User Role: As a Catalog Manager, I want to upload a CSV file so that I can populate the catalog database efficiently.
 
 Functional Description:
 
-The system should allow users to upload CSV files containing catalog data. The backend will validate, parse, and store the data in a PostgreSQL database. The UI should provide feedback during the upload process and notify users when it is complete.
+The system should allow users to upload a CSV file containing catalog data. The backend should validate, parse, and store this data in PostgreSQL. The UI should provide real-time feedback during upload and notify users upon completion.
 
 **GIVEN-WHEN-THEN Scenario**:
 
-GIVEN I am on the CSV upload page
-
-WHEN I select a valid CSV file and click "Upload"
-
-THEN the system should process the file, validate its format, and store the data in the database
+GIVEN I am on the file upload page  
+WHEN I select a valid CSV file and click "Upload"  
+THEN the system should process the file, validate its format, and store the data in the database  
 
 **Acceptance Criteria**:
 
@@ -59,160 +57,191 @@ Frontend Implications:
 
 ---
 
-### **Title: Search and Edit Catalog Items**###
+### **Title: Display Catalog Data**###
 
-User Role: As a Catalog Manager, I want to search and edit catalog items to keep the catalog data accurate and up-to-date.
+User Role: As a Catalog Manager, I want to view the uploaded catalog data in a table format so that I can easily understand and manage the data.
 
 Functional Description:
 
-The system should allow users to search for catalog items by various attributes and edit existing entries. The edits should be saved to the PostgreSQL database, ensuring data is current and correct.
+The system should display the uploaded catalog data in a tabular format using a React component. The table should support pagination, sorting, and basic filtering of the products.
 
 **GIVEN-WHEN-THEN Scenario**:
 
-GIVEN I am on the catalog management page
-
-WHEN I search for a product and edit its details
-
-THEN the system should update the product information in the database
+GIVEN I have uploaded a CSV file  
+WHEN I navigate to the catalog data page  
+THEN I should see the data displayed in a table with pagination and sorting options  
 
 **Acceptance Criteria**:
 
-- Users must be able to search products by NSN, common name, and other relevant fields.
-- Users must be able to edit product details and save changes.
-- Changes must reflect in the database immediately.
-- Search results should be paginated for better performance.
+- The table should display all relevant columns from the CSV.
+- Sorting should be available for all columns.
+- Pagination should be implemented for large datasets.
+- Basic filtering by NSN or common name should be available.
 
-Story Points: 8 (High complexity)
+Story Points: 3 (Simple complexity)
 
 **Impact Analysis**:
 
 Backend Implications:
 
-- Implement search logic in API to query PostgreSQL.
-- Create CRUD endpoints for updating product details.
-- Ensure data integrity and version control during edits.
+- No additional backend changes are required for displaying data.
 
 Frontend Implications:
 
-- Build a search interface with filters using React.
-- Implement edit functionality with form validation.
-- Display confirmation messages upon successful edits.
+- Implement a CatalogTable component using React.
+- Ensure the table supports sorting and pagination.
+- Add filtering capabilities for specific columns.
 
 **Development Subtasks**:
 
-- Frontend: Build the search interface with filters.
-- Frontend: Implement editing form with validation.
-- Backend: Develop search API querying PostgreSQL.
-- Backend: Create endpoints for updating product data.
+- Frontend: Develop the CatalogTable component.
+- Frontend: Implement sorting and pagination.
+- Frontend: Add basic filtering functionality.
 
 **Testing Subtasks**:
 
-- Test search functionality with different queries.
-- Test editing product details and saving changes.
-- Validate data integrity after edits.
-- Test pagination for large result sets.
-- Perform security tests (unauthorized access, data leaks).
+- Test data display accuracy.
+- Test sorting functionality.
+- Test pagination with varying dataset sizes.
+- Test filtering options.
 
 ---
 
-### **Title: Download Catalog as CSV**###
+### **Title: Search Catalog**###
 
-User Role: As a Catalog Manager, I want to download the catalog as a CSV file for offline use and sharing with stakeholders.
+User Role: As a Catalog Manager, I want to search the catalog data by NSN or common name so that I can quickly find specific products.
 
 Functional Description:
 
-The system should allow users to download the entire catalog or selected items as a CSV file. This feature will facilitate offline access to catalog data and sharing with external parties.
+The system should allow users to search the catalog data by NSN or common name. The search results should be displayed in the same tabular format with pagination and sorting options.
 
 **GIVEN-WHEN-THEN Scenario**:
 
-GIVEN I am on the catalog management page
-
-WHEN I click on the "Download CSV" button
-
-THEN the system should generate and download the CSV file containing the selected catalog data
+GIVEN I am on the catalog data page  
+WHEN I enter a search term in the search bar and press "Enter"  
+THEN I should see the filtered results displayed in the table  
 
 **Acceptance Criteria**:
 
-- Users must be able to download the entire catalog or filtered results.
-- The CSV file should include all relevant fields.
-- Download should be initiated quickly and reliably.
-- Logs of download actions must be stored in AWS CloudWatch.
+- The search should be case-insensitive.
+- Results should update dynamically as the user types.
+- Pagination and sorting should be maintained for search results.
 
-Story Points: 3 (Low complexity)
+Story Points: 3 (Simple complexity)
 
 **Impact Analysis**:
 
 Backend Implications:
 
-- Implement API endpoint to generate CSV files from PostgreSQL data.
-- Ensure efficient data retrieval and CSV generation.
-- Log download activities for auditing.
+- Modify API to support search query parameters.
 
 Frontend Implications:
 
-- Add "Download CSV" button to the UI.
-- Implement client-side logic to handle download requests.
-- Display notifications for download success/failure.
+- Implement search functionality in the CatalogTable component.
+- Ensure UI updates dynamically based on user input.
 
 **Development Subtasks**:
 
-- Frontend: Implement "Download CSV" button.
-- Frontend: Handle download initiation and notifications.
-- Backend: Develop CSV generation logic.
-- Backend: Implement API endpoint for downloading CSV files.
+- Backend: Update API to handle search queries.
+- Frontend: Implement search bar in the CatalogTable component.
+- Frontend: Ensure dynamic updating of results.
 
 **Testing Subtasks**:
 
-- Test CSV download functionality for the entire catalog.
-- Test CSV download for filtered results.
-- Validate CSV file format and content integrity.
-- Perform load tests for large data downloads.
-- Verify logging of download actions.
+- Test search functionality with valid and invalid terms.
+- Test case insensitivity.
+- Test pagination and sorting with search results.
 
 ---
 
-### **Title: Basic UI Design using USWDS Components**###
+### **Title: Edit Catalog Data**###
 
-User Role: As a Catalog Manager, I want a user-friendly interface to interact with the catalog application efficiently.
+User Role: As a Catalog Manager, I want to edit product details directly in the table so that I can update the catalog efficiently.
 
 Functional Description:
 
-The application should feature a minimalistic and functional user interface using USWDS components to ensure compliance with federal design standards and enhance user experience.
+The system should allow users to edit product details directly within the table. Changes should be saved to the database upon confirmation.
 
 **GIVEN-WHEN-THEN Scenario**:
 
-GIVEN I am using the catalog application
-
-WHEN I navigate through different pages
-
-THEN the system should provide a consistent and intuitive user interface
+GIVEN I am viewing the catalog data  
+WHEN I click on a product detail cell and make changes  
+THEN I should be able to save the changes, updating the database  
 
 **Acceptance Criteria**:
 
-- UI must be built using USWDS components.
-- Ensure consistency in design across all pages.
-- UI should be responsive and accessible.
-- Feedback and error messages should be clear and concise.
+- Users should be able to edit all editable fields.
+- Changes must be saved to the database upon confirmation.
+- Feedback should be provided on successful or failed updates.
 
 Story Points: 5 (Moderate complexity)
 
 **Impact Analysis**:
 
+Backend Implications:
+
+- Create API endpoints for updating product details in the database.
+
 Frontend Implications:
 
-- Use USWDS components for UI consistency.
-- Ensure responsive design for various devices.
-- Implement state management for user interactions.
+- Implement inline editing functionality in the CatalogTable component.
+- Provide UI feedback for save operations.
 
 **Development Subtasks**:
 
-- Implement USWDS component-based design.
-- Ensure responsive layout across pages.
-- Integrate state management for UI components.
+- Backend: Create/update API for editing product details.
+- Frontend: Implement inline editing in CatalogTable.
+- Frontend: Implement confirmation and feedback mechanisms.
 
 **Testing Subtasks**:
 
-- Validate UI consistency across different pages.
-- Test responsiveness on various devices.
-- Check accessibility compliance.
-- Verify clarity of feedback and error messages.
+- Test editing functionality for all fields.
+- Test database updates after editing.
+- Test UI feedback for successful/failed operations.
+
+---
+
+### **Title: Download Catalog as CSV**###
+
+User Role: As a Catalog Manager, I want to download the current catalog data as a CSV file so that I can share or back up the data.
+
+Functional Description:
+
+The system should allow users to download the current catalog data as a CSV file. The download should include all data currently displayed in the table.
+
+**GIVEN-WHEN-THEN Scenario**:
+
+GIVEN I am viewing the catalog data  
+WHEN I click the "Download CSV" button  
+THEN the system should provide a CSV file containing the current catalog data  
+
+**Acceptance Criteria**:
+
+- The CSV file should contain all displayed data columns.
+- The download should reflect any current filters or sorting.
+- File should be named with a timestamp for uniqueness.
+
+Story Points: 2 (Simple complexity)
+
+**Impact Analysis**:
+
+Backend Implications:
+
+- Implement API to generate and serve CSV files.
+
+Frontend Implications:
+
+- Add a "Download CSV" button to the UI.
+- Handle CSV file generation on the client-side.
+
+**Development Subtasks**:
+
+- Backend: Create API for CSV file generation.
+- Frontend: Implement download functionality.
+- Frontend: Ensure UI reflects download status.
+
+**Testing Subtasks**:
+
+- Test CSV download functionality.
+- Test file content accuracy.
+- Test file naming conventions.
