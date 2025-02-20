@@ -4,13 +4,15 @@ User Role: As a Catalog Manager, I want to upload a CSV file so that I can popul
 
 Functional Description:
 
-The system should allow users to upload a CSV file containing catalog data. The backend should validate, parse, and store this data in PostgreSQL. The UI should provide real-time feedback during the upload and notify users upon completion.
+The system should allow users to upload a CSV file containing catalog data. The backend should validate, parse, and store this data in PostgreSQL. The UI should provide real-time feedback during upload and notify users upon completion.
 
 **GIVEN-WHEN-THEN Scenario**:
 
-GIVEN I am on the file upload page  
-WHEN I select a valid CSV file and click "Upload"  
-THEN the system should process the file, validate its format, and store the data in the database  
+GIVEN I am on the file upload page
+
+WHEN I select a valid CSV file and click "Upload"
+
+THEN the system should process the file, validate its format, and store the data in the database
 
 **Acceptance Criteria**:
 
@@ -57,161 +59,157 @@ Frontend Implications:
 
 ---
 
-### **Title: Search and Edit Catalog**###
+### **Title: Search Catalog**###
 
-User Role: As a Catalog Manager, I want to search and edit the catalog items so that I can keep the product information up-to-date.
+User Role: As a Catalog Manager, I want to search the catalog so that I can easily find specific products.
 
 Functional Description:
 
-The system should allow users to search through catalog items and edit them directly from the search results. The backend should support efficient querying and updating of catalog items.
+The application should provide a search feature that allows users to search the catalog by NSN or common name. The results should be displayed in a paginated format.
 
 **GIVEN-WHEN-THEN Scenario**:
 
-GIVEN I am on the catalog page  
-WHEN I enter a search term and press "Search"  
-THEN the system should display relevant catalog items  
+GIVEN I am on the catalog page
 
-GIVEN I have the search results  
-WHEN I click on an item to edit  
-THEN I should be able to update the item details  
+WHEN I enter a search term and press "Search"
+
+THEN the system should display search results matching the term in a paginated format
 
 **Acceptance Criteria**:
 
-- The search functionality must support filtering by multiple fields (e.g., NSN, common_name).
-- Edits must be immediately reflected in the database.
-- Users must receive confirmation upon successful edits.
-- Search results should be paginated for efficiency.
+- The system must support search by NSN and common name.
+- Results should be displayed in pages with a maximum of 20 items per page.
+- A "No results found" message must be shown if no matches are found.
 
-Story Points: 8 (High complexity)
+Story Points: 3 (Simple complexity)
 
 **Impact Analysis**:
 
 Backend Implications:
 
-- Develop search API endpoints to query the database.
-- Implement update logic for catalog items.
-- Ensure data integrity and validation for updates.
+- Create an API endpoint to query the catalog data.
+- Implement search logic to filter results based on NSN or common name.
 
 Frontend Implications:
 
-- Build a search interface with filter options.
-- Implement an editable form for catalog items.
-- Provide user feedback for successful/failed edits.
+- Implement a search input and button in the React UI.
+- Display search results in a paginated table.
+- Implement state management for search results.
 
 **Development Subtasks**:
 
-- Frontend: Create search bar and filter UI components.
-- Frontend: Implement result pagination.
-- Backend: Develop search query logic.
-- Backend: Implement update functionality for catalog items.
-- Backend: Ensure data validation on updates.
+- Frontend: Create search bar component.
+- Frontend: Implement paginated results display.
+- Backend: Create API endpoint for catalog search.
+- Backend: Implement search filtering logic.
 
 **Testing Subtasks**:
 
-- Test search with different query parameters.
-- Verify data correctness after edits.
-- Check search performance with a large dataset.
-- Test for response time and accuracy in search results.
-- Ensure proper validation and error handling during updates.
+- Test search functionality with valid terms.
+- Test search with no matching results.
+- Test pagination display and navigation.
+- Test search performance with large datasets.
 
 ---
 
-### **Title: Download Catalog as CSV**###
+### **Title: Edit Catalog Entry**###
 
-User Role: As a Catalog Manager, I want to download the entire catalog as a CSV file so that I can share it externally.
+User Role: As a Catalog Manager, I want to edit catalog entries so that I can update product information as needed.
 
 Functional Description:
 
-The system should allow users to download the entire catalog as a CSV file. The backend should compile and format the data into a CSV file, ensuring all fields are included.
+The application should allow users to edit existing catalog entries. Changes should be immediately reflected in the database and be visible to other users.
 
 **GIVEN-WHEN-THEN Scenario**:
 
-GIVEN I am on the catalog page  
-WHEN I click "Download"  
-THEN the system should generate a CSV file of the entire catalog  
+GIVEN I am viewing a catalog entry
+
+WHEN I edit the entry and save changes
+
+THEN the system should update the catalog entry in the database and display a confirmation message
 
 **Acceptance Criteria**:
 
-- The CSV file must include all catalog fields.
-- The download should initiate within 5 seconds.
-- The system must handle large datasets without crashing.
-- Users should be notified upon successful download initiation.
+- Users can modify all fields except NSN.
+- Changes must be saved to the database immediately.
+- A success message should confirm the update.
+- Validation must ensure no empty fields are submitted.
 
-Story Points: 3 (Low complexity)
+Story Points: 5 (Moderate complexity)
 
 **Impact Analysis**:
 
 Backend Implications:
 
-- Develop an API endpoint to generate CSV from the database.
-- Optimize database queries for large data extraction.
-- Ensure proper CSV formatting.
+- Create an API endpoint for updating catalog entries.
+- Implement validation logic to ensure data integrity.
 
 Frontend Implications:
 
-- Implement a download button and initiate download upon click.
-- Provide user feedback for download initiation.
+- Implement an editable form for catalog entries.
+- Provide feedback for successful updates or errors.
 
 **Development Subtasks**:
 
-- Frontend: Add a download button to the catalog page.
-- Backend: Implement CSV generation logic.
-- Backend: Optimize data retrieval queries.
+- Frontend: Create editable form for catalog entries.
+- Frontend: Implement validation and user feedback.
+- Backend: Create API endpoint for updating entries.
+- Backend: Implement update logic and validation.
 
 **Testing Subtasks**:
 
-- Test CSV download speed and accuracy.
-- Verify CSV file format and completeness.
-- Check system performance for large dataset downloads.
-- Test error handling for download failures.
+- Test editing with valid data.
+- Test validation with missing fields.
+- Test database update and confirmation message.
+- Test concurrent edits by multiple users.
 
 ---
 
-### **Title: Publish Catalog to GSA Marketplaces**###
+### **Title: Download Catalog**###
 
-User Role: As a Catalog Manager, I want to publish the catalog to GSA marketplaces so that it can be accessible on platforms like FedMall or GSA Advantage.
+User Role: As a Catalog Manager, I want to download the catalog as a CSV file so that I can have an offline copy of the data.
 
 Functional Description:
 
-The system should provide an option to publish the catalog data to designated marketplaces. The backend should handle data conversion and communication with marketplace APIs.
+The application should provide a feature to download the entire catalog as a CSV file. The file should follow the predefined format and include all catalog entries.
 
 **GIVEN-WHEN-THEN Scenario**:
 
-GIVEN I am on the publish page  
-WHEN I click "Publish"  
-THEN the system should send the catalog data to the GSA marketplaces  
+GIVEN I am on the catalog page
+
+WHEN I click the "Download" button
+
+THEN the system should generate a CSV file with all catalog data and prompt me to save it
 
 **Acceptance Criteria**:
 
-- The system must convert data to the required marketplace format.
-- Successful publication should be confirmed to the user.
-- Errors during the process should be clearly communicated.
-- Logs of publication attempts must be maintained for audit.
+- The CSV file must include all catalog entries.
+- The file should be formatted according to the predefined structure.
+- Users should be prompted to save the file upon download.
 
-Story Points: 13 (Very high complexity)
+Story Points: 3 (Simple complexity)
 
 **Impact Analysis**:
 
 Backend Implications:
 
-- Develop API interactions with GSA marketplace endpoints.
-- Implement data conversion logic for marketplace compatibility.
-- Log publication attempts and outcomes.
+- Create an API endpoint to generate a CSV file from the database.
+- Implement logic to format data according to the CSV structure.
 
 Frontend Implications:
 
-- Create a publish interface with status indicators.
-- Inform users of successful or failed publishing attempts.
+- Implement a "Download" button in the React UI.
+- Handle file download and saving on the client-side.
 
 **Development Subtasks**:
 
-- Frontend: Design publish page UI.
-- Backend: Develop data conversion and API communication logic.
-- Backend: Implement logging for publication attempts.
+- Frontend: Add "Download" button to catalog page.
+- Backend: Create API endpoint for CSV generation.
+- Backend: Implement data formatting logic.
 
 **Testing Subtasks**:
 
-- Test successful data publishing to marketplaces.
-- Verify data format conversion accuracy.
-- Test error handling for failed publication attempts.
-- Ensure logging accuracy and completeness for audit trails.
+- Test CSV download functionality.
+- Test file format and data accuracy.
+- Test performance with large datasets.
+- Test file saving on different browsers.
