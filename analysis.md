@@ -1,76 +1,81 @@
 ### Problem Analysis
 
-- **Objective**: Develop an application for the GSA Acquisition Workforce to manage the Global Supply catalog, enabling upload, curation, and publication of product data on platforms like FedMall or GSA Advantage.
-
-- **Key Features**:
-  - **CSV Upload**: Users should be able to upload CSV files containing product data.
-  - **Data Management**: Users can search, edit, and manage product catalogs.
-  - **Publication**: Users can download or publish the catalog to GSA marketplaces.
-
-- **Data Structure**:
+- **Objective**: Develop an application for the GSA Acquisition Workforce to upload, curate, and publish the Global Supply catalog on platforms like FedMall or GSA Advantage.
+  
+- **Functional Requirements**:
+  - **CSV Upload**: Users must be able to upload CSV files containing product information through a web interface.
+  - **Catalog Management**: Users should be able to search and edit product catalogs.
+  - **Publication**: Users should be able to download or publish the entire catalog to GSA marketplaces.
+  
+- **Data**:
   - Each product is identified by a National Stock Number (NSN).
-  - Sample CSV fields include NSN, rep_office, common_name, Description, Price, UI, and AAC.
+  - The CSV contains fields such as NSN, rep_office, common_name, Description, Price, UI, and AAC.
 
-- **User Interaction**:
-  - Web interface for uploading CSV files.
-  - Search and edit functionality for product catalogs.
-  - Option to download or publish the catalog.
+- **User Interface**:
+  - A web interface is required for file uploads and catalog management.
 
-- **Technical Stack**:
-  - Frontend: React, USWDS components.
-  - Backend: Node.js, Express, Sequelize.
-  - Database: PostgreSQL.
-  - Platform: AWS for hosting and deployment.
-  - APIs: RESTful for communication between frontend and backend.
+- **Tech Stack**:
+  - Frontend: React, USWDS components
+  - Backend: Node.js, Restful APIs, Sequelize, Postgres
+  - Platform: AWS
+
+- **Team Composition**:
+  - 2 Frontend Engineers
+  - 2 Backend Engineers
+  - 1 Platform Engineer
 
 ### Assumptions
 
-- Users have the necessary permissions to upload, edit, and publish catalogs.
-- The CSV file format is consistent and validated before upload.
-- The application will handle basic CSV file sizes initially, with scalability considered later.
-- The application will be deployed on AWS, leveraging its services for scalability and reliability.
+- The CSV format is standardized and consistent with the sample provided.
+- User authentication and authorization are not part of the MVP.
+- The application will initially support only English language.
+- The application will be deployed on AWS.
+- The MVP will focus on basic functionality without advanced features like version control or detailed analytics.
 
 ### Areas of Uncertainty
 
-- **CSV File Size**: The maximum file size that can be uploaded is not specified.
-- **User Roles and Permissions**: Details on user roles and permissions for accessing different features are not provided.
-- **Publication Process**: The exact process for publishing to GSA marketplaces is not detailed.
-- **Error Handling**: Specifics on error handling and validation for CSV uploads are not mentioned.
+- **CSV File Size**: The maximum file size for uploads is not specified.
+- **Search Functionality**: The extent and complexity of search capabilities are not detailed.
+- **Publication Process**: The exact method for publishing to GSA marketplaces is not described.
+- **User Roles**: It is unclear if there are different user roles with varying permissions.
+- **Error Handling**: Specifics on error handling and user feedback are not provided.
 
 ### MVP Plan
 
+#### Core Features for MVP
+
 1. **CSV Upload Functionality**:
-   - Implement a basic web interface using React for users to upload CSV files.
-   - Backend API endpoint in Node.js to handle file uploads and store data in PostgreSQL.
+   - Develop a web interface for uploading CSV files.
+   - Implement backend logic to parse and store CSV data in a Postgres database.
 
-2. **Data Management**:
-   - Implement a simple search functionality using React and Node.js to query the PostgreSQL database.
-   - Basic editing capability for product details.
+2. **Basic Catalog Management**:
+   - Implement a simple search functionality based on NSN or common_name.
+   - Allow users to edit product details directly from the web interface.
 
-3. **Publication**:
-   - Provide a download option for the catalog as a CSV file.
+3. **Download Functionality**:
+   - Enable users to download the catalog as a CSV file.
 
-4. **Deployment**:
-   - Deploy the application on AWS using basic EC2 instances or AWS Elastic Beanstalk.
+4. **Basic UI Design**:
+   - Use USWDS components to create a simple and consistent user interface.
 
-### Stretch Goal
+#### Stretch Goal
 
-- Implement user authentication and role-based access control.
-- Add advanced search and filtering options.
-- Integrate with GSA marketplaces for direct publication.
+- **Publication to GSA Marketplaces**:
+  - Implement a basic mechanism to publish the catalog to external platforms like GSA Advantage.
 
 ### Deliverables
 
-- Web interface for CSV upload.
-- Backend API for handling CSV data and storing it in PostgreSQL.
-- Basic search and edit functionality.
-- Download option for the catalog.
-- Deployment on AWS.
+- Web interface for CSV file upload.
+- Backend service to parse and store CSV data.
+- Basic search and edit functionality for the product catalog.
+- CSV download capability.
+- Initial deployment on AWS.
 - Documentation for setup and usage.
 
-### Questions for Improvement
+### Questions for Improving MVP
 
 1. What is the maximum file size for CSV uploads?
-2. Are there specific user roles and permissions that need to be implemented?
+2. Are there any specific search filters or criteria required beyond NSN and common_name?
 3. Can you provide more details on the publication process to GSA marketplaces?
-4. What are the expected error handling and validation requirements for CSV uploads?
+4. Are there different user roles with specific permissions?
+5. What are the expected error handling and user feedback mechanisms?
