@@ -24,7 +24,7 @@ AND I should see features accessible based on my role
 - The system must display an error message for invalid login attempts.
 - Audit logs of login attempts should be stored in AWS CloudTrail.
 
-Story Points: 8 (High complexity)
+Story Points: 5 (Moderate complexity)
 
 **Impact Analysis**:
 
