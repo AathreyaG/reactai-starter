@@ -16,7 +16,7 @@
 
 - **Assumptions**:
   - The CSV files are well-formed and adhere to the specified format.
-  - User authentication and authorization are not part of the MVP.
+  - User authentication and authorization are not part of the MVP; it is a single-user application with no authentication needed.
   - The application will initially support only the English language.
   - Error handling for CSV upload (e.g., incorrect format) is minimal in MVP.
 
