@@ -56,7 +56,7 @@
 
 ## Generated Diagrams
 
-### C4 Container Diagram
+### Simplified C4 Container Diagram
 
 ### Explanation of the Diagram
 
@@ -65,11 +65,10 @@
 - **API Gateway**: Amazon API Gateway manages request routing, validation, and authorization.
 - **Backend Services**:
   - **Application Server**: A Node.js and Express server processes business logic and data transactions.
-  - **Authentication Service**: Amazon Cognito handles user authentication and authorization.
   - **Database**: PostgreSQL on Amazon RDS stores the supply catalog data.
   - **File Storage**: Amazon S3 stores uploaded CSV files and provides export storage.
-  - **Background Processing**: AWS Lambda executes asynchronous tasks like CSV file validation and processing.
-- **Monitoring and Security**: AWS CloudWatch monitors application performance, and AWS Secrets Manager manages sensitive configurations. AWS VPC isolates backend services in a secure network environment.
+
+This simplified diagram provides a high-level overview of the system architecture, focusing on the core components and their interactions without the detailed technical descriptions.
 
 ## Generated Diagrams
 
