@@ -55,56 +55,56 @@ end note
 #### 1. **Frontend Architecture (React + TypeScript)**
 
 - **Component Structure**:
-  - The frontend application will be organized into reusable components, ensuring maintainability and scalability.
+  - The frontend application will be organized into reusable components, providing a maintainable and scalable architecture.
   - **Components** include:
     - **Header Component**: Provides navigation and displays user information.
     - **CatalogTable Component**: Displays product catalog with pagination, sorting, and filtering capabilities.
     - **ProductDetail Component**: Allows users to view and edit product details.
-    - **CSVUploader Component**: Provides an interface for users to upload CSV files, with capabilities for drag-and-drop.
+    - **CSVUploader Component**: Offers an interface for users to upload CSV files, supporting drag-and-drop functionality.
     - **ExportComponent**: Enables users to download catalog data as CSV.
-  
+
 - **UI Frameworks/Component Libraries**:
-  - **Material-UI (MUI)**: Used for its rich set of components and consistency in UI design.
+  - **Material-UI (MUI)**: Utilized for its comprehensive set of components and consistent UI design.
   - **USWDS Components**: Ensures compliance with US federal design standards for accessibility and usability.
 
 #### 2. **Backend Architecture (Node.js + Express + PostgreSQL)**
 
 - **RESTful API Endpoints**:
   - **/api/upload**:
-    - **POST**: Accepts CSV files for validation and upload to S3.
+    - **POST**: Accepts CSV files for validation and storage in S3.
   - **/api/products**:
-    - **GET**: Retrieves product lists with sorting and filtering.
+    - **GET**: Retrieves product lists with optional sorting and filtering.
     - **POST**: Adds new products to the catalog.
   - **/api/products/:id**:
     - **GET**: Fetches detailed product information.
     - **PUT**: Updates an existing product's details.
     - **DELETE**: Deletes a product.
   - **/api/export**:
-    - **GET**: Initiates a CSV export of product data, stored in S3.
+    - **GET**: Initiates and retrieves a CSV export of product data, stored in S3.
 
 - **Data Processing Workflows**:
-  - **File Handling**: Utilizes **Multer** for processing file uploads, specifically CSV data.
-  - **Validations**: Employs **Joi** for validating data structure and integrity.
-  - **Background Processing**: Offloads heavy tasks to **AWS Lambda** for asynchronous execution, enhancing user response time.
+  - **File Handling**: Uses **Multer** for handling file uploads, specifically processing CSV data.
+  - **Validations**: Employs **Joi** for validating data structure and ensuring integrity.
+  - **Background Processing**: Offloads resource-intensive tasks to **AWS Lambda** for asynchronous execution, facilitating better user response times.
 
 #### 3. **AWS Infrastructure & Deployment**
 
 - **Hosting**:
-  - **AWS Elastic Beanstalk**: Automatically handles deployment and scaling for the Node.js application.
+  - **AWS Elastic Beanstalk**: Automatically manages deployment and scaling for the Node.js application.
 
 - **File Storage**:
-  - **Amazon S3**: Provides a reliable storage solution for uploaded CSV files and exported data.
+  - **Amazon S3**: Provides reliable storage solutions for uploaded CSV files and exported data.
 
 - **Database**:
-  - **Amazon RDS with PostgreSQL**: Delivers a managed database for reliable and scalable storage.
+  - **Amazon RDS with PostgreSQL**: Delivers a managed database environment for reliable, scalable data storage.
 
 - **API Management**:
-  - **Amazon API Gateway**: Manages API requests, routing, and security concerns.
+  - **Amazon API Gateway**: Manages API requests, routing, and security features.
 
 - **Security**:
-  - **Amazon Cognito**: Facilitates secure user authentication and authorization.
+  - **Amazon Cognito**: Provides secure user authentication and authorization mechanisms.
 
 - **CI/CD Pipeline**:
-  - **AWS CodePipeline**: Orchestrates the entire CI/CD process, integrating CodeBuild and CodeDeploy for streamlined deployments.
-  
-This architectural framework is designed to ensure that the GSA Supply Catalog Management Platform is scalable, efficient, and meets the required compliance standards.
+  - **AWS CodePipeline**: Automates the entire CI/CD process, integrating with CodeBuild and CodeDeploy for streamlined deployments.
+
+This architectural framework is geared towards ensuring that the GSA Supply Catalog Management Platform is scalable, efficient, and compliant with the necessary standards.
