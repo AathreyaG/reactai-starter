@@ -1,14 +1,14 @@
 ### Problem Statement Analysis
 
-- **Objective**: Develop an application for the GSA Acquisition Workforce to upload, curate, and publish the Global Supply catalog on platforms like FedMall or GSA Advantage.
-  
+- **Objective**: Develop a web application for the GSA Acquisition Workforce to upload, curate, and publish the Global Supply catalog on platforms like FedMall or GSA Advantage.
+
 - **Key Features**:
-  - **CSV Upload**: Users should be able to upload CSV files containing product data.
+  - **CSV Upload**: Users should be able to upload CSV files containing product data, with a maximum file size of 100 MB.
   - **Search and Edit**: Users should be able to search and edit the product catalog.
   - **Download and Publish**: Users should be able to download or publish the catalog to GSA marketplaces.
 
 - **Data Structure**:
-  - CSV file with columns: NSN, rep_office, common_name, Description, Price, UI, AAC.
+  - CSV file with columns: NSN, rep_office, common_name, Description, Price, UI, AAC, and an additional date column.
 
 - **User Interface**:
   - Web interface for uploading CSV files.
@@ -17,7 +17,7 @@
 - **Assumptions**:
   - The CSV files are well-formed and adhere to the specified format.
   - User authentication and authorization are not part of the MVP.
-  - The application will initially support only English language.
+  - The application will initially support only the English language.
   - Error handling for CSV upload (e.g., incorrect format) is minimal in MVP.
 
 - **Uncertainties/Ambiguities**:
@@ -50,7 +50,7 @@
 
 - **Frontend**:
   - React components for CSV upload, search, and edit functionality.
-  
+
 - **Backend**:
   - Node.js server with RESTful APIs for CSV processing, search, and edit operations.
   - Postgres database schema for storing product data.
