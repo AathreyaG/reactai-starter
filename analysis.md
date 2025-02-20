@@ -1,7 +1,7 @@
 ### Problem Analysis
 
 - **Objective**: Develop an application for the GSA Acquisition Workforce to upload, curate, and publish the Global Supply catalog on platforms like FedMall or GSA Advantage.
-  
+
 - **Core Features**:
   - **CSV Upload**: Users should be able to upload CSV files of varying sizes through a web interface.
   - **Catalog Management**: Users can search, edit, and manage product catalogs.
@@ -73,6 +73,22 @@
 - Ability to download the catalog as a CSV.
 - Basic deployment on AWS.
 - Documentation on setup and usage.
+
+### Security and Deployment Considerations
+
+- **Security**:
+  - Ensure the application is secure against unauthorized access, especially if publicly accessible.
+  - Implement security measures such as rate limiting, input validation, and sanitization to prevent abuse and injection attacks.
+
+- **Deployment**:
+  - Consider restricting access to trusted networks or IP addresses if sensitive data is involved.
+  - Use AWS security features like VPC configurations and security groups to protect the application and data.
+
+### Additional Considerations
+
+- **Data Privacy**: Protect any sensitive data within the catalog.
+- **Monitoring and Logging**: Implement robust logging and monitoring to detect unusual activity or potential security threats.
+- **Future Scalability**: Design the application to allow easy integration of authentication features in the future if needed.
 
 ### Questions for Improvement
 
