@@ -1,11 +1,11 @@
 ### Problem Statement Analysis
 
 - **Objective**: Develop an application for the GSA Acquisition Workforce (AWF) to upload, curate, and publish the Global Supply catalog on platforms like FedMall or GSA Advantage.
-  
+
 - **Key Features**:
-  - **CSV Upload**: Users should be able to upload CSV files containing product data.
+  - **CSV Upload**: Users should be able to upload CSV files containing product data. The file upload size is limited to 100MB.
   - **Search and Edit**: Users should be able to search through the catalog and edit product details.
-  - **Download and Publish**: Users should be able to download the catalog or publish it to GSA marketplaces.
+  - **Download and Publish**: Users should be able to download the catalog or prepare it for publishing to GSA marketplaces.
 
 - **Data Structure**:
   - The CSV file contains fields like NSN, rep_office, common_name, Description, Price, UI, and AAC.
@@ -23,7 +23,7 @@
 ### Assumptions
 
 - The CSV file format is consistent and validated before upload.
-- User authentication and authorization are already handled or not required for the MVP.
+- User authentication is not required as this is a single-user application.
 - The application will initially support only English language and US currency.
 - The MVP does not require integration with FedMall or GSA Advantage, only the capability to prepare data for such platforms.
 
