@@ -49,7 +49,7 @@ end note
 note right of appServer
 - Handles CSV parsing with csv-parser and validations with Joi.
 - Uses Sequelize ORM for managing and querying PostgreSQL.
-- Implements RESTful API endpoints for catalog operations.
+- Implements RESTful API endpoints for catalog operations, including delete capability.
 end note
 
 @enduml
@@ -61,7 +61,7 @@ end note
 **Component Structure and UI Interaction:**
 
 - **CSVUploadComponent**: Provides the UI for file selection and performs basic client-side validations. Interfaces with the backend to upload files for processing.
-- **CatalogTableComponent**: Renders catalog data in a table allowing inline edits and communicates changes through backend APIs.
+- **CatalogTableComponent**: Renders catalog data in a table allowing inline edits and delete operations, communicating changes through backend APIs.
 - **CatalogExportComponent**: Offers options to download catalog data in formats like CSV or JSON, interacting with the backend to generate and fetch these files.
 
 **State Management and Routing:**
@@ -80,6 +80,7 @@ end note
 - **/api/csv/upload**: Accepts CSV files through multi-part form-data. Processes and returns a JSON response indicating the operation's success or failure.
 - **/api/catalog/search**: Supports GET requests with queries to return JSON data matching specified criteria (e.g., NSN, description).
 - **/api/catalog/edit/{id}**: Handles updates to catalog entries based on an ID, with JSON input and output confirming the operation's success.
+- **/api/catalog/delete/{id}**: Manages deletion of catalog entries, ensuring proper authorization and validation.
 - **/api/catalog/export**: Generates files in requested formats and serves them for download.
 
 **Data Processing Workflows:**
@@ -102,3 +103,8 @@ end note
 **CI/CD Recommendations:**
 
 - Employ AWS CodePipeline and CodeBuild to automate testing, integration, and deployment processes, ensuring rapid and consistent delivery from development to production.
+
+### AWS Lambda for File Processing
+
+- **File Processing Lambda**: Introduced to handle intensive file processing tasks, such as parsing and validating large CSV files before inserting them into PostgreSQL.
+- **Triggering Mechanism**: The Lambda function is triggered by S3 events when a file is uploaded to a designated S3 bucket, ensuring efficient and scalable processing.
