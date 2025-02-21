@@ -1,9 +1,9 @@
 ### Problem Analysis
 
 - **Objective**: Develop an application for the GSA Acquisition Workforce to upload, curate, and publish the Global Supply catalog on platforms like FedMall or GSA Advantage.
-  
+
 - **Functional Requirements**:
-  - Upload CSV files through a web interface.
+  - Upload CSV files through a web interface with a file size limit of 100MB.
   - Allow varying file sizes for upload.
   - Enable searching and editing of product catalogs.
   - Allow downloading or publishing of the entire catalog to GSA marketplaces.
@@ -33,7 +33,7 @@
 ### Areas of Uncertainty
 
 - Specific file size limits for CSV uploads.
-- Detailed user roles and permissions.
+- Detailed user roles and permissions; user authentication is not needed.
 - Exact publishing mechanism to GSA marketplaces.
 - Handling of CSV upload errors and data validation.
 
