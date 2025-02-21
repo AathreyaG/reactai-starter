@@ -1,26 +1,26 @@
 ### Problem Analysis
 
 - **Objective**: Develop an application for the GSA Acquisition Workforce (AWF) to upload, curate, and publish the Global Supply catalog on platforms like FedMall or GSA Advantage.
-  
+
 - **Features Required**:
   - **Upload Functionality**: Users should be able to upload CSV files through a web interface.
   - **Search and Edit**: Users must have the ability to search and edit product catalogs.
   - **Download and Publish**: Users should be able to download or publish the entire catalog to GSA marketplaces.
-  
+
 - **Data Format**: CSV files with fields such as NSN, rep_office, common_name, Description, Price, UI, and AAC.
 
 - **Current System**: Over 2.5 million items are available, indicating a need for efficient data handling and processing.
 
 ### Assumptions
 
-- The CSV upload will handle varying file sizes, but specifics on size limits are not provided.
+- The CSV upload will handle varying file sizes, with a specified limit of 100 MB.
 - The application will be web-based, accessible via standard web browsers.
-- User authentication and authorization are not mentioned but may be necessary for secure access.
+- User authentication and authorization are not required.
 - The sample CSV format provided is representative of the data structure expected.
 
 ### Areas of Uncertainty or Ambiguity
 
-- **File Size Limits**: The maximum size of CSV files that can be uploaded is not specified.
+- **File Size Limits**: Clarified as 100 MB.
 - **User Roles**: The problem statement does not specify if there are different user roles with varying permissions.
 - **Publication Process**: Details on how the catalog is published to GSA marketplaces are not provided.
 - **Data Validation**: The level of data validation required during upload is unclear.
