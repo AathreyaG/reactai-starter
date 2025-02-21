@@ -1,9 +1,9 @@
 ### Detailed Analysis of the Problem Statement
 
-- **Objective:** Develop an application for the GSA Acquisition Workforce that facilitates the upload, curation, and publication of the Global Supply catalog on platforms like FedMall or GSA Advantage.
-  
+- **Objective:** Develop an application for the GSA Acquisition Workforce to facilitate the upload, curation, and publication of the Global Supply catalog on platforms like FedMall or GSA Advantage.
+
 - **Key Features:**
-  - **CSV File Upload:** Users should be able to upload CSV files containing product data through a web interface.
+  - **CSV File Upload:** Users should be able to upload CSV files containing product data through a web interface, with a size limit of 100MB.
   - **Catalog Management:** Users need the ability to search, edit, download, and publish product catalogs.
   - **Integration with Marketplaces:** The application must support publishing the catalog to GSA marketplaces.
 
@@ -30,7 +30,7 @@
 
 ### Areas of Uncertainty or Ambiguity
 
-- **File Size Limits:** The maximum size of CSV files that can be uploaded is not specified.
+- **File Size Limits:** The maximum size of CSV files that can be uploaded is now specified as 100MB.
 - **User Roles and Permissions:** It's unclear if there are different user roles with varying permissions.
 - **Publishing Process:** The exact process and requirements for publishing to GSA marketplaces are not detailed.
 - **Error Handling:** There is no mention of how errors in file uploads or data processing should be handled.
@@ -39,7 +39,7 @@
 
 - **Frontend:**
   - Develop a simple React-based interface for CSV file upload.
-  - Implement a basic search and edit functionality for the catalog.
+  - Implement basic search and edit functionality for the catalog.
   - Use USWDS components for UI consistency.
 
 - **Backend:**
@@ -64,7 +64,6 @@
 
 ### Questions for Improving the MVP
 
-1. What is the maximum file size for CSV uploads?
-2. Are there different user roles with specific permissions?
-3. Can we get more details on the publishing process to GSA marketplaces?
-4. What are the error handling requirements for file uploads and data processing?
+1. Are there different user roles with specific permissions?
+2. Can we get more details on the publishing process to GSA marketplaces?
+3. What are the error handling requirements for file uploads and data processing?
