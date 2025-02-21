@@ -1,9 +1,9 @@
 ### Problem Statement Analysis
 
 - **Objective**: Develop an application for the GSA Acquisition Workforce to upload, curate, and publish the Global Supply catalog on platforms like FedMall or GSA Advantage.
-  
+
 - **Core Features**:
-  - **CSV Upload**: Users should be able to upload CSV files of varying sizes through a web interface.
+  - **CSV Upload**: Users should be able to upload CSV files of varying sizes through a web interface. The file upload has a maximum limit of 100MB.
   - **Catalog Management**: Users should be able to search and edit product catalogs.
   - **Export/Publish**: Users should be able to download or publish the entire catalog to GSA marketplaces.
 
@@ -20,7 +20,7 @@
 
 ### Assumptions
 
-- Users have access to the web interface and necessary permissions to upload and manage catalogs.
+- Users have access to the web interface and necessary permissions to upload and manage catalogs. No user authentication is required.
 - The CSV format is consistent and validated before processing.
 - The application will initially support only the features outlined without additional integrations.
 - The application will be hosted on AWS, leveraging its services for deployment and scalability.
