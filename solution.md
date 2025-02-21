@@ -1,6 +1,6 @@
 ### Detailed Technical Architecture Proposal
 
-Below is the detailed architecture for the GSA Acquisition Workforce Platform based on the provided requirements.
+Below is the detailed architecture for the GSA Acquisition Workforce Platform based on the provided requirements, including the newly added delete catalog capability.
 
 ```plantuml
 @startuml
@@ -53,7 +53,7 @@ end note
 note right of appServer
 - Handles CSV parsing with csv-parser and validations with Joi.
 - Uses Sequelize ORM for managing and querying PostgreSQL.
-- Implements RESTful API endpoints for catalog operations.
+- Implements RESTful API endpoints for catalog operations, including delete.
 end note
 
 @enduml
@@ -66,7 +66,7 @@ end note
 **Component Structure and UI Interaction:**
 
 - **CSVUploadComponent**: A user interface element allowing the selection and uploading of CSV files. It performs client-side validations before sending the file to the backend via HTTP requests.
-- **CatalogTableComponent**: Displays catalog data in a table format, enables inline editing, and communicates with the backend to submit updates using RESTful APIs.
+- **CatalogTableComponent**: Displays catalog data in a table format, enables inline editing, deletion, and communicates with the backend to submit updates using RESTful APIs.
 - **CatalogExportComponent**: Allows users to download the catalog in various formats. It interacts with the backend to generate and fetch these files.
 
 **State Management and Routing:**
@@ -85,6 +85,7 @@ end note
 - **/api/csv/upload**: Handles multipart/form-data requests for CSV uploads. Returns a JSON response indicating success or failure after processing.
 - **/api/catalog/search**: Handles GET requests with specific search criteria, returning matching entries in JSON format.
 - **/api/catalog/edit/{id}**: Supports PUT requests to update catalog entries, identified by a unique ID, with the request and response formatted in JSON.
+- **/api/catalog/delete/{id}**: Supports DELETE requests to remove catalog entries, identified by a unique ID.
 - **/api/catalog/export**: Provides downloadable catalog files in requested formats through a predefined endpoint.
 
 **Data Processing Workflows:**
