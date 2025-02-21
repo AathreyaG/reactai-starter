@@ -1,4 +1,4 @@
-Here is the proposed technical architecture for the GSA Acquisition Workforce Platform following the given requirements and scenario:
+Here is the refined and updated technical architecture for the GSA Acquisition Workforce Platform, incorporating the delete capability:
 
 ```plantuml
 @startuml
@@ -35,7 +35,7 @@ System_Boundary(SD_Boundary, "GSA Acquisition Platform") {
     Rel(user, webApp, "Uses")
     Rel(webApp, apiGateway, "Communicates via HTTP with")
     Rel(apiGateway, appServer, "Forwards requests to")
-    Rel(appServer, database, "Reads and writes catalog data")
+    Rel(appServer, database, "Reads, writes, and deletes catalog data")
     Rel(appServer, fileStorage, "Uploads and downloads CSV files")
     Rel(appServer, backgroundProcessing, "Initiates background tasks for")
     Rel(appServer, authService, "Authenticates users")
@@ -51,7 +51,7 @@ end note
 note right of appServer
 - Handles CSV parsing with csv-parser and validations with Joi.
 - Uses Sequelize ORM for managing and querying PostgreSQL.
-- Implements RESTful API endpoints for catalog operations.
+- Implements RESTful API endpoints for catalog operations, including delete functionality.
 end note
 
 @enduml
@@ -64,13 +64,13 @@ end note
 **Component Structure and UI Interaction:**
 
 - **CSVUploadComponent**: Allows users to select and upload CSV files, performing client-side validations. Interfaces with the backend using HTTP requests to upload files for processing.
-- **CatalogTableComponent**: Displays catalog data in a dynamic table allowing inline edits and communicates changes through RESTful APIs to the backend.
+- **CatalogTableComponent**: Displays catalog data in a dynamic table allowing inline edits and delete operations, communicating changes through RESTful APIs to the backend.
 - **CatalogExportComponent**: Provides options to download catalog data in various formats (CSV, JSON) by generating and fetching these files from the backend.
 
 **State Management and Routing:**
 
 - **Redux**: Centralizes state management, ensuring a consistent catalog data presentation across the application.
-- **React Router**: Enables seamless navigation between pages such as upload, search, and edit functionalities.
+- **React Router**: Enables seamless navigation between pages such as upload, search, edit, and delete functionalities.
 
 **UI Frameworks:**
 
@@ -83,6 +83,7 @@ end note
 - **/api/csv/upload**: Accepts multipart form-data for CSV files. Processes these files and returns a JSON response indicating success or failure.
 - **/api/catalog/search**: Handles GET requests with query parameters to retrieve JSON data matching specific criteria.
 - **/api/catalog/edit/{id}**: Supports PUT requests for updating catalog entries identified by an ID, using JSON input and output to confirm changes.
+- **/api/catalog/delete/{id}**: Handles DELETE requests for removing catalog entries, ensuring secure and authorized operations.
 - **/api/catalog/export**: Generates and provides downloadable files in the requested formats.
 
 **Data Processing Workflows:**
@@ -105,3 +106,5 @@ end note
 **CI/CD Recommendations:**
 
 - Implement AWS CodePipeline and CodeBuild for continuous integration and continuous deployment, automating testing and deployment processes to streamline delivery from development to production environments.
+
+These updates provide a comprehensive view of how the architecture is adjusted to incorporate the delete functionality, ensuring that all components are aligned with the new requirements.
