@@ -13,7 +13,7 @@
 
 - **Customizable Workflow:**
   - Ability for AltantisGate Assimilators to modify process flows to optimize speed.
-  - Low-code/no-code mobile proof of concept app for demonstration purposes.
+  - Low-code/no-code mobile proof of concept app for demonstration purposes. // No mobile app needed.
 
 - **Performance Analysis:**
   - Analyze enrollment throughput to recommend surge capacity above the base 100K applicants.
@@ -27,7 +27,7 @@
   - Automated security scans and code testing in the pipeline.
 
 - **User Stories:**
-  - Applicant needs to submit information, schedule enrollment, track status, and receive notifications.
+  - Applicants need to submit information, schedule enrollment, track status, and receive notifications.
   - Internal users need dashboards for processing times, queues, and scheduling adjustments.
   - Supervisors need to approve enrollments for scheduling.
   - DevSecOps engineers need to create and manage AWS environments, pipelines, and workflows.
