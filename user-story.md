@@ -1,76 +1,24 @@
-### **Title: Search Product Catalog**###
+### **Title: CSV File Upload**
 
-User Role: As a GSA Acquisition Workforce member, I want to search the product catalog so that I can quickly find specific items using filters.
-
-Functional Description:
-
-The system should provide a search functionality that allows users to filter the product catalog by various fields such as NSN, common name, and description. This feature should return results quickly, even with a large dataset, and provide an intuitive interface for inputting search criteria.
-
-**GIVEN-WHEN-THEN Scenario**:
-
-GIVEN I am on the catalog search page  
-WHEN I enter a keyword into the search bar  
-THEN the system should display a list of items matching the criteria  
-
-**Acceptance Criteria**:
-
-- The search should handle queries by NSN, common name, and description.
-- The search results must be returned within 2 seconds for a dataset of 2.5 million items.
-- The UI should support pagination for large result sets.
-- If no results are found, an appropriate message should be displayed.
-
-Story Points: 8 (High complexity)
-
-**Impact Analysis**:
-
-Backend Implications:
-
-- Implement search API endpoint using Node.js and Express.
-- Optimize database queries for speed and efficiency using PostgreSQL indexes.
-- Implement caching strategies to enhance performance (e.g., Redis).
-
-Frontend Implications:
-
-- Create a search bar component with auto-suggestions.
-- Implement result rendering components with pagination controls.
-- Manage state using React Context or Redux for search queries and results.
-
-**Development Subtasks**:
-
-- Frontend: Develop search input and result display components.
-- Frontend: Implement pagination and result filtering UI.
-- Backend: Create and optimize search API endpoint.
-- Backend: Implement caching for frequent queries.
-
-**Testing Subtasks**:
-
-- Test search functionality with valid and edge case queries.
-- Test performance for large datasets to ensure results within 2 seconds.
-- Validate pagination and filtering on the client side.
-- Perform security tests (e.g., SQL injection protection).
-
----
-
-### **Title: Edit Catalog Entry**###
-
-User Role: As a Catalog Manager, I want to edit catalog entries so that I can update product information as needed.
+User Role: As a Catalog Manager, I want to upload a CSV file so that I can populate the catalog database efficiently.
 
 Functional Description:
 
-The system should allow users to edit existing catalog entries directly from the product detail view. Changes should be validated and saved to the database, with the UI providing feedback on success or failure.
+The system should allow users to upload a CSV file containing catalog data. The backend should validate, parse, and store this data in PostgreSQL. The UI should provide real-time feedback during upload and notify users upon completion.
 
 **GIVEN-WHEN-THEN Scenario**:
 
-GIVEN I am viewing a product detail  
-WHEN I click "Edit" and modify the fields  
-THEN the system should save the changes and update the catalog  
+GIVEN I am on the file upload page  
+WHEN I select a valid CSV file and click "Upload"  
+THEN the system should process the file, validate its format, and store the data in the database  
 
 **Acceptance Criteria**:
 
-- Users must be able to edit all fields of a product entry.
-- Changes must be validated before saving.
-- Updates should reflect in the database immediately.
-- An error message should be displayed if validation fails.
+- The system must support CSV file uploads up to 100MB.
+- If the file is invalid, an error message must be displayed.
+- Upon successful upload, data should be inserted into PostgreSQL.
+- The system must provide progress feedback while uploading.
+- Logs must be stored in AWS CloudWatch for debugging.
 
 Story Points: 5 (Moderate complexity)
 
@@ -78,77 +26,144 @@ Story Points: 5 (Moderate complexity)
 
 Backend Implications:
 
-- Implement update API endpoint for catalog entries.
-- Validate incoming data against defined schema (using Joi).
+- Create an API endpoint in Node.js (Express) to accept CSV files.
+- Implement file validation & parsing logic.
+- Store processed data in PostgreSQL (via Sequelize ORM).
+- Handle large file processing asynchronously (use AWS Lambda for scalability).
 
 Frontend Implications:
 
-- Develop editable fields within the product detail component.
-- Implement form validation and submission logic.
+- Implement a drag-and-drop file uploader UI using React.
+- Show progress bar & success/failure messages.
+- Implement client-side file validation (CSV format, size check).
 
 **Development Subtasks**:
 
-- Frontend: Create editable form fields in product detail view.
-- Frontend: Implement form validation and error handling.
-- Backend: Develop update API endpoint.
-- Backend: Integrate validation logic for data integrity.
+- Frontend: Build the file upload component.
+- Frontend: Implement progress bar & error handling.
+- Backend: Create Express API to handle file uploads.
+- Backend: Implement file parsing logic.
+- Backend: Store data in PostgreSQL.
+- Backend: Log upload status to AWS CloudWatch.
 
 **Testing Subtasks**:
 
-- Test editing functionality with valid and invalid data.
-- Verify data integrity post-update in the database.
-- Test user feedback for successful and failed edits.
-- Perform negative testing for unauthorized access attempts.
+- Test successful file upload (valid CSV).
+- Test invalid file formats (TXT, JSON).
+- Test upload with a corrupt CSV file.
+- Test large file handling (100MB limit).
+- Test backend database storage & query performance.
+- Perform security tests (malicious file uploads, SQL injection protection).
 
 ---
 
-### **Title: Download Catalog as CSV**###
+### **Title: Catalog Search and Edit**
 
-User Role: As a Catalog Manager, I want to download the entire catalog as a CSV file so that I can share or archive the data.
+User Role: As a Catalog Manager, I want to search and edit catalog entries to ensure data accuracy and relevance.
 
 Functional Description:
 
-The system should allow users to download the entire catalog or a filtered subset as a CSV file. The download process should be efficient and handle large data volumes without performance degradation.
+The system should allow users to search for catalog entries and make edits as necessary. The frontend should offer a user-friendly search interface, and the backend should efficiently handle search queries and updates to the database.
 
 **GIVEN-WHEN-THEN Scenario**:
 
 GIVEN I am on the catalog management page  
-WHEN I click "Download as CSV"  
-THEN the system should generate and download the file  
+WHEN I enter a search term and click "Search"  
+THEN the system should return matching catalog entries  
+
+GIVEN I have a list of catalog entries  
+WHEN I click "Edit" on an entry and make changes  
+THEN the system should update the entry in the database  
 
 **Acceptance Criteria**:
 
-- The download must support the entire catalog or filtered results.
-- CSV file format should adhere to standard specifications.
-- File generation should not exceed 30 seconds for the entire dataset.
+- The search functionality should return results that match the query.
+- Edits to catalog entries should be reflected in the database.
+- Changes should be logged for auditing purposes.
+- The user should receive a confirmation message upon successful edit.
 
-Story Points: 8 (High complexity)
+Story Points: 3 (Moderate complexity)
 
 **Impact Analysis**:
 
 Backend Implications:
 
-- Implement CSV export API endpoint.
-- Handle large data processing efficiently (consider AWS Lambda).
+- Implement search logic in Node.js to query PostgreSQL.
+- Create API endpoints for search and edit operations.
+- Ensure data consistency and concurrency handling during edits.
 
 Frontend Implications:
 
-- Develop download button and feedback mechanism.
-- Implement client-side handling for file download.
+- Design a search bar and results table in React.
+- Implement inline editing capabilities with form validation.
+- Provide user feedback for search results and edit confirmations.
 
 **Development Subtasks**:
 
-- Frontend: Implement download button and user feedback.
-- Backend: Develop CSV export logic.
-- Backend: Optimize file generation for large datasets.
+- Frontend: Build the search bar and results table.
+- Frontend: Implement inline editing functionality.
+- Backend: Create API endpoints for search and edit.
+- Backend: Implement search query logic.
+- Backend: Ensure data consistency during edit operations.
 
 **Testing Subtasks**:
 
-- Test download functionality for different data sizes.
-- Validate CSV format and content accuracy.
-- Test performance for large dataset exports.
-- Perform security tests for data confidentiality during export.
+- Test various search queries (exact match, partial match).
+- Test edit functionality for different fields.
+- Ensure data consistency with concurrent edits.
+- Validate user feedback messages for search and edit operations.
+- Perform security tests (SQL injection, unauthorized access).
 
 ---
 
-These user stories adhere to CMMI Level 5 standards, focusing on clear, actionable steps and comprehensive testing to ensure high-quality deliverables.
+### **Title: Download Catalog as CSV**
+
+User Role: As a Catalog Manager, I want to download the catalog as a CSV file for offline analysis and sharing.
+
+Functional Description:
+
+The system should allow users to download the entire catalog as a CSV file. The backend should generate this file dynamically based on the current database state, and the frontend should offer a simple download interface.
+
+**GIVEN-WHEN-THEN Scenario**:
+
+GIVEN I am on the catalog management page  
+WHEN I click "Download"  
+THEN the system should generate and download the catalog as a CSV file  
+
+**Acceptance Criteria**:
+
+- The download should include all current catalog entries.
+- The CSV format should match the upload template.
+- The download process should be efficient and user-friendly.
+- Users should receive a confirmation notification upon download completion.
+
+Story Points: 2 (Low complexity)
+
+**Impact Analysis**:
+
+Backend Implications:
+
+- Implement logic in Node.js to export catalog data to CSV format.
+- Create an API endpoint for initiating the download.
+
+Frontend Implications:
+
+- Add a download button to the catalog management interface.
+- Provide user feedback during the download process.
+
+**Development Subtasks**:
+
+- Frontend: Add download button and feedback notification.
+- Backend: Create API endpoint for catalog export.
+- Backend: Implement CSV generation logic.
+
+**Testing Subtasks**:
+
+- Test CSV download for different catalog sizes.
+- Validate CSV format and content.
+- Ensure download efficiency and user experience.
+- Perform security tests (ensure only authorized downloads).
+
+---
+
+These user stories are designed to follow CMMI Level 5 development standards, ensuring high-quality deliverables with a focus on process improvement and optimization.
