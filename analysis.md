@@ -3,7 +3,7 @@
 - **Objective**: Develop an application for the GSA Acquisition Workforce to upload, curate, and publish the Global Supply catalog on platforms like FedMall or GSA Advantage.
 
 - **Key Features**:
-  - **CSV Upload**: Users should be able to upload CSV files through a web interface. The files can vary in size.
+  - **CSV Upload**: Users should be able to upload CSV files through a web interface. The file size limit is 100MB.
   - **Catalog Management**: Users should be able to search and edit product catalogs.
   - **Export/Publish**: Users should be able to download or publish the entire catalog to GSA marketplaces.
 
@@ -64,7 +64,7 @@
 ### Stretch Goal
 
 - **Edit Functionality**: Allow users to edit catalog entries directly from the web interface.
-- **Basic Authentication**: Implement simple user authentication to restrict access to authorized users only.
+- **Basic Authentication**: Implement simple user authentication to restrict access to authorized users only. No authentication is required.
 
 ### Deliverables
 
