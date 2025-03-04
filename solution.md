@@ -1,6 +1,6 @@
 ### High-Level Architecture for Web Application
 
-This architecture is crafted to align with the requirements of developing a web application for the GSA Acquisition Workforce. The design accommodates uploading, managing, and exporting CSV data and integrates with AWS for robust and scalable infrastructure.
+This architecture is crafted to align with the requirements of developing a web application for the GSA Acquisition Workforce. The design accommodates uploading, managing, exporting, and deleting CSV data, and integrates with AWS for robust and scalable infrastructure.
 
 ---
 
@@ -12,10 +12,10 @@ title GSA Acquisition Workforce Platform Architecture (Container Diagram)
 System_Boundary(SD_Boundary, "GSA Acquisition Platform") {
     
     ' Users
-    Person(user, "GSA Staff", "Uploads, manages, and publishes the Global Supply catalog")
+    Person(user, "GSA Staff", "Uploads, manages, publishes, and deletes the Global Supply catalog")
 
     ' Frontend
-    Container(webApp, "Web Application", "React + TypeScript", "Provides interface for uploading CSVs, managing catalogs, and uses USWDS components")
+    Container(webApp, "Web Application", "React + TypeScript", "Provides interface for uploading, managing, deleting catalogs, and uses USWDS components")
 
     ' API Gateway
     Container(apiGateway, "API Gateway", "Amazon API Gateway", "Routes requests, applies security, and manages API versions")
@@ -69,7 +69,7 @@ end note
 **Component Structure and UI Interaction:**
 
 - **CSVUploadComponent**: Handles the user interface for selecting and uploading CSV files. Files are sent to the backend using `multipart/form-data`.
-- **CatalogTableComponent**: Displays catalog data in a table format, enabling users to view and interact with catalog entries. Supports inline editing, with updates sent via RESTful API calls.
+- **CatalogTableComponent**: Displays catalog data in a table format, enabling users to view, interact, and delete catalog entries. Supports inline editing, with updates sent via RESTful API calls.
 - **CatalogExportComponent**: Allows users to request downloads of the entire catalog in various formats.
 
 **State Management and UI Framework:**
@@ -85,6 +85,7 @@ end note
 - **/api/csv/upload**: Accepts CSV files, processes uploads, and responds with JSON indicating success or error.
 - **/api/catalog/search**: GET endpoint providing search functionality for catalog entries, returning results in JSON format.
 - **/api/catalog/edit/{id}**: PUT request to update catalog entries, with payload and response both in JSON format.
+- **/api/catalog/delete/{id}**: DELETE request to remove catalog entries, ensuring data consistency and logging actions for auditing.
 - **/api/catalog/export**: Facilitates CSV or specific format downloads of the catalog upon request.
 
 **Data Processing Workflows:**
