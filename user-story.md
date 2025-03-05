@@ -1,15 +1,15 @@
 ```markdown
 ### **Title: CSV File Upload for Catalog Population**
 
-User Role: As a Catalog Manager, I want to upload a CSV file so that I can efficiently populate and update the catalog database.
+**User Role**: As a Catalog Manager, I want to upload a CSV file so that I can efficiently populate and update the catalog database.
 
-Functional Description:
+**Functional Description**:  
 The system should provide a capability for users to upload CSV files that contain catalog data. The backend will validate, parse, and store this data in a PostgreSQL database. The frontend should offer real-time feedback during the upload process and notify users of completion.
 
-**GIVEN-WHEN-THEN Scenario**:
-GIVEN I am on the catalog management page  
-WHEN I select a valid CSV file and click "Upload"  
-THEN the system should validate the file, process it, and store the data in the database
+**GIVEN-WHEN-THEN Scenario**:  
+- **GIVEN** I am on the catalog management page  
+- **WHEN** I select a valid CSV file and click "Upload"  
+- **THEN** the system should validate the file, process it, and store the data in the database
 
 **Acceptance Criteria**:
 - The application must support CSV file uploads up to 100MB.
@@ -18,17 +18,15 @@ THEN the system should validate the file, process it, and store the data in the 
 - The system must provide progress feedback while uploading.
 - Log upload activities in AWS CloudWatch for auditing and debugging.
 
-Story Points: 8 (Complex)
-
 **Impact Analysis**:
 
-Backend Implications:
+**Backend Implications**:
 - Create an API endpoint in Node.js (Express) to handle CSV file uploads.
 - Implement file validation and parsing logic.
 - Use Sequelize ORM to store data into PostgreSQL.
 - Enable asynchronous processing for large files using AWS Lambda for scalability.
 
-Frontend Implications:
+**Frontend Implications**:
 - Develop a drag-and-drop file uploader UI using React.
 - Display a progress bar and success/failure messages.
 - Implement client-side file validation for CSV format and size.
@@ -53,30 +51,28 @@ Frontend Implications:
 
 ### **Title: Search Catalog Entries**
 
-User Role: As a Catalog Manager, I want to search the catalog so that I can quickly find specific entries based on criteria.
+**User Role**: As a Catalog Manager, I want to search the catalog so that I can quickly find specific entries based on criteria.
 
-Functional Description:
+**Functional Description**:  
 The system should allow users to search the catalog using keywords or filters. This functionality should be responsive and allow users to find catalog entries efficiently.
 
-**GIVEN-WHEN-THEN Scenario**:
-GIVEN I am on the catalog management page  
-WHEN I enter a search term and click "Search"  
-THEN the system should return a list of entries that match the search criteria
+**GIVEN-WHEN-THEN Scenario**:  
+- **GIVEN** I am on the catalog management page  
+- **WHEN** I enter a search term and click "Search"  
+- **THEN** the system should return a list of entries that match the search criteria
 
 **Acceptance Criteria**:
 - The system must allow searches by NSN, common name, and other relevant fields.
 - Results should be returned within 2 seconds.
 - Handle cases where no entries match the search criteria.
 
-Story Points: 3 (Simple)
-
 **Impact Analysis**:
 
-Backend Implications:
+**Backend Implications**:
 - Create a search API endpoint in Node.js (Express).
 - Implement query logic using Sequelize ORM for efficient data retrieval.
 
-Frontend Implications:
+**Frontend Implications**:
 - Develop a search bar component using React.
 - Display search results dynamically in a table or list format.
 
@@ -96,30 +92,28 @@ Frontend Implications:
 
 ### **Title: Delete Catalog Entry**
 
-User Role: As a Catalog Manager, I want to delete catalog entries so that I can remove outdated or incorrect information.
+**User Role**: As a Catalog Manager, I want to delete catalog entries so that I can remove outdated or incorrect information.
 
-Functional Description:
+**Functional Description**:  
 The system should allow users to delete catalog entries. This action should be confirmed by the user to prevent accidental deletions.
 
-**GIVEN-WHEN-THEN Scenario**:
-GIVEN I am viewing a catalog entry  
-WHEN I click "Delete" and confirm  
-THEN the entry should be removed from the catalog
+**GIVEN-WHEN-THEN Scenario**:  
+- **GIVEN** I am viewing a catalog entry  
+- **WHEN** I click "Delete" and confirm  
+- **THEN** the entry should be removed from the catalog
 
 **Acceptance Criteria**:
 - Users must confirm deletion to prevent accidental removal.
 - The system should immediately reflect the removal of the entry.
 - Handle cases where the entry does not exist.
 
-Story Points: 2 (Simple)
-
 **Impact Analysis**:
 
-Backend Implications:
+**Backend Implications**:
 - Create a delete API endpoint in Node.js (Express).
 - Implement logic to remove entries from PostgreSQL using Sequelize ORM.
 
-Frontend Implications:
+**Frontend Implications**:
 - Add a "Delete" button to catalog entries in the UI.
 - Implement a confirmation dialog for delete actions.
 
