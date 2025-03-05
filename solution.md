@@ -10,6 +10,7 @@ Sure, let's break down the technical architecture for this web application using
   - **CSVUploadComponent**: Manages file selection and uploads via a form interface. Interaction with the backend is handled using HTTP requests in `multipart/form-data` format.
   - **CatalogTableComponent**: Presents catalog entries in a tabular format. It's designed to support inline editing, triggering RESTful API calls to update entries.
   - **CatalogExportComponent**: Offers functionality to export catalog data, allowing users to request downloads.
+  - **CatalogDeleteComponent**: Manages catalog entry deletion, providing a UI for users to remove entries.
 
 **State Management and UI Framework:**
 
@@ -42,6 +43,11 @@ Sure, let's break down the technical architecture for this web application using
   - **Method**: GET
   - **Request**: Query parameters for format selection.
   - **Response**: File download in requested format.
+
+- **/api/catalog/delete/{id}**:
+  - **Method**: DELETE
+  - **Request**: Identifier of the catalog entry to be deleted.
+  - **Response**: JSON result of the deletion operation.
 
 **Data Processing Workflows:**
 
@@ -128,4 +134,4 @@ end note
 @enduml
 ```
 
-This architecture ensures scalability, robust data management, and security while keeping future maintenance in mind by leveraging standard services and frameworks.
+This architecture ensures scalability, robust data management, and security while keeping future maintenance in mind by leveraging standard services and frameworks. The addition of the delete functionality allows catalog managers to maintain an up-to-date and accurate catalog.
