@@ -1,18 +1,18 @@
-### **Title: Upload CSV File**
+### **Title: Upload CSV File**###
 
-**User Role:**  
-As a Catalog Manager, I want to upload a CSV file so that I can populate the catalog database efficiently.
+User Role: As a Catalog Manager, I want to upload a CSV file so that I can populate the catalog database efficiently.
 
-**Functional Description:**  
+Functional Description:
+
 The system should allow users to upload a CSV file containing catalog data. The backend should validate, parse, and store this data in PostgreSQL. The UI should provide real-time feedback during upload and notify users upon completion.
 
-**GIVEN-WHEN-THEN Scenario:**  
+**GIVEN-WHEN-THEN Scenario**:
 
-- **GIVEN** I am on the file upload page  
-- **WHEN** I select a valid CSV file and click "Upload"  
-- **THEN** the system should process the file, validate its format, and store the data in the database  
+GIVEN I am on the file upload page  
+WHEN I select a valid CSV file and click "Upload"  
+THEN the system should process the file, validate its format, and store the data in the database  
 
-**Acceptance Criteria:**
+**Acceptance Criteria**:
 
 - The system must support CSV file uploads up to 100MB.
 - If the file is invalid, an error message must be displayed.
@@ -20,24 +20,24 @@ The system should allow users to upload a CSV file containing catalog data. The 
 - The system must provide progress feedback while uploading.
 - Logs must be stored in AWS CloudWatch for debugging.
 
-**Story Points:** 5 (Moderate complexity)
+Story Points: 5 (Moderate complexity)
 
-**Impact Analysis:**
+**Impact Analysis**:
 
-**Backend Implications:**
+Backend Implications:
 
 - Create an API endpoint in Node.js (Express) to accept CSV files.
 - Implement file validation & parsing logic.
-- Store processed data in PostgreSQL (via Sequelize ORM).
-- Handle large file processing asynchronously (use AWS Lambda for scalability).
+- Store processed data in PostgreSQL using Sequelize ORM.
+- Handle large file processing asynchronously using AWS Lambda for scalability.
 
-**Frontend Implications:**
+Frontend Implications:
 
 - Implement a drag-and-drop file uploader UI using React.
 - Show progress bar & success/failure messages.
 - Implement client-side file validation (CSV format, size check).
 
-**Development Subtasks:**
+**Development Subtasks**:
 
 - Frontend: Build the file upload component.
 - Frontend: Implement progress bar & error handling.
@@ -46,7 +46,7 @@ The system should allow users to upload a CSV file containing catalog data. The 
 - Backend: Store data in PostgreSQL.
 - Backend: Log upload status to AWS CloudWatch.
 
-**Testing Subtasks:**
+**Testing Subtasks**:
 
 - Test successful file upload (valid CSV).
 - Test invalid file formats (TXT, JSON).
@@ -57,104 +57,152 @@ The system should allow users to upload a CSV file containing catalog data. The 
 
 ---
 
-### **Title: Search Catalog Entries**
+### **Title: Search Catalog**###
 
-**User Role:**  
-As a Catalog Manager, I want to search catalog entries efficiently so that I can quickly find specific products.
+User Role: As a Catalog Manager, I want to search for specific products so that I can quickly find and manage catalog entries.
 
-**Functional Description:**  
-The system should allow users to search catalog entries by NSN or common name. The backend should support query operations, and the frontend should display search results in a user-friendly table format.
+Functional Description:
 
-**GIVEN-WHEN-THEN Scenario:**  
+The system should allow users to search for product entries within the catalog database based on various parameters like NSN, common name, and description. The search results should be displayed in a user-friendly format.
 
-- **GIVEN** I am on the catalog management page  
-- **WHEN** I enter a search term and press "Search"  
-- **THEN** the system should display a list of matching catalog entries  
+**GIVEN-WHEN-THEN Scenario**:
 
-**Acceptance Criteria:**
+GIVEN I am on the catalog search page  
+WHEN I enter a search query and click "Search"  
+THEN the system should display relevant product entries matching the query  
 
-- Users can search by NSN or common name.
-- Search results should be displayed within 2 seconds.
-- The system should handle special characters and partial matches.
-- If no results are found, display a "No results" message.
+**Acceptance Criteria**:
 
-**Story Points:** 3 (Simple complexity)
+- The search should be case-insensitive and support partial matches.
+- Search results should be displayed in a tabular format with pagination.
+- The system should respond to search queries within 2 seconds.
 
-**Impact Analysis:**
+Story Points: 3 (Simple complexity)
 
-**Backend Implications:**
+**Impact Analysis**:
 
-- Create a search API endpoint in Node.js (Express).
-- Implement query logic in PostgreSQL.
-- Optimize query performance for quick retrieval.
+Backend Implications:
 
-**Frontend Implications:**
+- Create a search API endpoint in Node.js (Express) to handle search requests.
+- Implement search logic using Sequelize ORM for PostgreSQL.
 
-- Build a search bar component in React.
-- Display results in a table with pagination.
+Frontend Implications:
 
-**Development Subtasks:**
+- Implement a search bar and results table UI using React.
+- Handle search query submission and result display.
 
-- Frontend: Create search bar and results table.
-- Backend: Implement search API endpoint.
-- Backend: Optimize database queries for search.
+**Development Subtasks**:
 
-**Testing Subtasks:**
+- Frontend: Build the search bar component.
+- Frontend: Build the results table component.
+- Backend: Create Express API for search functionality.
+- Backend: Implement search logic using Sequelize.
 
-- Test search functionality with valid inputs.
-- Test search with no matching results.
-- Test handling of special characters.
-- Test performance of search operations.
+**Testing Subtasks**:
 
----
-
-### **Title: Export Catalog as CSV**
-
-**User Role:**  
-As a Catalog Manager, I want to export the entire catalog as a CSV file so that I can share it with other platforms.
-
-**Functional Description:**  
-The system should allow users to download the entire catalog as a CSV file. The backend should handle data extraction and file generation, while the frontend should provide a download link.
-
-**GIVEN-WHEN-THEN Scenario:**  
-
-- **GIVEN** I am on the catalog management page  
-- **WHEN** I click "Export to CSV"  
-- **THEN** the system should generate and download the catalog as a CSV file  
-
-**Acceptance Criteria:**
-
-- Users can download the catalog in CSV format.
-- The file should include all product entries.
-- Download should start within 3 seconds after the request.
-
-**Story Points:** 3 (Simple complexity)
-
-**Impact Analysis:**
-
-**Backend Implications:**
-
-- Create an export API endpoint in Node.js (Express).
-- Implement logic to extract data and format it as CSV.
-
-**Frontend Implications:**
-
-- Implement an "Export" button in the UI.
-
-**Development Subtasks:**
-
-- Frontend: Add "Export to CSV" button.
-- Backend: Implement CSV generation logic.
-- Backend: Create export API endpoint.
-
-**Testing Subtasks:**
-
-- Test successful CSV export.
-- Test CSV file format and content.
-- Verify file download performance.
+- Test search functionality with various queries.
+- Test pagination of search results.
+- Test response time for search queries.
+- Perform security tests (SQL injection protection).
 
 ---
 
-These user stories are designed to meet CMMI Level 5 standards, ensuring a comprehensive and detailed approach to development and testing.
+### **Title: Edit Catalog Entry**###
 
-**Note:** A new user story for deleting catalog entries needs to be added.
+User Role: As a Catalog Manager, I want to edit product details so that I can update inaccurate or outdated information.
+
+Functional Description:
+
+The system should allow users to edit product details for entries within the catalog. Changes should be validated and then stored in the database, with the UI reflecting the updates immediately.
+
+**GIVEN-WHEN-THEN Scenario**:
+
+GIVEN I am on the catalog management page  
+WHEN I select a product entry and click "Edit"  
+THEN I should be able to modify its details and save the changes  
+
+**Acceptance Criteria**:
+
+- Users should be able to edit fields like common name, description, and price.
+- Changes must be validated before saving.
+- The UI should update to reflect changes immediately.
+
+Story Points: 5 (Moderate complexity)
+
+**Impact Analysis**:
+
+Backend Implications:
+
+- Create an API endpoint in Node.js (Express) to handle edit requests.
+- Implement update logic using Sequelize ORM for PostgreSQL.
+
+Frontend Implications:
+
+- Implement an editable form UI using React.
+- Handle form submission and result display.
+
+**Development Subtasks**:
+
+- Frontend: Build the editable form component.
+- Frontend: Implement form validation and submission.
+- Backend: Create Express API for edit functionality.
+- Backend: Implement update logic using Sequelize.
+
+**Testing Subtasks**:
+
+- Test editing functionality for various fields.
+- Test form validation logic.
+- Test UI updates after saving changes.
+- Perform security tests (SQL injection protection).
+
+---
+
+### **Title: Delete Catalog Entry**###
+
+User Role: As a Catalog Manager, I want to delete catalog entries so that I can remove outdated or incorrect products from the catalog.
+
+Functional Description:
+
+The system should allow users to delete product entries from the catalog. The deletion should be confirmed by the user and reflect immediately in the UI.
+
+**GIVEN-WHEN-THEN Scenario**:
+
+GIVEN I am on the catalog management page  
+WHEN I select a catalog entry and click "Delete"  
+THEN the system should remove the selected entry from the database and update the UI accordingly  
+
+**Acceptance Criteria**:
+
+- Users can delete catalog entries from the UI.
+- The system should confirm the deletion action before proceeding.
+- Deleted entries should be removed from PostgreSQL.
+- The UI should reflect the changes immediately after deletion.
+
+Story Points: 3 (Simple complexity)
+
+**Impact Analysis**:
+
+Backend Implications:
+
+- Create a DELETE API endpoint in Node.js (Express) to handle deletion requests.
+- Implement logic to remove entries from PostgreSQL using Sequelize.
+
+Frontend Implications:
+
+- Add a "Delete" button to each catalog entry in the table.
+- Implement a confirmation dialog for deletion.
+- Update the UI to reflect the removal of the entry.
+
+**Development Subtasks**:
+
+- Frontend: Add the "Delete" button to catalog entries.
+- Frontend: Implement confirmation dialog for deletion.
+- Backend: Create Express API for delete functionality.
+- Backend: Implement deletion logic using Sequelize.
+
+**Testing Subtasks**:
+
+- Test successful deletion of catalog entries.
+- Test UI updates after deletion.
+- Test handling of deletion for non-existent entries.
+- Perform security tests (ensure only authorized users can delete entries).
