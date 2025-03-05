@@ -1,9 +1,9 @@
 ### Problem Analysis
 
 - **Objective**: Develop an application for the GSA Acquisition Workforce to upload, curate, and publish the Global Supply catalog on platforms like FedMall or GSA Advantage.
-  
+
 - **Key Features**:
-  - **File Upload**: Users should be able to upload CSV files through a web interface. The application must handle varying file sizes.
+  - **File Upload**: Users should be able to upload CSV files through a web interface. The application must handle varying file sizes, with a file size limit of 100 MB.
   - **Catalog Management**: Users should be able to search and edit product catalogs.
   - **Download and Publish**: Users should be able to download or publish the entire catalog to GSA marketplaces.
 
@@ -18,15 +18,14 @@
 ### Assumptions
 
 - The application will primarily be web-based.
-- User authentication and authorization are not explicitly mentioned but may be necessary for secure access.
+- User authentication and authorization are not required as this is a single-user app.
 - The CSV file format is standardized and will not change frequently.
 - The application will be deployed on AWS, utilizing its services for hosting and storage.
 - Publishing to GSA marketplaces involves a straightforward API call or file transfer.
 
 ### Areas of Uncertainty
 
-- **User Authentication**: The problem statement does not mention user roles or authentication requirements.
-- **CSV File Size Limits**: The exact limits for file size are not specified.
+- **CSV File Size Limits**: The file size limit is specified as 100 MB.
 - **Publishing Process**: Details on how the catalog is published to GSA marketplaces are not provided.
 - **Error Handling**: The problem statement does not specify how errors should be managed during file upload or processing.
 
@@ -63,6 +62,4 @@
 ### Questions for Improvement
 
 - What are the specific requirements for publishing to GSA marketplaces?
-- Are there any user roles or permissions that need to be considered?
 - Is there a need for data validation or error reporting during CSV upload?
-- What are the expected file size limits for uploads?
