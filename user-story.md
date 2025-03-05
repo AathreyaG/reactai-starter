@@ -1,3 +1,4 @@
+```markdown
 ### **Title: CSV File Upload for Catalog Population**
 
 User Role: As a Catalog Manager, I want to upload a CSV file so that I can efficiently populate and update the catalog database.
@@ -6,8 +7,8 @@ Functional Description:
 The system should provide a capability for users to upload CSV files that contain catalog data. The backend will validate, parse, and store this data in a PostgreSQL database. The frontend should offer real-time feedback during the upload process and notify users of completion.
 
 **GIVEN-WHEN-THEN Scenario**:
-GIVEN I am on the catalog management page
-WHEN I select a valid CSV file and click "Upload"
+GIVEN I am on the catalog management page  
+WHEN I select a valid CSV file and click "Upload"  
 THEN the system should validate the file, process it, and store the data in the database
 
 **Acceptance Criteria**:
@@ -17,7 +18,7 @@ THEN the system should validate the file, process it, and store the data in the 
 - The system must provide progress feedback while uploading.
 - Log upload activities in AWS CloudWatch for auditing and debugging.
 
-Story Points: 5 (Moderate complexity)
+Story Points: 8 (Complex)
 
 **Impact Analysis**:
 
@@ -46,7 +47,7 @@ Frontend Implications:
 - Test with a corrupt CSV file.
 - Test handling of large files up to 100MB.
 - Test database storage and query performance.
-- Perform security testing against malicious file uploads and SQL injection attacks. 
+- Perform security testing against malicious file uploads and SQL injection attacks.
 
 ---
 
@@ -58,8 +59,8 @@ Functional Description:
 The system should allow users to search the catalog using keywords or filters. This functionality should be responsive and allow users to find catalog entries efficiently.
 
 **GIVEN-WHEN-THEN Scenario**:
-GIVEN I am on the catalog management page
-WHEN I enter a search term and click "Search"
+GIVEN I am on the catalog management page  
+WHEN I enter a search term and click "Search"  
 THEN the system should return a list of entries that match the search criteria
 
 **Acceptance Criteria**:
@@ -67,7 +68,7 @@ THEN the system should return a list of entries that match the search criteria
 - Results should be returned within 2 seconds.
 - Handle cases where no entries match the search criteria.
 
-Story Points: 3 (Simple complexity)
+Story Points: 3 (Simple)
 
 **Impact Analysis**:
 
@@ -101,8 +102,8 @@ Functional Description:
 The system should allow users to delete catalog entries. This action should be confirmed by the user to prevent accidental deletions.
 
 **GIVEN-WHEN-THEN Scenario**:
-GIVEN I am viewing a catalog entry
-WHEN I click "Delete" and confirm
+GIVEN I am viewing a catalog entry  
+WHEN I click "Delete" and confirm  
 THEN the entry should be removed from the catalog
 
 **Acceptance Criteria**:
@@ -110,7 +111,7 @@ THEN the entry should be removed from the catalog
 - The system should immediately reflect the removal of the entry.
 - Handle cases where the entry does not exist.
 
-Story Points: 2 (Simple complexity)
+Story Points: 2 (Simple)
 
 **Impact Analysis**:
 
@@ -132,6 +133,5 @@ Frontend Implications:
 - Test successful deletion of catalog entries.
 - Validate UI updates correctly after deletion.
 - Test deletion attempts for non-existent entries.
-- Perform security tests to ensure only authorized deletions occur. 
-
----
+- Perform security tests to ensure only authorized deletions occur.
+```
