@@ -1,9 +1,9 @@
 ### Problem Analysis
 
 - **Objective**: Develop an application for the GSA Acquisition Workforce to upload, curate, and publish the Global Supply catalog on platforms like FedMall or GSA Advantage.
-  
+
 - **Key Features**:
-  - **CSV Upload**: Users should be able to upload CSV files containing product data.
+  - **CSV Upload**: Users should be able to upload CSV files containing product data. File size should be restricted to 100MB.
   - **Search and Edit**: Users should have the capability to search for specific products and edit their details.
   - **Download and Publish**: Users should be able to download the catalog or publish it to GSA marketplaces.
 
@@ -23,15 +23,15 @@
 
 - The CSV format is consistent and validated before upload.
 - User authentication and authorization are not part of the MVP.
-- The application will initially support only English language.
+- The application will initially support only the English language.
 - The application will be deployed on AWS.
 
 ### Areas of Uncertainty
 
-- **File Size Limitations**: The maximum file size for uploads is not specified.
+- **File Size Limitations**: The maximum file size for uploads is now specified as 100MB.
 - **Data Validation**: The extent of data validation required for CSV uploads.
 - **Publishing Process**: The exact mechanism for publishing to GSA marketplaces is unclear.
-- **User Roles**: Different user roles and permissions are not defined.
+- **User Roles**: Different user roles and permissions are not defined. This is a single-person app, so there is no need for user roles or authentication.
 
 ### MVP Plan
 
@@ -41,7 +41,7 @@
 
 1. **Frontend Development**:
    - Create a simple React interface for CSV file upload.
-   - Implement a basic search functionality.
+   - Implement basic search functionality.
    - Develop a form for editing product details.
 
 2. **Backend Development**:
@@ -71,4 +71,3 @@
 - What are the specific requirements for data validation during CSV upload?
 - Are there any specific security requirements for the application?
 - Can we get more details on the publishing process to GSA marketplaces?
-- What are the expected user roles and permissions for the application?
