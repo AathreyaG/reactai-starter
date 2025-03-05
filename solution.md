@@ -5,7 +5,7 @@ Here is a detailed, structured technical architecture for a web application desi
 **Component Structure and UI Interaction:**
 
 - **CSVUploadComponent**: Responsible for file selection, preview, and uploading. Communicates with the backend using HTTP requests with `multipart/form-data` to submit CSV files.
-- **CatalogTableComponent**: Displays the catalog in a table format, featuring inline editing. It sends RESTful API requests to update catalog records.
+- **CatalogTableComponent**: Displays the catalog in a table format, featuring inline editing and deletion capabilities. It sends RESTful API requests to update or delete catalog records.
 - **CatalogExportComponent**: Facilitates export operations, allowing users to download the catalog in various formats.
 
 **State Management and UI Framework:**
@@ -34,6 +34,11 @@ Here is a detailed, structured technical architecture for a web application desi
   - **Method**: PUT
   - **Request**: JSON payload with updated catalog entry details.
   - **Response**: JSON indicating the result of the update operation.
+
+- **/api/catalog/delete/{id}**:
+  - **Method**: DELETE
+  - **Request**: The ID of the catalog entry to be deleted.
+  - **Response**: JSON indicating success or failure of the deletion operation.
 
 - **/api/catalog/export**:
   - **Method**: GET
@@ -65,13 +70,44 @@ Here is a detailed, structured technical architecture for a web application desi
 
 ---
 
-### C4-PlantUML Architecture Diagram
+### C4-PlantUML Architecture Diagrams
+
+#### Context Diagram
+
+```plantuml
+@startuml
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+title GSA Acquisition Workforce Platform - Context Diagram
+
+Person(user, "GSA Staff", "Uses the platform to manage the Global Supply catalog")
+
+System(webApp, "Web Application", "Allows users to upload, manage, and publish catalog data")
+
+System_Ext(apiGateway, "API Gateway", "Routes requests to backend services")
+
+System_Ext(database, "PostgreSQL Database", "Stores catalog data")
+
+System_Ext(fileStorage, "Amazon S3", "Stores uploaded CSV files")
+
+System_Ext(authService, "Amazon Cognito", "Manages user authentication")
+
+Rel(user, webApp, "Interacts with")
+Rel(webApp, apiGateway, "Sends requests to")
+Rel(apiGateway, database, "Reads/Writes data")
+Rel(apiGateway, fileStorage, "Uploads/Downloads files")
+Rel(apiGateway, authService, "Verifies user identities")
+
+@enduml
+```
+
+#### Container Diagram
 
 ```plantuml
 @startuml
 !includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 
-title GSA Acquisition Workforce Platform Architecture (Container Diagram)
+title GSA Acquisition Workforce Platform - Container Diagram
 
 System_Boundary(SD_Boundary, "GSA Acquisition Platform") {
     
@@ -108,19 +144,36 @@ System_Boundary(SD_Boundary, "GSA Acquisition Platform") {
     Rel(appServer, authService, "Verifies user identities")
 }
 
-' Notes for additional context
-note right of webApp
-- Utilizes React Router for SPA navigation
-- Axios for API interactions.
-- USWDS components to ensure accessibility and compliance
-end note
+@enduml
+```
 
-note right of appServer
-- Employs csv-parser for CSV parsing
-- Joi for server-side validation
-- Sequelize ORM for PostgreSQL database interaction
-- Defines RESTful API endpoints for operations
-end note
+#### Component Diagram
+
+```plantuml
+@startuml
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title GSA Acquisition Workforce Platform - Component Diagram
+
+Container_Boundary(webApp, "Web Application") {
+    Component(csvUpload, "CSV Upload Component", "React Component", "Handles file selection and uploading")
+    Component(catalogTable, "Catalog Table Component", "React Component", "Displays catalog data in a table format")
+    Component(searchBar, "Search Bar Component", "React Component", "Allows users to search catalog entries")
+    Component(deleteButton, "Delete Button Component", "React Component", "Allows users to delete catalog entries")
+}
+
+Container_Boundary(appServer, "Application Server") {
+    Component(uploadAPI, "Upload API", "Express Controller", "Handles CSV file uploads")
+    Component(searchAPI, "Search API", "Express Controller", "Handles catalog search requests")
+    Component(editAPI, "Edit API", "Express Controller", "Handles catalog entry edits")
+    Component(deleteAPI, "Delete API", "Express Controller", "Handles catalog entry deletions")
+    Component(databaseAccess, "Database Access Layer", "Sequelize ORM", "Interacts with PostgreSQL database")
+}
+
+Rel(csvUpload, uploadAPI, "Uploads CSV files to")
+Rel(catalogTable, searchAPI, "Fetches catalog data from")
+Rel(searchBar, searchAPI, "Submits search queries to")
+Rel(deleteButton, deleteAPI, "Sends delete requests to")
 
 @enduml
 ```
