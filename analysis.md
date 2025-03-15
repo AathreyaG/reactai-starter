@@ -1,82 +1,80 @@
-### Problem Analysis
+### Detailed Analysis of the Problem Statement
 
-- **Objective**: Develop an application for the GSA Acquisition Workforce to manage the Global Supply catalog, enabling upload, curation, and publication on platforms like FedMall or GSA Advantage.
+- **Objective Overview:**
+  - Develop a digital enrollment platform for AltantisGate to handle at least 100K applicants per month, with provisions for surge capacity.
+  - Implement a flashy enrollment site with real-time public enrollment counters.
+  - Create a customizable workflow engine for processing applicants.
+  - Develop an automated intelligent scheduling assistant for assimilation across multiple sites.
+  - Provide a mobile proof of concept app using a low-code/no-code platform.
 
-- **Key Features**:
-  - **CSV Upload**: Users should be able to upload CSV files containing product data, with a file size limit of 100MB.
-  - **Data Management**: Users can search, edit, and manage product catalogs.
-  - **Publication**: Users can download or publish the catalog to GSA marketplaces.
+- **Functional Requirements:**
+  - **Applicant Portal:**
+    - Submission of information via the A-9000 form.
+    - Scheduling and tracking of enrollment.
+    - Notifications for status updates.
+  - **Internal Business User Portal:**
+    - Dashboard for processing times, queues, and scheduling.
+    - Ability to adjust resources and change workflows.
+  - **Internal Business Supervisor Portal:**
+    - Approve applicant enrollments for scheduling.
+  - **DevSecOps Requirements:**
+    - AWS environment setup with CI/CD pipeline.
+    - Automated security scans and code testing.
+    - Infrastructure setup using automated scripts.
+    - Implementation of a configurable workflow engine.
+    - Automated scheduling assistant for assimilation.
 
-- **Data Structure**:
-  - Sample CSV fields include NSN, rep_office, common_name, Description, Price, UI, AAC.
-  - Each product has a unique NSN.
+- **Technical Constraints:**
+  - Use of AWS FedRAMP services, open-source/free software.
+  - Development team specialization in React, Node.js, AWS, TypeScript, USWDS components, RESTful APIs, Sequelize, and PostgreSQL.
 
-- **User Interaction**:
-  - Web interface for uploading and managing CSV files.
-  - Ability to search and edit product information.
+- **Assumptions:**
+  - The enrollment process will be based on the US DHS USCIS agency model.
+  - All applicants will be granted access, so the focus is on processing efficiency.
+  - The mobile app is a proof of concept and does not need full functionality.
 
-- **Tech Stack**:
-  - Frontend: React, USWDS components.
-  - Backend: Node.js, Sequelize, Postgres.
-  - Platform: AWS.
-  - APIs: RESTful.
+- **Areas of Uncertainty or Ambiguity:**
+  - Specific data formats and irregularities in the immigration information.
+  - Exact surge capacity requirements beyond the 100K baseline.
+  - Details on the flashy design requirements for the enrollment site.
+  - Customization options for the workflow engine.
 
-### Assumptions
+### MVP Plan (5-6 hours of development time)
 
-- Users have valid credentials to access the application. No authentication needed as it is a single-user app.
-- CSV files are well-formed and follow a predefined schema.
-- The application will handle only text-based data (no images or multimedia).
-- The publication process involves exporting data in a compatible format for GSA marketplaces.
+- **Frontend Development:**
+  - Create a basic React application for the applicant portal with:
+    - A form for A-9000 submission.
+    - A status tracking page.
+  - Implement a simple dashboard for internal users using USWDS components.
 
-### Areas of Uncertainty
+- **Backend Development:**
+  - Set up a Node.js server with RESTful APIs for:
+    - Handling form submissions.
+    - Providing status updates.
+  - Use Sequelize with PostgreSQL for basic data storage.
 
-- **CSV Schema**: Detailed schema requirements for CSV files are not specified.
-- **User Roles**: No information on user roles or permissions.
-- **Publication Process**: Specifics on how the publication to GSA marketplaces is handled.
-- **Data Volume**: Handling of large CSV files and performance considerations.
+- **Platform Engineering:**
+  - Set up a basic AWS environment with:
+    - A simple CI/CD pipeline using Jenkins.
+    - Infrastructure as code using AWS CloudFormation or Terraform for automated setup.
 
-### MVP Plan
+- **Stretch Goal:**
+  - Implement a basic version of the automated scheduling assistant.
+  - Add a simple real-time enrollment counter using WebSockets or a similar technology.
 
-**Objective**: Develop a minimal viable product that allows CSV upload, basic search, and edit functionality.
+### Questions for Improving the MVP
 
-#### Tasks
-
-1. **Frontend Development** (React, USWDS components)
-   - Create a simple UI for CSV upload.
-   - Implement a basic search and edit interface for product data.
-
-2. **Backend Development** (Node.js, Sequelize, Postgres)
-   - Set up a database schema to store product data.
-   - Develop RESTful APIs for:
-     - CSV upload and parsing.
-     - Product search and edit functionalities.
-
-3. **Platform Setup** (AWS)
-   - Deploy the application on AWS.
-   - Ensure basic security and access controls.
-
-#### Timeline
-
-- **Design and Architecture Discussion**: 1 hour
-- **Frontend Development**: 2 hours
-- **Backend Development**: 2 hours
-- **Integration and Testing**: 1 hour
-- **Deployment**: 1 hour
-
-### Stretch Goal
-
-- Implement the download functionality to export the catalog in a format compatible with GSA marketplaces.
+1. What specific data formats and irregularities should we anticipate in the immigration information?
+2. Can we get more details on the "flashy" design requirements for the enrollment site?
+3. Are there any specific customization options required for the workflow engine?
+4. What are the expected surge capacity numbers beyond the 100K baseline?
 
 ### Deliverables
 
-- A web interface for CSV upload and basic product management.
-- RESTful APIs for handling product data.
-- Deployed application on AWS with basic security configurations.
-- Documentation for setup and usage instructions.
-
-### Questions for Improvement
-
-1. Are there specific user roles and permissions that need to be implemented?
-2. What are the detailed requirements for the CSV schema?
-3. How is the publication process to GSA marketplaces expected to work?
-4. Are there any specific performance requirements for handling large CSV files?
+- Basic React application for applicant portal.
+- Simple dashboard for internal users.
+- Node.js backend with RESTful APIs.
+- PostgreSQL database setup with Sequelize.
+- AWS environment with CI/CD pipeline.
+- Infrastructure as code scripts for automated setup.
+- Documentation of the MVP and stretch goal implementation.
