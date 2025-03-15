@@ -7,7 +7,7 @@ Here is a structured technical architecture for the web application based on the
   - **UploadComponent**: Handles CSV file uploads, providing user feedback and interacting with backend services for file submission.
   - **CatalogComponent**: Displays catalog data in a table format with capabilities for searching, filtering, and sorting of entries.
   - **EditComponent**: Allows editing of individual catalog entries, with data validation and submission to the backend.
-  - **ExportComponent**: Faciliates downloading of the catalog as a CSV, interacting with backend services for file generation.
+  - **ExportComponent**: Facilitates downloading of the catalog as a CSV, interacting with backend services for file generation.
   - **UI Interaction**: The frontend communicates with the backend via RESTful API calls for uploading files, retrieving catalog data, and exporting catalogs.
 
 - **UI Frameworks/Libraries**: 
@@ -51,25 +51,43 @@ Here is a structured technical architecture for the web application based on the
 - **CI/CD Pipeline Recommendations**:
   - Implement AWS CodePipeline and AWS CodeBuild for continuous integration and deployment processes, enabling automated testing and deployment of both frontend and backend services upon code changes.
 
-Here is the diagram proposed in C4-PlantUML format:
+### C4 Diagrams
+
+#### Context Diagram
+
+```plaintext
+@startuml
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+title GSA Catalog Management Application - Context Diagram
+
+Person(webUser, "GSA User", "Uploads and manages the catalog data")
+System(SystemUnderDesign, "GSA Catalog Management Platform", "Web application for managing catalog data")
+
+System_Ext(FedMall, "FedMall", "Platform for purchasing")
+System_Ext(GSAAdvantage, "GSA Advantage", "Platform for purchasing")
+
+Rel(webUser, SystemUnderDesign, "Uses")
+Rel(SystemUnderDesign, FedMall, "Publishes catalog data to")
+Rel(SystemUnderDesign, GSAAdvantage, "Publishes catalog data to")
+
+@enduml
+```
+
+#### Container Diagram
 
 ```plaintext
 @startuml
 !includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 
-' Title
-title GSA Catalog Management Application (Container Diagram)
+title GSA Catalog Management Application - Container Diagram
 
-' Define the system
 System_Boundary(SD_Boundary, "GSA Catalog Management Platform") {
 
-    ' Users
     Person(webUser, "GSA User", "Uploads and manages the catalog data")
 
-    ' API Gateway
     Container(apiGateway, "API Gateway", "Amazon API Gateway", "Handles request routing and validation")
 
-    ' Core Backend Services
     Container_Boundary(Backend, "Backend Services") {
         Container(appNode, "Application Server", "Node.js on Elastic Beanstalk", "Processes business logic and data handling")
         Container(catalogService, "Catalog Service", "Express.js", "Manages catalog data and provides RESTful APIs")
@@ -78,13 +96,11 @@ System_Boundary(SD_Boundary, "GSA Catalog Management Platform") {
         Container(dataProcessor, "Data Processor", "AWS Lambda", "Processes CSV files and updates the database")
     }
 
-    ' Monitoring and Security
     System_Ext(cloudwatch, "CloudWatch", "AWS CloudWatch", "Monitors and logs backend performance metrics")
     System_Ext(cloudtrail, "CloudTrail", "AWS CloudTrail", "Records AWS-level actions for compliance and auditing")
     System_Ext(secretsManager, "Secrets Manager", "AWS Secrets Manager", "Stores API keys and database credentials securely")
     System_Ext(cognito, "Cognito", "Amazon Cognito", "Provides user authentication and authorization services")
 
-    ' Relationships and Flows
     Rel(webUser, apiGateway, "Sends API requests for managing catalog")
     Rel(apiGateway, appNode, "Forwards requests to")
     Rel(appNode, catalogService, "Handles catalog operations")
@@ -93,7 +109,6 @@ System_Boundary(SD_Boundary, "GSA Catalog Management Platform") {
     Rel(appNode, dataProcessor, "Triggers processing of CSV files")
 }
 
-'Notes
 note right of cognito
 User authentication is
 future scope and not
@@ -103,4 +118,32 @@ end note
 @enduml
 ```
 
-This diagram and architecture provide a comprehensive overview of the proposed solution, ensuring clarity, scalability, and maintainability while addressing the business goals and requirements.
+#### Component Diagram
+
+```plaintext
+@startuml
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title GSA Catalog Management Application - Component Diagram
+
+Container(appNode, "Application Server", "Node.js on Elastic Beanstalk") {
+    Component(uploadComponent, "Upload Component", "Express.js", "Handles CSV file uploads")
+    Component(catalogComponent, "Catalog Component", "Express.js", "Manages catalog data retrieval and updates")
+    Component(exportComponent, "Export Component", "Express.js", "Handles catalog data export")
+
+    Rel(uploadComponent, catalogComponent, "Sends processed data to")
+    Rel(catalogComponent, exportComponent, "Requests data export from")
+}
+
+Container(database, "Database", "Amazon RDS (PostgreSQL)") {
+    Component(catalogTable, "Catalog Table", "PostgreSQL", "Stores catalog entries")
+}
+
+Rel(uploadComponent, catalogTable, "Inserts data into")
+Rel(catalogComponent, catalogTable, "Reads from and writes to")
+Rel(exportComponent, catalogTable, "Reads from")
+
+@enduml
+```
+
+These diagrams provide a structured view of the system at different levels of detail, helping stakeholders understand the architecture and its components.
