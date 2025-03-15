@@ -1,51 +1,55 @@
-Here's a structured technical architecture for the web application based on the provided requirements. This architecture outlines the frontend, backend, AWS infrastructure, and deployment strategy, adhering to the C4-PlantUML format.
+Here is a structured technical architecture for the web application based on the provided requirements. This architecture outlines the frontend, backend, AWS infrastructure, and deployment strategy, adhering to the C4-PlantUML format.
 
 ### 1. Frontend Architecture (React + TypeScript)
 
 - **Component Structure**: 
-  - **App Component**: The main entry point, responsible for routing and theming.
-  - **UploadComponent**: Handles CSV file uploads, invoking backend services.
-  - **CatalogComponent**: Displays catalog data in a table with search and sorting functionality.
-  - **ExportComponent**: Facilitates downloading of the catalog.
-  - **UI Interaction**: The frontend interacts with the backend through RESTful API calls to submit and retrieve catalog data.
+  - **App Component**: The main entry point, responsible for initializing the application, routing, and theming.
+  - **UploadComponent**: Handles CSV file uploads, providing user feedback and interacting with backend services for file submission.
+  - **CatalogComponent**: Displays catalog data in a table format with capabilities for searching, filtering, and sorting of entries.
+  - **EditComponent**: Allows editing of individual catalog entries, with data validation and submission to the backend.
+  - **ExportComponent**: Faciliates downloading of the catalog as a CSV, interacting with backend services for file generation.
+  - **UI Interaction**: The frontend communicates with the backend via RESTful API calls for uploading files, retrieving catalog data, and exporting catalogs.
 
 - **UI Frameworks/Libraries**: 
-  - Use USWDS components for a consistent, accessible, and responsive UI in line with government standards.
+  - Use USWDS components to ensure a consistent, accessible, and responsive user interface, aligning with government standards for design and usability.
 
 ### 2. Backend Architecture (Node.js + Express + PostgreSQL)
 
 - **RESTful API Endpoints**:
-  - **POST /upload**: Accepts CSV files, processes them, and returns a status message.
-    - Request: `multipart/form-data` with CSV file.
-    - Response: JSON with upload status.
-  - **GET /catalog**: Returns catalog data.
-    - Request: Parameters for pagination and search filters.
-    - Response: JSON with catalog entries.
-  - **GET /export**: Triggers catalog data download as a CSV.
-    - Request: Optional filters for exporting specific data.
-    - Response: CSV file stream.
+  - **POST /upload**: Accepts CSV files, performs asynchronous processing, and returns a status message.
+    - Request: `multipart/form-data` with CSV file included.
+    - Response: JSON object indicating success or failure status of upload.
+  - **GET /catalog**: Returns catalog data with support for pagination and search.
+    - Request: Query parameters for pagination and optional search filters.
+    - Response: JSON array of catalog entries.
+  - **POST /catalog/edit/:id**: Updates specific catalog entry.
+    - Request: JSON payload with updated catalog fields.
+    - Response: JSON object confirming the update status.
+  - **GET /export**: Initiates the download of catalog data as a CSV file.
+    - Request: Optional query parameters for filtering data to be exported.
+    - Response: Streamed CSV file.
 
 - **Data Processing Workflows**:
-  - **File Handling**: CSV files uploaded are stored temporarily in AWS S3 for processing.
-  - **Validations**: Ensure CSV meets format specifications; validate entries for mandatory fields and valid data types.
-  - **Background Processing**: Utilize AWS Lambda or an SQS-based worker to process CSV files in the background for scalability and reliability.
+  - **File Handling**: Uploaded CSV files are stored temporarily in an S3 bucket to ensure durability and scalability.
+  - **Validations**: CSV files are checked for adherence to predefined schemas, including checks for mandatory fields and data types.
+  - **Background Processing**: Use AWS Lambda functions or an SQS-based Node.js worker to process CSV files in the background, ensuring responsiveness and decoupled architecture.
 
 ### 3. AWS Infrastructure & Deployment
 
 - **AWS Services**:
-  - **Hosting**: Use Elastic Beanstalk to deploy the Node.js application as it simplifies deployment and management.
-  - **File Storage**: AWS S3 for storing uploaded CSV files.
-  - **Database**: Amazon RDS (PostgreSQL) to store catalog data, benefiting from automated backups and scalability.
-  - **API Management**: Amazon API Gateway for handling API requests, enabling request/response transformation, and facilitating monitoring.
-  - **Security**: Use AWS Cognito for potential future implementation of user authentication and control access to APIs.
+  - **Hosting**: Elastic Beanstalk for deploying the Node.js application, offering simplified management and scaling features.
+  - **File Storage**: AWS S3 is utilized for storing uploaded CSV files and serving as a source for file processing.
+  - **Database**: Amazon RDS (PostgreSQL) is used to store catalog data, benefiting from high availability and automated backup capabilities.
+  - **API Management**: Amazon API Gateway facilitates API request handling, including request validation, throttling, and monitoring.
+  - **Security**: AWS Cognito can be integrated for user authentication and authorization, although not in the current MVP scope.
 
 - **Deployment Details**:
-  - Deploy frontend using S3 + CloudFront for fast, reliable content delivery.
-  - Set up Elastic Beanstalk with a load-balanced environment for the Node.js backend.
-  - RDS for the PostgreSQL database to handle large datasets effectively.
+  - Deploy frontend components using AWS S3 and Amazon CloudFront for efficient, globally distributed content delivery.
+  - Set up Elastic Beanstalk with a load-balancer configuration for the Node.js backend to handle increased load and ensure high availability.
+  - Leverage Amazon RDS for storing and managing database operations, ensuring data integrity and security.
 
 - **CI/CD Pipeline Recommendations**:
-  - Use AWS CodePipeline and CodeBuild for continuous integration and deployment, enabling automated testing and deployment of both frontend and backend services on code commit.
+  - Implement AWS CodePipeline and AWS CodeBuild for continuous integration and deployment processes, enabling automated testing and deployment of both frontend and backend services upon code changes.
 
 Here is the diagram proposed in C4-PlantUML format:
 
