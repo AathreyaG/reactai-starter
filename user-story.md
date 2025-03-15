@@ -11,6 +11,7 @@ The system should allow users to upload a CSV file containing catalog data. The 
 GIVEN I am on the file upload page
 
 WHEN I select a valid CSV file and click "Upload"
+
 THEN the system should process the file, validate its format, and store the data in the database
 
 **Acceptance Criteria**:
@@ -71,6 +72,7 @@ The system should allow users to search for specific catalog entries and edit th
 GIVEN I am on the catalog management page
 
 WHEN I search for a specific NSN and click on an entry
+
 THEN the system should display the entry details and allow me to edit and save changes
 
 **Acceptance Criteria**:
@@ -126,6 +128,7 @@ The system should allow users to export catalog data into a CSV format compatibl
 GIVEN I am on the catalog management page
 
 WHEN I click the "Export" button
+
 THEN the system should generate a CSV file and prompt me to download it
 
 **Acceptance Criteria**:
@@ -161,4 +164,60 @@ Frontend Implications:
 - Test CSV generation with complete and partial data sets.
 - Verify CSV format compatibility with GSA requirements.
 - Test download functionality and user feedback.
+- Perform log verification in AWS CloudWatch.
+
+---
+
+### **Title: Delete Catalog Entries** ###
+
+User Role: As a Catalog Manager, I want to delete catalog entries so that I can maintain an accurate and up-to-date catalog.
+
+Functional Description:
+
+The system should allow users to delete specific catalog entries. The backend should support delete operations on the catalog database. The UI should provide a user-friendly interface for selecting and confirming the deletion of entries.
+
+**GIVEN-WHEN-THEN Scenario**:
+
+GIVEN I am on the catalog management page
+
+WHEN I select a specific catalog entry and click the "Delete" button
+
+THEN the system should prompt me for confirmation and, upon confirmation, remove the entry from the database and update the UI accordingly
+
+**Acceptance Criteria**:
+
+- The system must allow deletion of catalog entries by their unique identifier (e.g., NSN).
+- Users should receive a confirmation prompt before deletion.
+- Deleted entries must be removed from PostgreSQL and the UI should reflect this change.
+- The system should log deletion activities in AWS CloudWatch for auditing purposes.
+
+Story Points: 3 (Low complexity)
+
+**Impact Analysis**:
+
+Backend Implications:
+
+- Implement delete API to handle removal requests.
+- Ensure data integrity and validation in PostgreSQL.
+- Log deletion activities in AWS CloudWatch.
+
+Frontend Implications:
+
+- Add a "Delete" button to the catalog management UI.
+- Implement confirmation dialog for deletion.
+- Update the UI to reflect the removal of entries.
+
+**Development Subtasks**:
+
+- Frontend: Implement "Delete" button and confirmation dialog.
+- Frontend: Update UI to reflect entry deletion.
+- Backend: Implement delete API endpoint.
+- Backend: Ensure data validation and integrity checks.
+- Backend: Log deletion activities.
+
+**Testing Subtasks**:
+
+- Test deletion functionality with valid and invalid entries.
+- Verify data removal and UI updates.
+- Perform usability testing for the deletion interface.
 - Perform log verification in AWS CloudWatch.
