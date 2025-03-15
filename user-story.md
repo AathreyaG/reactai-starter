@@ -1,26 +1,25 @@
-### **Title: Upload CSV File** ###
+### **Title: Submit Enrollment Form A-9000**###
 
-User Role: As a Catalog Manager, I want to upload a CSV file so that I can populate the catalog database efficiently.
+User Role: As an Applicant, I want to submit my enrollment form online so that I can be considered for enrollment.
 
 Functional Description:
 
-The system should allow users to upload a CSV file containing catalog data. The backend should validate, parse, and store this data in PostgreSQL. The UI should provide real-time feedback during upload and notify users upon completion.
+The system should enable applicants to fill out and submit the A-9000 enrollment form via the online portal. This feature aims to facilitate easy submission of enrollment information and ensure that necessary data is captured accurately for processing.
 
 **GIVEN-WHEN-THEN Scenario**:
 
-GIVEN I am on the file upload page
+GIVEN I am on the enrollment form page
 
-WHEN I select a valid CSV file and click "Upload"
+WHEN I fill in all required fields and click "Submit"
 
-THEN the system should process the file, validate its format, and store the data in the database
+THEN the system should validate the information and store it in the database
 
 **Acceptance Criteria**:
 
-- The system must support CSV file uploads up to 100MB.
-- If the file is invalid, an error message must be displayed.
-- Upon successful upload, data should be inserted into PostgreSQL.
-- The system must provide progress feedback while uploading.
-- Logs must be stored in AWS CloudWatch for debugging.
+- The form must include all required fields as per the A-9000 specifications.
+- Form submission should trigger a validation process to ensure data accuracy.
+- Successful submissions must be stored in PostgreSQL.
+- Users should receive a confirmation message upon successful submission.
 
 Story Points: 5 (Moderate complexity)
 
@@ -28,115 +27,104 @@ Story Points: 5 (Moderate complexity)
 
 Backend Implications:
 
-- Create an API endpoint in Node.js (Express) to accept CSV files.
-- Implement file validation & parsing logic.
-- Store processed data in PostgreSQL (via Sequelize ORM).
-- Handle large file processing asynchronously (use AWS Lambda for scalability).
+- Create an API endpoint in Node.js (Express) to accept form submissions.
+- Implement server-side validation logic.
+- Store form data in PostgreSQL (via Sequelize ORM).
 
 Frontend Implications:
 
-- Implement a drag-and-drop file uploader UI using React.
-- Show progress bar & success/failure messages.
-- Implement client-side file validation (CSV format, size check).
+- Build a form component using React with USWDS components.
+- Implement client-side validation for user input.
+- Display success or error messages based on submission outcome.
 
 **Development Subtasks**:
 
-- Frontend: Build the file upload component.
-- Frontend: Implement progress bar & error handling.
-- Backend: Create Express API to handle file uploads.
-- Backend: Implement file parsing logic.
-- Backend: Store data in PostgreSQL.
-- Backend: Log upload status to AWS CloudWatch.
+- Frontend: Develop the form component with necessary fields.
+- Frontend: Implement client-side validation.
+- Backend: Develop the API endpoint for form submission.
+- Backend: Implement server-side validation and data storage logic.
 
 **Testing Subtasks**:
 
-- Test successful file upload (valid CSV).
-- Test invalid file formats (TXT, JSON).
-- Test upload with a corrupt CSV file.
-- Test large file handling (100MB limit).
-- Test backend database storage & query performance.
-- Perform security tests (malicious file uploads, SQL injection protection).
+- Test successful form submission with valid data.
+- Test form submission with missing or invalid data.
+- Test database storage and retrieval of form data.
+- Conduct usability testing for the form interface.
 
 ---
 
-### **Title: Search and Edit Catalog Entries** ###
+### **Title: Track Enrollment Status**###
 
-User Role: As a Catalog Manager, I want to search and edit catalog entries to ensure data accuracy and relevance.
+User Role: As an Applicant, I want to track my enrollment status so that I can stay informed about my application progress.
 
 Functional Description:
 
-The system should allow users to search for specific catalog entries and edit them as needed. The backend should support query and update operations on the catalog database. The UI should provide a user-friendly interface for searching and editing entries.
+The system should provide applicants with a status tracking page where they can view the current status of their enrollment application. This feature helps applicants stay informed about any changes or updates to their application.
 
 **GIVEN-WHEN-THEN Scenario**:
 
-GIVEN I am on the catalog management page
+GIVEN I have submitted my enrollment form
 
-WHEN I search for a specific NSN and click on an entry
+WHEN I navigate to the status tracking page
 
-THEN the system should display the entry details and allow me to edit and save changes
+THEN the system should display the current status of my application
 
 **Acceptance Criteria**:
 
-- The system must allow searches by NSN and other relevant fields.
-- Users should be able to edit fields such as common_name, Description, and Price.
-- Changes must be saved in PostgreSQL and reflected in the UI.
-- The system should offer confirmation upon successful edits.
+- The tracking page must display the latest status of the application.
+- Status information should be updated in real-time or near real-time.
+- Users should be able to refresh the page to get the latest status.
 
-Story Points: 8 (High complexity)
+Story Points: 3 (Simple complexity)
 
 **Impact Analysis**:
 
 Backend Implications:
 
-- Implement search API to query catalog entries.
-- Develop update API to handle edit requests.
-- Ensure data integrity and validation in PostgreSQL.
+- Create an API endpoint to retrieve enrollment status.
+- Ensure real-time or scheduled status updates in the database.
 
 Frontend Implications:
 
-- Create a search bar and results table using React.
-- Build an editable form for catalog entry details.
-- Implement state management for search and edit operations.
+- Develop a status tracking page using React.
+- Implement API calls to fetch the latest status.
+- Design intuitive UI to display status updates.
 
 **Development Subtasks**:
 
-- Frontend: Develop search functionality and results display.
-- Frontend: Create form for editing catalog entries.
-- Backend: Implement search API endpoint.
-- Backend: Implement update API endpoint.
-- Backend: Ensure data validation and integrity checks.
+- Frontend: Create the status tracking page layout.
+- Frontend: Implement API integration for fetching status.
+- Backend: Develop API endpoint for status retrieval.
 
 **Testing Subtasks**:
 
-- Test search functionality with valid and invalid queries.
-- Test editing functionality with valid and invalid data.
-- Verify data persistence and accuracy in the database.
-- Perform usability testing for the search and edit interface.
+- Test status retrieval with different application statuses.
+- Verify real-time status updates on the front end.
+- Conduct regression testing to ensure no impact on other functionalities.
 
 ---
 
-### **Title: Export Catalog Data** ###
+### **Title: Approve Applicant Enrollment**###
 
-User Role: As a Catalog Manager, I want to export catalog data so that I can publish it on GSA marketplaces.
+User Role: As a Business Supervisor, I want to approve applicant enrollments for scheduling to ensure only qualified applicants proceed.
 
 Functional Description:
 
-The system should allow users to export catalog data into a CSV format compatible with GSA marketplaces. The backend should handle data retrieval and CSV generation. The UI should provide an option to download the generated file.
+Business Supervisors should have the ability to review and approve applicant enrollments through an internal portal. This feature ensures that only applicants meeting criteria are scheduled for further processing.
 
 **GIVEN-WHEN-THEN Scenario**:
 
-GIVEN I am on the catalog management page
+GIVEN I am on the supervisor dashboard
 
-WHEN I click the "Export" button
+WHEN I review an applicant's details and click "Approve"
 
-THEN the system should generate a CSV file and prompt me to download it
+THEN the system should mark the application as approved and notify the applicant
 
 **Acceptance Criteria**:
 
-- The system must generate a CSV file containing all catalog entries.
-- The CSV format must be compatible with GSA marketplaces.
-- Users should be notified of successful export and download.
-- Generated files should be logged in AWS CloudWatch for auditing.
+- Supervisors must be able to view applicant details before approval.
+- Approved applications should be flagged in the database.
+- Applicants should receive a notification upon approval.
 
 Story Points: 5 (Moderate complexity)
 
@@ -144,80 +132,73 @@ Story Points: 5 (Moderate complexity)
 
 Backend Implications:
 
-- Implement CSV generation logic in Node.js.
-- Develop API endpoint to initiate CSV export.
-- Log export activities in AWS CloudWatch.
+- Create an API endpoint for approving applications.
+- Implement business logic for changing application status to ‘approved’.
+- Trigger notification service upon approval.
 
 Frontend Implications:
 
-- Add an "Export" button to the catalog management UI.
-- Implement feedback for export status and download prompt.
+- Develop a supervisor dashboard using React.
+- Implement UI for reviewing and approving applications.
 
 **Development Subtasks**:
 
-- Frontend: Implement "Export" button and feedback mechanism.
-- Backend: Create CSV generation logic and endpoint.
-- Backend: Log export status and activities.
+- Frontend: Develop the supervisor dashboard and approval UI.
+- Backend: Create API endpoint for application approval.
+- Backend: Implement notification service integration.
 
 **Testing Subtasks**:
 
-- Test CSV generation with complete and partial data sets.
-- Verify CSV format compatibility with GSA requirements.
-- Test download functionality and user feedback.
-- Perform log verification in AWS CloudWatch.
+- Test the approval process with valid and invalid scenarios.
+- Verify notification delivery upon approval.
+- Conduct security testing to prevent unauthorized approvals.
 
 ---
 
-### **Title: Delete Catalog Entries** ###
+### **Title: Real-Time Enrollment Counter**###
 
-User Role: As a Catalog Manager, I want to delete catalog entries so that I can maintain an accurate and up-to-date catalog.
+User Role: As a Visitor, I want to see the real-time enrollment counter so that I can understand the current enrollment activity.
 
 Functional Description:
 
-The system should allow users to delete specific catalog entries. The backend should support delete operations on the catalog database. The UI should provide a user-friendly interface for selecting and confirming the deletion of entries.
+The system should display a real-time counter of enrollments on the public portal, providing visitors with insights into current enrollment activities.
 
 **GIVEN-WHEN-THEN Scenario**:
 
-GIVEN I am on the catalog management page
+GIVEN I am on the enrollment site
 
-WHEN I select a specific catalog entry and click the "Delete" button
+WHEN I view the page
 
-THEN the system should prompt me for confirmation and, upon confirmation, remove the entry from the database and update the UI accordingly
+THEN the system should show a real-time counter of enrollments
 
 **Acceptance Criteria**:
 
-- The system must allow deletion of catalog entries by their unique identifier (e.g., NSN).
-- Users should receive a confirmation prompt before deletion.
-- Deleted entries must be removed from PostgreSQL and the UI should reflect this change.
-- The system should log deletion activities in AWS CloudWatch for auditing purposes.
+- The counter must update in real-time or near real-time.
+- Visitors should see the total number of enrollments without needing to refresh the page.
 
-Story Points: 3 (Low complexity)
+Story Points: 3 (Simple complexity)
 
 **Impact Analysis**:
 
 Backend Implications:
 
-- Implement delete API to handle removal requests.
-- Ensure data integrity and validation in PostgreSQL.
-- Log deletion activities in AWS CloudWatch.
+- Implement WebSocket or similar technology for real-time updates.
+- Maintain a count of enrollments in the database.
 
 Frontend Implications:
 
-- Add a "Delete" button to the catalog management UI.
-- Implement confirmation dialog for deletion.
-- Update the UI to reflect the removal of entries.
+- Develop a UI component to display the real-time counter.
+- Implement WebSocket client integration for updates.
 
 **Development Subtasks**:
 
-- Frontend: Implement "Delete" button and confirmation dialog.
-- Frontend: Update UI to reflect entry deletion.
-- Backend: Implement delete API endpoint.
-- Backend: Ensure data validation and integrity checks.
-- Backend: Log deletion activities.
+- Frontend: Create the real-time counter component.
+- Backend: Implement WebSocket server for updates.
 
 **Testing Subtasks**:
 
-- Test deletion functionality with valid and invalid entries.
-- Verify data removal and UI updates.
-- Perform usability testing for the deletion interface.
-- Perform log verification in AWS CloudWatch.
+- Test real-time updates for counter accuracy.
+- Verify counter initialization and updates on page load.
+- Conduct stress testing to ensure performance during high traffic.
+
+These user stories align with CMMI Level 5 standards, ensuring a focus on process improvement and high-quality delivery.
