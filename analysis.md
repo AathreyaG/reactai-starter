@@ -1,66 +1,82 @@
 ### Problem Analysis
 
-- **Objective**: Develop an application for the GSA Acquisition Workforce to manage the upload, curation, and publication of the Global Supply catalog on platforms like FedMall or GSA Advantage.
-
+- **Objective**: Develop an application for the GSA Acquisition Workforce to manage the Global Supply catalog, enabling upload, curation, and publication on platforms like FedMall or GSA Advantage.
+  
 - **Key Features**:
-  - **CSV Upload**: Users should be able to upload CSV files of varying sizes through a web interface.
-  - **Catalog Management**: Users should be able to search and edit product catalogs.
-  - **Export/Publish**: Users should be able to download or publish the entire catalog to GSA marketplaces.
+  - **CSV Upload**: Users should be able to upload CSV files containing product data.
+  - **Data Management**: Users can search, edit, and manage product catalogs.
+  - **Publication**: Users can download or publish the catalog to GSA marketplaces.
 
-- **Current Data**: The catalog includes over 2.5 million items, each with a unique NSN and associated details like rep_office, common_name, description, price, UI, and AAC.
+- **Data Structure**:
+  - Sample CSV fields include NSN, rep_office, common_name, Description, Price, UI, AAC.
+  - Each product has a unique NSN.
 
-- **Sample CSV Data**: Provided format includes columns for NSN, rep_office, common_name, description, price, UI, and AAC.
+- **User Interaction**:
+  - Web interface for uploading and managing CSV files.
+  - Ability to search and edit product information.
+
+- **Tech Stack**:
+  - Frontend: React, USWDS components.
+  - Backend: Node.js, Sequelize, Postgres.
+  - Platform: AWS.
+  - APIs: RESTful.
 
 ### Assumptions
 
-- The CSV format is standardized and will not change frequently. Let's restrict the file size to 100MB.
-- Users have the necessary permissions to upload, edit, and publish catalogs.
-- The application will be web-based and accessible to users with appropriate credentials.
-- The application will integrate with existing GSA platforms like FedMall and GSA Advantage.
-- The application will handle large datasets efficiently.
+- Users have valid credentials to access the application.
+- CSV files are well-formed and follow a predefined schema.
+- The application will handle only text-based data (no images or multimedia).
+- The publication process involves exporting data in a compatible format for GSA marketplaces.
 
 ### Areas of Uncertainty
 
-- **CSV File Size**: The maximum file size for uploads is not specified.
-- **User Authentication**: Details on user authentication and authorization are not provided. Single person app, no auth.
-- **Integration Details**: Specifics on how the application will integrate with FedMall and GSA Advantage are not clear.
-- **Data Validation**: The level of data validation required for CSV uploads is not specified.
-- **Error Handling**: How errors in CSV uploads or during publication should be handled is not detailed.
+- **CSV Schema**: Detailed schema requirements for CSV files are not specified.
+- **User Roles**: No information on user roles or permissions.
+- **Publication Process**: Specifics on how the publication to GSA marketplaces is handled.
+- **Data Volume**: Handling of large CSV files and performance considerations.
 
 ### MVP Plan
 
-1. **CSV Upload Feature**:
-   - Implement a simple web interface using React for users to upload CSV files.
-   - Use Node.js and Express to handle file uploads on the backend.
-   - Store uploaded files temporarily on AWS S3.
+**Objective**: Develop a minimal viable product that allows CSV upload, basic search, and edit functionality.
 
-2. **Basic Catalog Management**:
-   - Parse CSV files and display data in a tabular format using React.
-   - Allow basic search functionality on the displayed data.
+#### Tasks
 
-3. **Export/Download Functionality**:
-   - Implement a feature to download the catalog data as a CSV file.
+1. **Frontend Development** (React, USWDS components)
+   - Create a simple UI for CSV upload.
+   - Implement a basic search and edit interface for product data.
 
-4. **Deployment**:
-   - Deploy the application on AWS using the platform engineer's expertise.
+2. **Backend Development** (Node.js, Sequelize, Postgres)
+   - Set up a database schema to store product data.
+   - Develop RESTful APIs for:
+     - CSV upload and parsing.
+     - Product search and edit functionalities.
+
+3. **Platform Setup** (AWS)
+   - Deploy the application on AWS.
+   - Ensure basic security and access controls.
+
+#### Timeline
+
+- **Design and Architecture Discussion**: 1 hour
+- **Frontend Development**: 2 hours
+- **Backend Development**: 2 hours
+- **Integration and Testing**: 1 hour
+- **Deployment**: 1 hour
 
 ### Stretch Goal
 
-- Implement basic edit functionality for the catalog data.
-- Set up a simple authentication mechanism using AWS Cognito.
+- Implement the download functionality to export the catalog in a format compatible with GSA marketplaces.
 
 ### Deliverables
 
-- A web interface for uploading CSV files.
-- Backend service to handle file uploads and parsing.
-- Basic search functionality for catalog data.
-- CSV download feature.
-- Deployment on AWS.
-- Documentation for the MVP implementation.
+- A web interface for CSV upload and basic product management.
+- RESTful APIs for handling product data.
+- Deployed application on AWS with basic security configurations.
+- Documentation for setup and usage instructions.
 
 ### Questions for Improvement
 
-- What are the specific integration requirements with FedMall and GSA Advantage?
-- Are there specific data validation rules for the CSV uploads?
-- What is the expected user load, and how should we handle concurrent uploads?
-- Are there any specific security requirements or compliance standards to follow?
+1. Are there specific user roles and permissions that need to be implemented?
+2. What are the detailed requirements for the CSV schema?
+3. How is the publication process to GSA marketplaces expected to work?
+4. Are there any specific performance requirements for handling large CSV files?
