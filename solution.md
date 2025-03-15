@@ -1,100 +1,102 @@
-```plantuml
+Here's a structured technical architecture for the web application based on the provided requirements. This architecture outlines the frontend, backend, AWS infrastructure, and deployment strategy, adhering to the C4-PlantUML format.
+
+### 1. Frontend Architecture (React + TypeScript)
+
+- **Component Structure**: 
+  - **App Component**: The main entry point, responsible for routing and theming.
+  - **UploadComponent**: Handles CSV file uploads, invoking backend services.
+  - **CatalogComponent**: Displays catalog data in a table with search and sorting functionality.
+  - **ExportComponent**: Facilitates downloading of the catalog.
+  - **UI Interaction**: The frontend interacts with the backend through RESTful API calls to submit and retrieve catalog data.
+
+- **UI Frameworks/Libraries**: 
+  - Use USWDS components for a consistent, accessible, and responsive UI in line with government standards.
+
+### 2. Backend Architecture (Node.js + Express + PostgreSQL)
+
+- **RESTful API Endpoints**:
+  - **POST /upload**: Accepts CSV files, processes them, and returns a status message.
+    - Request: `multipart/form-data` with CSV file.
+    - Response: JSON with upload status.
+  - **GET /catalog**: Returns catalog data.
+    - Request: Parameters for pagination and search filters.
+    - Response: JSON with catalog entries.
+  - **GET /export**: Triggers catalog data download as a CSV.
+    - Request: Optional filters for exporting specific data.
+    - Response: CSV file stream.
+
+- **Data Processing Workflows**:
+  - **File Handling**: CSV files uploaded are stored temporarily in AWS S3 for processing.
+  - **Validations**: Ensure CSV meets format specifications; validate entries for mandatory fields and valid data types.
+  - **Background Processing**: Utilize AWS Lambda or an SQS-based worker to process CSV files in the background for scalability and reliability.
+
+### 3. AWS Infrastructure & Deployment
+
+- **AWS Services**:
+  - **Hosting**: Use Elastic Beanstalk to deploy the Node.js application as it simplifies deployment and management.
+  - **File Storage**: AWS S3 for storing uploaded CSV files.
+  - **Database**: Amazon RDS (PostgreSQL) to store catalog data, benefiting from automated backups and scalability.
+  - **API Management**: Amazon API Gateway for handling API requests, enabling request/response transformation, and facilitating monitoring.
+  - **Security**: Use AWS Cognito for potential future implementation of user authentication and control access to APIs.
+
+- **Deployment Details**:
+  - Deploy frontend using S3 + CloudFront for fast, reliable content delivery.
+  - Set up Elastic Beanstalk with a load-balanced environment for the Node.js backend.
+  - RDS for the PostgreSQL database to handle large datasets effectively.
+
+- **CI/CD Pipeline Recommendations**:
+  - Use AWS CodePipeline and CodeBuild for continuous integration and deployment, enabling automated testing and deployment of both frontend and backend services on code commit.
+
+Here is the diagram proposed in C4-PlantUML format:
+
+```plaintext
 @startuml
 !includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 
-title GSA Acquisition Workforce Platform Architecture (Container Diagram)
+' Title
+title GSA Catalog Management Application (Container Diagram)
 
-System_Boundary(SD_Boundary, "GSA Acquisition Platform") {
-    
+' Define the system
+System_Boundary(SD_Boundary, "GSA Catalog Management Platform") {
+
     ' Users
-    Person(user, "GSA Staff", "Uploads, manages, and publishes the Global Supply catalog")
-
-    ' Frontend
-    Container(webApp, "Web Application", "React + TypeScript", "Provides interface for uploading CSVs, managing catalogs, and uses USWDS components")
+    Person(webUser, "GSA User", "Uploads and manages the catalog data")
 
     ' API Gateway
-    Container(apiGateway, "API Gateway", "Amazon API Gateway", "Routes requests, applies security, and manages API versions")
+    Container(apiGateway, "API Gateway", "Amazon API Gateway", "Handles request routing and validation")
 
     ' Core Backend Services
     Container_Boundary(Backend, "Backend Services") {
-        Container(appServer, "Application Server", "Node.js + Express", "Handles business logic, CSV processing, and interacts with PostgreSQL")
-        Container(database, "Database", "AWS RDS (PostgreSQL)", "Stores catalog data, ensuring ACID compliance and structured querying")
-        Container(fileStorage, "File Storage", "Amazon S3", "Holds temporary and archived files securely")
-        Container(backgroundProcessing, "Background Processing", "AWS Lambda", "Executes asynchronous tasks for intensive processing")
-        Container(authService, "Authentication Service", "Amazon Cognito", "Manages user authentication and provides OAuth2 tokens")
+        Container(appNode, "Application Server", "Node.js on Elastic Beanstalk", "Processes business logic and data handling")
+        Container(catalogService, "Catalog Service", "Express.js", "Manages catalog data and provides RESTful APIs")
+        Container(database, "Database", "Amazon RDS (PostgreSQL)", "Stores catalog data and metadata")
+        Container(fileStorage, "File Storage", "Amazon S3", "Stores uploaded CSV files")
+        Container(dataProcessor, "Data Processor", "AWS Lambda", "Processes CSV files and updates the database")
     }
 
-    ' Monitoring and Security Services
-    System_Ext(cloudwatch, "CloudWatch", "AWS CloudWatch", "Monitors application and infrastructure health")
-    System_Ext(secretsManager, "Secrets Manager", "AWS Secrets Manager", "Safeguards API keys and sensitive information")
-    System_Ext(vpc, "Virtual Private Cloud", "AWS VPC", "Ensures network segregation and security")
-    
+    ' Monitoring and Security
+    System_Ext(cloudwatch, "CloudWatch", "AWS CloudWatch", "Monitors and logs backend performance metrics")
+    System_Ext(cloudtrail, "CloudTrail", "AWS CloudTrail", "Records AWS-level actions for compliance and auditing")
+    System_Ext(secretsManager, "Secrets Manager", "AWS Secrets Manager", "Stores API keys and database credentials securely")
+    System_Ext(cognito, "Cognito", "Amazon Cognito", "Provides user authentication and authorization services")
+
     ' Relationships and Flows
-    Rel(user, webApp, "Interacts with for catalog operations")
-    Rel(webApp, apiGateway, "Requests API services from")
-    Rel(apiGateway, appServer, "Forwards requests to")
-    Rel(appServer, database, "Reads/Writes catalog data")
-    Rel(appServer, fileStorage, "Uploads/downloads CSV files")
-    Rel(appServer, backgroundProcessing, "Initiates tasks for")
-    Rel(appServer, authService, "Verifies user identities")
+    Rel(webUser, apiGateway, "Sends API requests for managing catalog")
+    Rel(apiGateway, appNode, "Forwards requests to")
+    Rel(appNode, catalogService, "Handles catalog operations")
+    Rel(catalogService, database, "CRUD operations on")
+    Rel(appNode, fileStorage, "Uploads and retrieves CSV files from")
+    Rel(appNode, dataProcessor, "Triggers processing of CSV files")
 }
 
-' Notes for additional context
-note right of webApp
-- Utilizes React Router for SPA navigation
-- Axios for API interactions.
-- USWDS components to ensure accessibility and compliance
-end note
-
-note right of appServer
-- Employs csv-parser for CSV parsing
-- Joi for server-side validation
-- Sequelize ORM for PostgreSQL database interaction
-- Defines RESTful API endpoints for operations
+'Notes
+note right of cognito
+User authentication is
+future scope and not
+included in MVP
 end note
 
 @enduml
 ```
 
-### Explanation
-
-1. **Frontend Architecture (React + TypeScript)**
-
-   - **Component Structure**: 
-     - `CSVUploadComponent` manages file upload interactions using `multipart/form-data`.
-     - `CatalogTableComponent` provides a tabular view of the catalog with inline editing and deletion capabilities.
-     - `CatalogExportComponent` allows users to export the catalog in different formats.
-
-   - **UI Frameworks**:
-     - **USWDS Components**: Ensures accessibility standards for government applications.
-     - **Redux**: Manages global state for consistent data sharing across components.
-     - **React Router**: Enables SPA navigation for enhanced user experience.
-
-2. **Backend Architecture (Node.js + Express + PostgreSQL)**
-
-   - **RESTful API Endpoints**:
-     - **/api/csv/upload**: Handles CSV file uploads.
-     - **/api/catalog/search**: Retrieves catalog entries based on search criteria.
-     - **/api/catalog/edit/{id}**: Updates catalog entries.
-     - **/api/catalog/export**: Exports catalog data in specified formats.
-     - **/api/catalog/delete/{id}**: Deletes a catalog entry.
-
-   - **Data Processing Workflows**:
-     - CSVs are temporarily stored in S3 with metadata in PostgreSQL.
-     - Data validation is performed using Joi.
-     - Background processing with AWS Lambda for resource-intensive tasks.
-
-3. **AWS Infrastructure & Deployment**
-
-   - **AWS Services**:
-     - **Hosting**: Frontend on Amazon S3; CloudFront for global content delivery.
-     - **Backend Deployment**: Managed through AWS Elastic Beanstalk.
-     - **File Storage**: Amazon S3 for CSV files.
-     - **Database**: PostgreSQL managed by Amazon RDS.
-     - **API Management**: API Gateway for routing and security.
-     - **Security**: AWS Secrets Manager for confidential data, Cognito for user management.
-
-   - **CI/CD Recommendations**:
-     - Implement using AWS CodePipeline and CodeBuild for continuous integration and deployment.
-
-This refined architecture ensures the application supports catalog entry management, including deletion, while maintaining scalability, security, and a seamless user experience.
+This diagram and architecture provide a comprehensive overview of the proposed solution, ensuring clarity, scalability, and maintainability while addressing the business goals and requirements.
